@@ -73,11 +73,14 @@ const bakerySchema = {
 
 // 8 fotos originales de /images/home/ + grinch y flamenca añadidos de /galeria
 // para mostrar humor y temáticas.
-const galleryHome: Array<{ src: string; alt: string; caption: string }> = [
+// `pos` opcional para ajustar el object-position (útil cuando el sujeto está
+// fuera del centro de la foto y se ve mal cortado al hacer crop cuadrado).
+const galleryHome: Array<{ src: string; alt: string; caption: string; pos?: string }> = [
   {
     src: "/images/home/andreia-tarta-frambuesa.jpg",
     alt: "Andreia con tarta de chantilly y frambuesas en EvangelCake Zaragoza",
     caption: "Andreia · Chantilly",
+    pos: "center 25%",
   },
   {
     src: "/images/home/cumple-unicornio.jpg",
@@ -529,6 +532,7 @@ export default function Home() {
                   width: "100%",
                   height: "100%",
                   objectFit: "cover",
+                  objectPosition: p.pos ?? "center",
                 }}
               />
               <figcaption className="gallery-label">{p.caption}</figcaption>

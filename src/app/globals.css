@@ -429,22 +429,25 @@ p{margin:0 0 12px}
   margin:0 auto;
   max-width:1080px;
   grid-template-columns:repeat(5,1fr);
-  grid-auto-rows:90px;
   gap:8px;
 }
 .gallery-home .gallery-item{
   margin:0;
   background:var(--paper-2);
   cursor:pointer;
+  aspect-ratio:1 / 1;
 }
+/* Anular el .gallery-item.tall (span 2 rows) en la home — aquí queremos
+   cuadros 1:1 consistentes */
+.gallery-home .gallery-item.tall{grid-row:span 1}
 @media (max-width:1199px){
-  .gallery-home{grid-template-columns:repeat(4,1fr);grid-auto-rows:90px}
+  .gallery-home{grid-template-columns:repeat(4,1fr)}
 }
 @media (max-width:899px){
-  .gallery-home{grid-template-columns:repeat(3,1fr);grid-auto-rows:90px}
+  .gallery-home{grid-template-columns:repeat(3,1fr)}
 }
 @media (max-width:687px){
-  .gallery-home{grid-template-columns:repeat(3,1fr);grid-auto-rows:80px}
+  .gallery-home{grid-template-columns:repeat(3,1fr)}
 }
 .gallery-home .gallery-item img{
   position:absolute;inset:0;
@@ -3368,8 +3371,8 @@ footer ul a:hover{color:var(--pink)}
 
 /* === GRIDS === */
 .gal-grid{display:grid;gap:10px;margin:0 auto}
-.gal-grid-3{grid-template-columns:repeat(4,1fr);max-width:1080px}
-.gal-grid-2{grid-template-columns:repeat(3,1fr);max-width:780px}
+.gal-grid-3{grid-template-columns:repeat(4,1fr);max-width:960px}
+.gal-grid-2{grid-template-columns:repeat(3,1fr);max-width:720px}
 @media (max-width:1199px){
   .gal-grid-3{grid-template-columns:repeat(3,1fr)}
   .gal-grid-2{grid-template-columns:repeat(2,1fr)}
@@ -3386,7 +3389,7 @@ footer ul a:hover{color:var(--pink)}
   border-radius:var(--r-card);
   overflow:hidden;
   background:var(--paper-2);
-  aspect-ratio:3/4;
+  aspect-ratio:1/1;
   box-shadow:var(--shadow-card);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease);
 }
