@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { markCodeUsed } from "@/lib/markCodeUsed";
+import DesignPicker, { type DesignSelection } from "@/components/DesignPicker";
 
 type Size = {
   value: string;
@@ -48,7 +49,13 @@ function maxFills(state: State): 1 | 2 {
   return found?.rellenos ?? 1;
 }
 
-function buildWA(state: State, date: string, notes: string, code: string): string {
+function buildWA(
+  state: State,
+  date: string,
+  notes: string,
+  code: string,
+  design: DesignSelection,
+): string {
   const rellenoLine =
     state.rellenos.length === 2
       ? `✨ Rellenos: ${state.rellenos[0]} + ${state.rellenos[1]}`
@@ -76,6 +83,20 @@ function buildWA(state: State, date: string, notes: string, code: string): strin
       lines.push(`📅 Fecha: ${date}`);
     }
   }
+  if (design) {
+    lines.push("");
+    if (design.kind === "gallery") {
+      const site = typeof window !== "undefined" ? window.location.origin : "https://evangelcake.com";
+      lines.push(`🎨 Diseño de referencia (galería · ${design.caption}):`);
+      lines.push(`${site}${design.url}`);
+    } else if (design.kind === "upload") {
+      lines.push(`🎨 Foto de referencia subida:`);
+      lines.push(design.url);
+    } else if (design.kind === "describe") {
+      lines.push(`🎨 Idea (sin diseño claro todavía):`);
+      lines.push(design.description.trim());
+    }
+  }
   if (notes.trim()) lines.push("", `📝 Notas: ${notes.trim()}`);
   if (code) lines.push("", `🎁 Código de descuento: ${code} (5%)`);
   lines.push("", "¿Podríais pasarme presupuesto y hablamos del diseño?");
@@ -91,6 +112,7 @@ export default function CakeModal() {
   const [state, setState] = useState<State>(EMPTY);
   const [date, setDate] = useState("");
   const [notes, setNotes] = useState("");
+  const [design, setDesign] = useState<DesignSelection>(null);
   const [shakeKey, setShakeKey] = useState<string | null>(null);
   const [spinReset, setSpinReset] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
@@ -139,6 +161,7 @@ export default function CakeModal() {
     setState(EMPTY);
     setDate("");
     setNotes("");
+    setDesign(null);
     setStep(1);
     setSpinReset(true);
     setTimeout(() => setSpinReset(false), 600);
@@ -485,6 +508,16 @@ export default function CakeModal() {
                 />
               </div>
 
+              <div className="cc-design">
+                <label className="cc-notes-label" style={{ marginBottom: 4 }}>
+                  <span className="cc-notes-icon" aria-hidden="true">🎨</span>
+                  <span>
+                    Diseño de referencia <em>(opcional)</em>
+                  </span>
+                </label>
+                <DesignPicker value={design} onChange={setDesign} />
+              </div>
+
               <p className="cc-finish-note">
                 Tras enviar, hablaremos del{" "}
                 <strong>diseño y los detalles</strong> directamente por
@@ -493,7 +526,7 @@ export default function CakeModal() {
               </p>
               <a
                 className="btn btn-pink cc-finish"
-                href={buildWA(state, date, notes, discountCode)}
+                href={buildWA(state, date, notes, discountCode, design)}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
