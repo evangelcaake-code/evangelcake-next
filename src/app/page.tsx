@@ -204,6 +204,22 @@ export default function Home() {
       />
 
       <section id="hero" className="hero" aria-labelledby="hero-title">
+        {/* Decoración animada detrás del hero — flota suavemente para darle
+            vida sin distraer ni cargar la página. */}
+        <div className="hero-decor" aria-hidden="true">
+          <span className="hero-decor-blob hero-decor-blob-1" />
+          <span className="hero-decor-blob hero-decor-blob-2" />
+          <span className="hero-decor-blob hero-decor-blob-3" />
+          <span className="hero-decor-emoji hero-decor-e1">🎂</span>
+          <span className="hero-decor-emoji hero-decor-e2">🧁</span>
+          <span className="hero-decor-emoji hero-decor-e3">🍰</span>
+          <span className="hero-decor-emoji hero-decor-e4">🍩</span>
+          <span className="hero-decor-emoji hero-decor-e5">✨</span>
+          <span className="hero-decor-emoji hero-decor-e6">🍓</span>
+          <span className="hero-decor-emoji hero-decor-e7">🥮</span>
+          <span className="hero-decor-emoji hero-decor-e8">♥</span>
+        </div>
+
         <div className="hero-left">
           <span className="tag">
             Tartas Personalizadas · Zaragoza · Desde 2024
