@@ -19,6 +19,7 @@ export default function NewsletterForm({
   eyebrow = "Solo para ti",
   buttonLabel = "Quiero mi código",
 }: Props) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,6 +29,10 @@ export default function NewsletterForm({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    if (name.trim().length < 2) {
+      setError("Pon tu nombre.");
+      return;
+    }
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setError("Email no válido.");
       return;
@@ -41,7 +46,7 @@ export default function NewsletterForm({
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source, consent }),
+        body: JSON.stringify({ name: name.trim(), email, source, consent }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
@@ -74,7 +79,21 @@ export default function NewsletterForm({
       <span className="newsletter-inline-tag">{eyebrow}</span>
       <h3>{title}</h3>
       <p>{description}</p>
-      <form className="newsletter-form" onSubmit={onSubmit} noValidate>
+      <form
+        className="newsletter-form newsletter-form-stacked"
+        onSubmit={onSubmit}
+        noValidate
+      >
+        <input
+          type="text"
+          placeholder="Tu nombre"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          maxLength={40}
+          autoComplete="given-name"
+          aria-label="Tu nombre"
+        />
         <input
           type="email"
           placeholder="tu@email.com"

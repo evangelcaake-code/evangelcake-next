@@ -7,6 +7,10 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import {
+  sendTopRankNotification,
+  sendDethronedNotification,
+} from "@/lib/resend";
 
 function currentMonth() {
   const d = new Date();
@@ -64,6 +68,16 @@ export async function POST(req: NextRequest) {
     const month = currentMonth();
     const sb = getSupabaseAdmin();
 
+    // ANTES de tocar nada: averiguar quién era el #1 actual.
+    // Lo necesitamos para detectar destronaciones después del update.
+    const { data: prevTopRow } = await sb
+      .from("scores")
+      .select("name, email, score")
+      .eq("month", month)
+      .order("score", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
     // Buscar score previo del mes
     const { data: prev } = await sb
       .from("scores")
@@ -74,7 +88,6 @@ export async function POST(req: NextRequest) {
 
     let isNewRecord = false;
     if (!prev) {
-      // No tenía score este mes → insertar
       const { error } = await sb.from("scores").insert({
         email,
         name,
@@ -84,7 +97,6 @@ export async function POST(req: NextRequest) {
       if (error) throw error;
       isNewRecord = true;
     } else if (score > prev.score) {
-      // Mejoró → actualizar
       const { error } = await sb
         .from("scores")
         .update({ score, name })
@@ -110,6 +122,46 @@ export async function POST(req: NextRequest) {
     const position = all
       ? all.findIndex((r) => r.email === email) + 1 || null
       : null;
+
+    // ===== EMAILS POST-RANKING =====
+    // Solo si fue un nuevo récord (insert o mejora real) — así evitamos
+    // mandar mails cada vez que alguien juega y no mejora.
+    if (isNewRecord && position !== null) {
+      // 1) Si el jugador entró al top 3, le mandamos un email de enhorabuena.
+      if (position <= 3) {
+        try {
+          await sendTopRankNotification({
+            to: email,
+            name,
+            position,
+            score,
+            month,
+          });
+        } catch (err) {
+          console.error("[ranking] top-rank email:", err);
+        }
+      }
+
+      // 2) Si el jugador desplazó al antiguo #1 (era otra persona), avisamos
+      //    a quien acaba de ser destronado.
+      if (
+        position === 1 &&
+        prevTopRow &&
+        prevTopRow.email !== email
+      ) {
+        try {
+          await sendDethronedNotification({
+            to: prevTopRow.email,
+            oldKingName: prevTopRow.name,
+            newKingName: name,
+            newScore: score,
+            yourScore: prevTopRow.score,
+          });
+        } catch (err) {
+          console.error("[ranking] dethroned email:", err);
+        }
+      }
+    }
 
     return NextResponse.json({
       ok: true,

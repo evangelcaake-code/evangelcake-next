@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { saveSubscribedEmail } from "@/lib/subscriberLocal";
+import { getSubscribedEmail, saveSubscribedEmail } from "@/lib/subscriberLocal";
 import { track } from "@/lib/track";
 
 const DELAY_MS = 15_000; // 15 segundos
@@ -17,6 +17,7 @@ const VISIT_START_KEY = "evangelcake_visit_started_at";
 export default function NewsletterPopup() {
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -30,6 +31,10 @@ export default function NewsletterPopup() {
     try {
       if (localStorage.getItem(SUBSCRIBED_KEY) === "yes") return;
     } catch {}
+
+    // Si tenemos su email de cualquier suscripción anterior (popup, home,
+    // footer, blog, game o cookie firmada), no le mostramos el popup.
+    if (getSubscribedEmail()) return;
 
     // Si fue dismissado hace < 7 días, no mostrar
     try {
@@ -97,6 +102,10 @@ export default function NewsletterPopup() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    if (name.trim().length < 2) {
+      setError("Pon tu nombre, aunque sea solo el primero.");
+      return;
+    }
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setError("Email no válido.");
       return;
@@ -106,7 +115,7 @@ export default function NewsletterPopup() {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "popup", consent: true }),
+        body: JSON.stringify({ name: name.trim(), email, source: "popup", consent: true }),
       });
       if (res.ok) {
         try {
@@ -178,17 +187,28 @@ export default function NewsletterPopup() {
             </p>
 
             <form
-              className="newsletter-popup-form"
+              className="newsletter-popup-form newsletter-popup-form-stacked"
               onSubmit={onSubmit}
               noValidate
             >
+              <input
+                type="text"
+                placeholder="Tu nombre"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                maxLength={40}
+                autoFocus
+                autoComplete="given-name"
+                aria-label="Tu nombre"
+              />
               <input
                 type="email"
                 placeholder="tu@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                autoFocus
+                autoComplete="email"
                 aria-label="Tu correo electrónico"
               />
               <button type="submit" disabled={loading}>

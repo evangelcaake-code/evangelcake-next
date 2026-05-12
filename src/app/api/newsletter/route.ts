@@ -7,7 +7,16 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { sendWelcomeDiscount, generateDiscountCode } from "@/lib/resend";
+import {
+  sendWelcomeDiscount,
+  sendAlreadySubscribed,
+  generateDiscountCode,
+} from "@/lib/resend";
+import {
+  SUBSCRIBER_COOKIE,
+  SUBSCRIBER_COOKIE_OPTS,
+  buildSubscriberCookie,
+} from "@/lib/subscriberCookie";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -15,12 +24,18 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const email = String(body.email || "").toLowerCase().trim();
-    const name = String(body.name || "").trim() || "amig@";
+    const name = String(body.name || "").trim();
     const source = String(body.source || "newsletter");
     const consent = Boolean(body.consent);
 
     if (!EMAIL_REGEX.test(email)) {
       return NextResponse.json({ error: "Email inválido" }, { status: 400 });
+    }
+    if (!name || name.length < 2) {
+      return NextResponse.json(
+        { error: "Hace falta tu nombre (mínimo 2 letras)" },
+        { status: 400 },
+      );
     }
     if (!consent) {
       return NextResponse.json(
@@ -91,24 +106,35 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Enviar email (también para usuarios que repiten — recordatorio del código)
+    // Enviar email: si es nuevo → bienvenida con código. Si ya estaba →
+    // email distinto, divertido, recordándole que ya está suscrito.
     if (code) {
       try {
-        await sendWelcomeDiscount({ to: email, name, code });
+        if (isNew) {
+          await sendWelcomeDiscount({ to: email, name, code });
+        } else {
+          await sendAlreadySubscribed({
+            to: email,
+            name: name || existing?.name || "amig@",
+            code,
+          });
+        }
       } catch (err) {
         console.error("[newsletter] resend send:", err);
         // No fallar la petición por esto — el subscriber ya está guardado.
       }
     }
 
-    return NextResponse.json({
+    const res = NextResponse.json({
       ok: true,
       isNew,
       code,
       message: isNew
         ? "¡Bienvenida! Te hemos enviado tu código de descuento."
-        : "Ya estabas suscrita. Te hemos reenviado tu código.",
+        : "Ya estabas suscrita. Te hemos mandado un email recordatorio.",
     });
+    res.cookies.set(SUBSCRIBER_COOKIE, buildSubscriberCookie(email), SUBSCRIBER_COOKIE_OPTS);
+    return res;
   } catch (err) {
     console.error("[newsletter] error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

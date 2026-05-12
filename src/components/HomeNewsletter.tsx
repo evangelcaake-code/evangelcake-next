@@ -6,6 +6,7 @@ import { saveSubscribedEmail } from "@/lib/subscriberLocal";
 import { track } from "@/lib/track";
 
 export default function HomeNewsletter() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -14,6 +15,10 @@ export default function HomeNewsletter() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    if (name.trim().length < 2) {
+      setError("Pon tu nombre.");
+      return;
+    }
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setError("Email no válido.");
       return;
@@ -23,12 +28,13 @@ export default function HomeNewsletter() {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "home", consent: true }),
+        body: JSON.stringify({ name: name.trim(), email, source: "home", consent: true }),
       });
       if (res.ok) {
         saveSubscribedEmail(email);
         track("newsletter_signup", { email, meta: { source: "home" } });
         setDone(true);
+        setName("");
         setEmail("");
       } else {
         const data = await res.json().catch(() => ({}));
@@ -70,7 +76,21 @@ export default function HomeNewsletter() {
           ¡Hecho! Mira tu correo en unos minutos.
         </p>
       ) : (
-        <form className="newsletter-form" onSubmit={onSubmit} noValidate>
+        <form
+          className="newsletter-form newsletter-form-stacked"
+          onSubmit={onSubmit}
+          noValidate
+        >
+          <input
+            type="text"
+            placeholder="Tu nombre"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={40}
+            autoComplete="given-name"
+            aria-label="Tu nombre"
+          />
           <input
             type="email"
             name="email"
@@ -78,6 +98,7 @@ export default function HomeNewsletter() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="email"
             aria-label="Tu correo electrónico"
           />
           <button type="submit" disabled={loading}>

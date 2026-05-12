@@ -931,13 +931,16 @@ export default function Game({ embed = false }: GameProps = {}) {
               </button>
               {regError && <p className="game-error">{regError}</p>}
             </form>
-            <button
-              type="button"
-              className="game-cta-mini"
-              onClick={() => startGame(null)}
+            <p
+              style={{
+                fontSize: 11,
+                color: "var(--ink-2)",
+                margin: "10px 0 0",
+                opacity: 0.7,
+              }}
             >
-              No, gracias. Volver a jugar sin guardar →
-            </button>
+              Sin registrar perderás tu puntuación.
+            </p>
           </div>
         </section>
       )}
