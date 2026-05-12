@@ -4884,3 +4884,205 @@ footer ul a:hover{color:var(--pink)}
 }
 .admin-mark-used:hover{background:var(--pink-deep);color:#fff}
 .admin-mark-used:disabled{opacity:.6;cursor:wait}
+
+/* ==========================================================================
+   CATÁLOGO (/encargos) + detalle de producto (/encargos/[slug])
+   ========================================================================== */
+
+/* Grid del catálogo */
+.catalog-section{padding:0 5vw 80px}
+.catalog-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+  max-width:1180px;
+  margin:0 auto;
+}
+.catalog-grid-small{grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:16px}
+
+.catalog-card{
+  display:flex;flex-direction:column;
+  background:#fff;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:var(--r-card);
+  overflow:hidden;
+  text-decoration:none;color:inherit;
+  box-shadow:0 4px 12px rgba(0,0,0,.04);
+  transition:transform .25s, box-shadow .25s;
+}
+.catalog-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 28px rgba(232,90,154,.15);
+}
+
+.catalog-card-img{
+  position:relative;
+  aspect-ratio:1/1;
+  background:var(--paper-2);
+  overflow:hidden;
+}
+.catalog-card-img img{
+  transition:transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.catalog-card:hover .catalog-card-img img{
+  transform:scale(1.05);
+}
+.catalog-card-pink{background:linear-gradient(160deg, var(--pink-soft), var(--pink))}
+.catalog-card-gold{background:linear-gradient(160deg, var(--cream-warm), var(--gold))}
+.catalog-card-blue{background:linear-gradient(160deg, var(--baby-blue, #cfe6ea), var(--paper-2))}
+.catalog-card-rose{background:linear-gradient(160deg, var(--pink-soft), var(--pink-deep))}
+
+.catalog-badge{
+  position:absolute;top:14px;left:14px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  color:var(--pink-deep);
+  font-size:10px;letter-spacing:.10em;text-transform:uppercase;font-weight:600;
+  padding:6px 12px;border-radius:var(--r-pill);
+  box-shadow:0 2px 8px rgba(0,0,0,.10);
+}
+
+.catalog-card-body{
+  padding:22px 22px 24px;
+  display:flex;flex-direction:column;gap:8px;
+  flex:1;
+}
+.catalog-card-body h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:24px;line-height:1.15;margin:0;color:var(--ink);
+}
+.catalog-card-body p{
+  font-size:14px;line-height:1.5;color:var(--ink-2);
+  margin:0;
+  flex:1;
+}
+.catalog-card-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:8px;padding-top:12px;
+  border-top:1px dashed rgba(0,0,0,.10);
+}
+.catalog-price{
+  font-family:var(--serif);font-weight:400;font-size:18px;
+  color:var(--pink-deep);
+}
+.catalog-cta{
+  font-size:13px;font-weight:600;color:var(--ink);
+  transition:color .2s;
+}
+.catalog-card:hover .catalog-cta{color:var(--pink-deep)}
+
+.catalog-grid-small .catalog-card-body h2{font-size:18px}
+.catalog-grid-small .catalog-card-body p{font-size:13px}
+.catalog-grid-small .catalog-price{font-size:15px}
+
+.catalog-extra{
+  max-width:680px;margin:48px auto 0;
+  text-align:center;
+  padding:24px;
+  background:var(--paper-2);
+  border-radius:var(--r-card);
+}
+.catalog-extra p{
+  font-size:15px;color:var(--ink-2);margin:0;line-height:1.6;
+}
+.catalog-extra a{color:var(--pink-deep);text-decoration:underline;font-weight:500}
+.catalog-extra a:hover{color:var(--ink)}
+
+/* ===== Detalle de producto ===== */
+.product-detail{
+  max-width:1200px;margin:0 auto;
+  padding:72px 5vw 72px;
+}
+.product-hero{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;
+  align-items:start;margin-top:24px;
+}
+.product-hero-img{
+  position:relative;
+  aspect-ratio:1/1.05;
+  border-radius:var(--r-big);
+  overflow:hidden;
+  background:var(--paper-2);
+  box-shadow:0 18px 40px rgba(0,0,0,.10);
+}
+.product-hero-text{
+  display:flex;flex-direction:column;gap:18px;
+  padding-top:8px;
+}
+.product-hero-text h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(40px, 5vw, 64px);
+  line-height:1.05;margin:0;
+}
+.product-short{
+  font-family:var(--serif-2,var(--serif));font-style:italic;
+  font-size:20px;color:var(--ink-2);margin:0;line-height:1.45;
+}
+.product-price-box{
+  display:flex;flex-direction:column;gap:4px;
+  padding:18px 22px;
+  background:linear-gradient(135deg, var(--pink-soft), var(--cream-warm));
+  border:2px dashed var(--pink-deep);
+  border-radius:var(--r-card);
+}
+.product-price-num{
+  font-family:var(--serif);font-weight:400;
+  font-size:34px;color:var(--pink-deep);line-height:1;
+}
+.product-price-label{
+  font-size:12px;letter-spacing:.06em;
+  color:var(--ink-2);text-transform:uppercase;
+}
+.product-long{
+  font-size:16px;line-height:1.65;color:var(--ink-2);
+  margin:0;
+}
+.product-highlights{
+  list-style:none;padding:0;margin:0;
+  display:flex;flex-direction:column;gap:10px;
+}
+.product-highlights li{
+  position:relative;
+  padding-left:28px;
+  font-size:14px;line-height:1.5;color:var(--ink);
+}
+.product-highlights li::before{
+  content:"✓";
+  position:absolute;left:0;top:1px;
+  width:20px;height:20px;
+  background:var(--pink-deep);color:#fff;
+  border-radius:50%;
+  display:grid;place-items:center;
+  font-size:11px;font-weight:700;
+}
+.product-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#25d366 !important;
+  border-color:#25d366 !important;
+  color:#fff !important;
+  padding:14px 26px;font-size:15px;
+  align-self:flex-start;
+}
+.product-cta:hover{background:#1ebe57 !important;transform:translateY(-2px)}
+.product-foot{
+  font-size:13px;color:var(--ink-2);margin:8px 0 0;
+}
+.product-foot a{color:var(--ink);text-decoration:underline}
+.product-foot a:hover{color:var(--pink-deep)}
+
+.product-related{
+  margin-top:80px;
+  padding-top:40px;
+  border-top:1px solid rgba(0,0,0,.08);
+}
+.product-related h3{
+  font-family:var(--serif);font-weight:400;
+  font-size:24px;margin:0 0 24px;text-align:center;
+}
+
+@media (max-width:780px){
+  .product-detail{padding:48px 20px}
+  .product-hero{grid-template-columns:1fr;gap:24px}
+  .product-hero-img{max-width:480px;margin:0 auto;width:100%}
+}
