@@ -5563,7 +5563,9 @@ footer ul a:hover{color:var(--pink)}
     aspect-ratio:1/1.1 !important;
   }
   .hook-pic-photo{aspect-ratio:1/1.1 !important}
-  .hook-pic-photo img{object-position:center 60% !important}
+  /* object-position 78% → en el crop cuadrado de Andreia mostramos menos
+     techo (rótulo EvangelCake) y centramos más en ella + la tarta. */
+  .hook-pic-photo img{object-position:center 78% !important}
 
   /* —— LEDES + PÁRRAFOS —— */
   .lede,p.lede,.hero-left .lede{font-size:14px;line-height:1.5}
@@ -5687,6 +5689,50 @@ footer ul a:hover{color:var(--pink)}
 
   /* —— Botones genéricos: tap target mínimo —— */
   .btn{min-height:40px;display:inline-flex;align-items:center;justify-content:center}
+
+  /* —— GALERÍAS A 3 COLS EN MOBILE —— */
+  /* Home gallery (Trabajos recientes) */
+  .gallery-home{
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:6px 6px !important;
+  }
+  /* Galería /galeria */
+  .gal-grid-3{grid-template-columns:repeat(3,1fr) !important;gap:6px !important}
+  .gal-grid-2{grid-template-columns:repeat(3,1fr) !important;gap:6px !important}
+  .gal-item-wide{grid-column:span 3;min-height:200px}
+
+  /* —— /tartas-personalizadas mobile —— */
+  /* Hero: quitar la mascota, dejar solo el texto a ancho completo */
+  .tp-hero-visual{display:none !important}
+  .tp-hero{grid-template-columns:1fr !important;padding:24px 16px !important}
+  .tp-hero-text{max-width:none}
+  .tp-hero h1{font-size:clamp(30px,8.5vw,46px) !important}
+  .tp-hero .lede{font-size:14px}
+  .tp-hero-ctas{gap:8px;flex-wrap:wrap}
+  .tp-hero-ctas .btn{font-size:13px;padding:10px 16px;width:auto}
+
+  /* "Para tu momento" cards: mucho más delgadas (2 cols, padding mínimo) */
+  .moments-grid{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:8px !important;
+  }
+  .moment{padding:12px 10px !important;border-radius:12px}
+  .moment .ic{width:28px;height:28px;font-size:13px;margin-bottom:6px}
+  .moment h3{font-size:13px;line-height:1.15;margin:0 0 3px}
+  .moment p{font-size:11px;line-height:1.3}
+
+  /* "Sobre los precios" card: en columna pero compacta */
+  .cfg-prices-note{
+    padding:14px 14px !important;
+    gap:8px !important;
+  }
+  .prices-note-icon{
+    width:28px !important;height:28px !important;
+    font-size:14px !important;
+  }
+  .prices-note-content strong{font-size:13px}
+  .prices-note-content p{font-size:12px;line-height:1.4;margin-bottom:4px}
+  .prices-note-handcraft{font-size:11px !important}
 }
 
 @media (max-width:480px){
