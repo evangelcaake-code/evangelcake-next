@@ -1116,8 +1116,10 @@ footer{padding:64px 48px 32px;background:var(--ink);color:var(--paper)}
   padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.10);
   max-width:1440px;margin:0 auto;
 }
-.foot-top img{height:48px;filter:brightness(0) invert(1)}
 .foot-top .brand p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6;margin:14px 0 18px;max-width:32ch}
+.foot-brand-mark{display:flex !important;flex-direction:column;gap:4px;margin:0 0 14px !important;line-height:1;max-width:none !important}
+.foot-brand-name{font-family:var(--script);font-size:46px;color:var(--gold);line-height:1;letter-spacing:.01em}
+.foot-brand-tag{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
 footer h5{
   font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--gold);margin:0 0 14px;font-weight:500;

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import FooterNewsletter from "./FooterNewsletter";
 
 export default function Footer() {
@@ -7,12 +6,10 @@ export default function Footer() {
     <footer role="contentinfo">
       <div className="foot-top">
         <div className="brand">
-          <Image
-            src="/images/logo.png"
-            alt="EvangelCake"
-            width={80}
-            height={80}
-          />
+          <p className="foot-brand-mark" aria-label="EvangelCake">
+            <span className="foot-brand-name">EvangelCake</span>
+            <span className="foot-brand-tag">Pastelería artesanal</span>
+          </p>
           <p>
             Pastelería artesanal en Zaragoza. Tartas hechas a mano, con alma
             brasileña, para los días que importan.
