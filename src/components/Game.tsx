@@ -677,17 +677,16 @@ export default function Game({ embed = false }: GameProps = {}) {
 
   const timeWarn = timeLeft <= 5;
 
-  // Helper para el botón "Jugar" desde la preview en modo embed: si ya hay
-  // jugador conocido, arranca directamente; si no, abre el banner de registro.
+  // "Jugar primero, registrar después": arranca la partida siempre.
+  // Si el visitante ya está identificado (localStorage → player), se asocia
+  // el score directamente. Si no, juega anónimo y al terminar le pedimos los
+  // datos en la pantalla de resultado (con email pre-rellenado si viene de
+  // una suscripción previa al newsletter).
   function onPlayFromPreview() {
-    if (player) {
-      startGame(player);
-    } else {
-      setScreen("register");
-    }
+    startGame(player);
   }
 
-  const overlayScreens: Screen[] = ["register", "welcome", "result"];
+  const overlayScreens: Screen[] = ["result"];
   const playScreens: Screen[] = ["countdown", "play"];
 
   const content = (
