@@ -151,7 +151,7 @@ p{margin:0 0 12px}
 }
 /* Separar el tag pequeño "Tartas Personalizadas · Zaragoza · Desde 2024"
    del h1 "Tu celebración" para que no parezcan pegados. */
-.hero-left .tag{margin-bottom:24px}
+.hero-left .tag{margin-bottom:56px}
 
 /* ===== HERO DECORATION: anillo cónico rotante + glow + sparkles =====
    Toda la decoración confinada al LADO DERECHO (left:50%) para no tapar
