@@ -7,7 +7,6 @@ import { track } from "@/lib/track";
 export default function FooterNewsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -31,7 +30,6 @@ export default function FooterNewsletter() {
         body: JSON.stringify({
           name: name.trim(),
           email,
-          birthday: birthday || undefined,
           source: "footer",
           consent: true,
         }),
@@ -81,15 +79,6 @@ export default function FooterNewsletter() {
         required
         autoComplete="email"
         aria-label="Tu correo"
-      />
-      <input
-        type="date"
-        value={birthday}
-        onChange={(e) => setBirthday(e.target.value)}
-        max={new Date().toISOString().slice(0, 10)}
-        min="1900-01-01"
-        title="Cumpleaños (opcional) — te mandamos algo el día"
-        aria-label="Tu cumpleaños (opcional)"
       />
       <button type="submit" disabled={loading}>
         {loading ? "…" : "Suscribir →"}
