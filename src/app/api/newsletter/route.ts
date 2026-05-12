@@ -34,12 +34,23 @@ export async function POST(req: NextRequest) {
     // ¿Existe ya?
     const { data: existing } = await sb
       .from("subscribers")
-      .select("id, discount_code")
+      .select("id, name, discount_code")
       .eq("email", email)
       .maybeSingle();
 
     let code = existing?.discount_code;
     let isNew = false;
+
+    // Si existe pero le faltan datos (típico cuando primero se suscribió al
+    // newsletter solo con email, y ahora se registra en el juego con nombre),
+    // actualizamos el row para enriquecerlo y evitar dashboards con celdas
+    // vacías. NO se crea fila nueva.
+    if (existing && body.name && (!existing.name || existing.name === "amig@")) {
+      await sb
+        .from("subscribers")
+        .update({ name, source })
+        .eq("id", existing.id);
+    }
 
     if (!existing) {
       isNew = true;

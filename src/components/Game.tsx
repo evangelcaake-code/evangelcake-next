@@ -9,6 +9,8 @@
  */
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { getSubscribedEmail, saveSubscribedEmail } from "@/lib/subscriberLocal";
+import { track } from "@/lib/track";
 
 // ===== Config =====
 const CONFIG: {
@@ -161,8 +163,13 @@ export default function Game({ embed = false }: GameProps = {}) {
   // Load player from localStorage en silencio (no cambiamos pantalla).
   // Si lo encontramos, el primer click arranca partida directa con su identidad.
   // Si no, el click arranca partida anónima y le pedimos registro al acabar.
+  //
+  // Si el usuario NO tiene player pero SÍ tiene email guardado de cuando se
+  // suscribió a la newsletter (popup/home/footer/blog), precargamos el email
+  // en el form post-partida y marcamos el consent — solo le falta poner nombre.
   useEffect(() => {
     if (typeof window === "undefined") return;
+    let hasPlayer = false;
     try {
       const raw = localStorage.getItem(CONFIG.LS_KEY);
       if (raw) {
@@ -170,9 +177,18 @@ export default function Game({ embed = false }: GameProps = {}) {
         if (p?.email && p?.name) {
           setPlayer(p);
           fetchPosition(p.email);
+          hasPlayer = true;
         }
       }
     } catch {}
+
+    if (!hasPlayer) {
+      const savedEmail = getSubscribedEmail();
+      if (savedEmail) {
+        setRegEmail(savedEmail);
+        setRegConsent(true);
+      }
+    }
   }, []);
 
   async function fetchPosition(email: string) {
@@ -473,6 +489,10 @@ export default function Game({ embed = false }: GameProps = {}) {
   const dulciImageRef = useRef<HTMLImageElement | null>(null);
 
   async function startGame(p: Player | null) {
+    track("game_start", {
+      email: p?.email,
+      meta: { embed, hasPlayer: !!p },
+    });
     setScreen("countdown");
     const s = stateRef.current;
     s.score = 0;
@@ -525,6 +545,10 @@ export default function Game({ embed = false }: GameProps = {}) {
     cancelAnimationFrame(s.rafId);
 
     const finalScore = Math.max(0, s.score);
+    track("game_complete", {
+      email: p?.email,
+      meta: { score: finalScore, anonymous: !p },
+    });
 
     if (!p) {
       // Partida anónima: vamos a la pantalla de resultados con formulario.

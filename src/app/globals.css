@@ -4719,3 +4719,19 @@ footer ul a:hover{color:var(--pink)}
   padding:6px 12px;
 }
 .newsletter-popup-skip:hover{color:var(--pink-deep)}
+
+/* Tags para event_type en analytics */
+.admin-tag-page_view{background:rgba(0,0,0,.06);color:var(--ink-2)}
+.admin-tag-popup_shown{background:rgba(199,154,74,.12);color:var(--gold-deep)}
+.admin-tag-popup_dismissed{background:rgba(0,0,0,.06);color:var(--ink-2)}
+.admin-tag-popup_converted{background:rgba(232,90,154,.18);color:var(--pink-deep);font-weight:700}
+.admin-tag-newsletter_signup{background:rgba(232,90,154,.12);color:var(--pink-deep)}
+.admin-tag-game_start{background:rgba(66,133,244,.10);color:#1a73e8}
+.admin-tag-game_complete{background:rgba(52,168,83,.12);color:#1f8a3a}
+.admin-tag-lead_submit{background:rgba(199,154,74,.15);color:var(--gold-deep);font-weight:700}
+.admin-tag-cta_click{background:rgba(0,0,0,.06);color:var(--ink-2)}
+.admin-tag-configurator_open{background:rgba(244,184,208,.25);color:var(--pink-deep)}
+.admin-tag-cake_modal_open{background:rgba(244,184,208,.25);color:var(--pink-deep)}
+.admin-tag-popup{background:rgba(232,90,154,.18);color:var(--pink-deep)}
+.admin-tag-contacto{background:rgba(66,133,244,.10);color:#1a73e8}
+.admin-tag-encargos{background:rgba(199,154,74,.15);color:var(--gold-deep)}

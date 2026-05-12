@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { saveSubscribedEmail } from "@/lib/subscriberLocal";
+import { track } from "@/lib/track";
 
-const DELAY_MS = 60_000; // 60 segundos
+const DELAY_MS = 15_000; // 15 segundos
 const DISMISS_KEY = "evangelcake_popup_dismissed_at";
 const SUBSCRIBED_KEY = "evangelcake_popup_subscribed";
 const SUPPRESS_DAYS = 7;
+// Marca de cuándo empezó la visita actual (sessionStorage = persiste entre
+// navegaciones dentro de la misma pestaña, se borra al cerrar el navegador).
+// Así el contador acumula tiempo total en el sitio, no por página.
+const VISIT_START_KEY = "evangelcake_visit_started_at";
 
 export default function NewsletterPopup() {
   const [open, setOpen] = useState(false);
@@ -15,6 +21,7 @@ export default function NewsletterPopup() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const trackedShownRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -33,7 +40,31 @@ export default function NewsletterPopup() {
       }
     } catch {}
 
-    const t = setTimeout(() => setOpen(true), DELAY_MS);
+    // Marca de tiempo de inicio de la visita.
+    // sessionStorage persiste entre navegaciones dentro de la misma pestaña,
+    // así el contador acumula tiempo TOTAL en el sitio (no por página).
+    let visitStart: number;
+    try {
+      const stored = sessionStorage.getItem(VISIT_START_KEY);
+      if (stored) {
+        visitStart = Number(stored);
+      } else {
+        visitStart = Date.now();
+        sessionStorage.setItem(VISIT_START_KEY, String(visitStart));
+      }
+    } catch {
+      visitStart = Date.now();
+    }
+
+    const elapsed = Date.now() - visitStart;
+    const remaining = Math.max(0, DELAY_MS - elapsed);
+    const t = setTimeout(() => {
+      setOpen(true);
+      if (!trackedShownRef.current) {
+        trackedShownRef.current = true;
+        track("popup_shown");
+      }
+    }, remaining);
     return () => clearTimeout(t);
   }, []);
 
@@ -55,6 +86,7 @@ export default function NewsletterPopup() {
     try {
       localStorage.setItem(DISMISS_KEY, String(Date.now()));
     } catch {}
+    track("popup_dismissed");
     setClosing(true);
     setTimeout(() => {
       setOpen(false);
@@ -80,6 +112,9 @@ export default function NewsletterPopup() {
         try {
           localStorage.setItem(SUBSCRIBED_KEY, "yes");
         } catch {}
+        saveSubscribedEmail(email);
+        track("popup_converted", { email });
+        track("newsletter_signup", { email, meta: { source: "popup" } });
         setDone(true);
       } else {
         const data = await res.json().catch(() => ({}));

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { saveSubscribedEmail } from "@/lib/subscriberLocal";
+import { track } from "@/lib/track";
 
 export default function FooterNewsletter() {
   const [email, setEmail] = useState("");
@@ -17,7 +19,11 @@ export default function FooterNewsletter() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, source: "footer", consent: true }),
       });
-      if (res.ok) setDone(true);
+      if (res.ok) {
+        saveSubscribedEmail(email);
+        track("newsletter_signup", { email, meta: { source: "footer" } });
+        setDone(true);
+      }
     } finally {
       setLoading(false);
     }

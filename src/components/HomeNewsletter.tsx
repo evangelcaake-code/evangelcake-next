@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { saveSubscribedEmail } from "@/lib/subscriberLocal";
+import { track } from "@/lib/track";
 
 export default function HomeNewsletter() {
   const [email, setEmail] = useState("");
@@ -24,6 +26,8 @@ export default function HomeNewsletter() {
         body: JSON.stringify({ email, source: "home", consent: true }),
       });
       if (res.ok) {
+        saveSubscribedEmail(email);
+        track("newsletter_signup", { email, meta: { source: "home" } });
         setDone(true);
         setEmail("");
       } else {

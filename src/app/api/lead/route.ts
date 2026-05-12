@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
       event_date: body.event_date || null,
       guests: body.guests ? Number(body.guests) : null,
       message: body.message ? String(body.message).trim().slice(0, 2000) : null,
+      source: body.source ? String(body.source).trim() : null,
     };
 
     const sb = getSupabaseAdmin();

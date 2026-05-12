@@ -52,12 +52,33 @@ CREATE TABLE IF NOT EXISTS leads (
   event_date   date,
   guests       integer,
   message      text,
+  source       text,                              -- 'contacto' | 'encargos' | (otro form)
   status       text DEFAULT 'new',                -- 'new' | 'contacted' | 'won' | 'lost'
   created_at   timestamptz DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status);
+CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source);
 CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at DESC);
+
+-- =====================================================
+-- TABLA: events (analytics — page views, clicks, conversiones)
+-- =====================================================
+CREATE TABLE IF NOT EXISTS events (
+  id            uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  event_type    text NOT NULL,        -- 'page_view', 'popup_shown', 'popup_dismissed', 'popup_converted', 'newsletter_signup', 'game_start', 'game_complete', 'lead_submit'
+  page          text,                 -- ruta donde ocurrió
+  email         text,                 -- si se puede asociar a un usuario conocido
+  visitor_id    text,                 -- identificador anónimo por navegador
+  meta          jsonb,                -- payload opcional (score, source, etc.)
+  user_agent    text,
+  referer       text,
+  created_at    timestamptz DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_events_type_date ON events(event_type, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_events_page ON events(page);
+CREATE INDEX IF NOT EXISTS idx_events_visitor ON events(visitor_id);
 
 -- =====================================================
 -- TABLA: discount_codes (códigos generados)
@@ -81,6 +102,7 @@ ALTER TABLE subscribers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scores      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE leads       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE discount_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE events      ENABLE ROW LEVEL SECURITY;
 
 -- Cliente público (anon): solo puede LEER ranking del mes
 CREATE POLICY "public can read scores" ON scores

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { saveSubscribedEmail } from "@/lib/subscriberLocal";
+import { track } from "@/lib/track";
 
 interface Props {
   source?: string;
@@ -43,6 +45,8 @@ export default function NewsletterForm({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
+      saveSubscribedEmail(email);
+      track("newsletter_signup", { email, meta: { source } });
       setSuccess(true);
     } catch (err: unknown) {
       const message =

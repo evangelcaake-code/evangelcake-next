@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/track";
 
 const EVENT_TYPES = ["Cumpleaños", "Boda", "Bautizo", "Empresa", "Otro"];
 const FLAVORS = [
@@ -55,10 +56,12 @@ export default function EncargoForm() {
           event_date: date || undefined,
           guests: people ? Number(people) : undefined,
           message: lines.join("\n") || undefined,
+          source: "encargos",
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
+      track("lead_submit", { meta: { source: "encargos", phone, event_type: event } });
       setSuccess(true);
     } catch (err: unknown) {
       const m =

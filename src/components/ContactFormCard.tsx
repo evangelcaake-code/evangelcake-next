@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/track";
 
 export default function ContactFormCard() {
   const [name, setName] = useState("");
@@ -30,10 +31,11 @@ export default function ContactFormCard() {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message: body }),
+        body: JSON.stringify({ name, email, message: body, source: "contacto" }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
+      track("lead_submit", { email, meta: { source: "contacto" } });
       setSuccess(true);
     } catch (err: unknown) {
       const m =
