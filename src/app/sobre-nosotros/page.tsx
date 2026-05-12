@@ -77,7 +77,13 @@ export default function SobreNosotrosPage() {
             alt="Andreia Evangelista, fundadora de EvangelCake, en la puerta de la pastelería en Zaragoza"
             width={720}
             height={900}
-            style={{ width: "100%", height: "auto" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              // 70% → muestra menos techo/arco de globos y centra más en Andreia
+              objectPosition: "center 70%",
+            }}
           />
           <div className="lab">
             <div className="av">A</div>

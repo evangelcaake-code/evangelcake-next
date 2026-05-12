@@ -147,77 +147,91 @@ p{margin:0 0 12px}
   position:relative;overflow:hidden;
 }
 
-/* ===== HERO DECORATION: blobs + emojis flotantes ===== */
+/* ===== HERO DECORATION: anillo cónico rotante + glow + sparkles =====
+   Toda la decoración confinada al LADO DERECHO (left:50%) para no tapar
+   el texto. Elegante y minimalista. */
 .hero-decor{
-  position:absolute;inset:0;z-index:0;
+  position:absolute;inset:0 0 0 50%;z-index:0;
   pointer-events:none;overflow:hidden;
 }
 .hero-left,.hero-pic{position:relative;z-index:1}
-.hero-decor-blob{
-  position:absolute;border-radius:50%;filter:blur(40px);
-  opacity:.55;mix-blend-mode:multiply;
-  animation:heroBlobDrift 16s ease-in-out infinite;
+
+/* Anillo conic-gradient rotante grande detrás de la mascota */
+.hero-decor-ring{
+  position:absolute;
+  top:50%;left:50%;
+  width:min(78%, 620px);aspect-ratio:1/1;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:conic-gradient(
+    from 0deg,
+    rgba(232,90,154,.0) 0deg,
+    rgba(232,90,154,.18) 40deg,
+    rgba(244,184,208,.32) 90deg,
+    rgba(199,154,74,.20) 150deg,
+    rgba(207,230,234,.30) 220deg,
+    rgba(232,90,154,.10) 290deg,
+    rgba(232,90,154,.0) 360deg
+  );
+  filter:blur(28px);
+  animation:heroRingRotate 28s linear infinite;
 }
-.hero-decor-blob-1{
-  width:340px;height:340px;
-  background:var(--pink-soft);
-  top:-80px;left:-60px;
-  animation-delay:0s;
-}
-.hero-decor-blob-2{
-  width:280px;height:280px;
-  background:var(--baby-blue,#cfe6ea);
-  bottom:-60px;right:8%;
-  animation-delay:-5s;animation-duration:22s;
-}
-.hero-decor-blob-3{
-  width:200px;height:200px;
-  background:var(--cream-warm,#fce4ee);
-  top:40%;right:-40px;
-  animation-delay:-10s;animation-duration:18s;
-}
-@keyframes heroBlobDrift{
-  0%,100%{transform:translate(0,0) scale(1)}
-  33%{transform:translate(30px,-20px) scale(1.08)}
-  66%{transform:translate(-20px,30px) scale(.94)}
+@keyframes heroRingRotate{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
-.hero-decor-emoji{
+/* Glow central — pulsa suavemente */
+.hero-decor-glow{
   position:absolute;
-  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
-  user-select:none;pointer-events:none;
-  opacity:.82;
-  filter:drop-shadow(0 6px 14px rgba(232,90,154,.18));
-  animation:heroEmojiFloat 9s ease-in-out infinite;
+  top:50%;left:50%;
+  width:min(46%, 360px);aspect-ratio:1/1;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.55) 0%, rgba(252,228,238,.30) 45%, transparent 70%);
+  filter:blur(8px);
+  animation:heroGlowPulse 5s ease-in-out infinite;
 }
-.hero-decor-e1{top:8%;left:8%;font-size:38px;animation-delay:0s;animation-duration:11s}
-.hero-decor-e2{top:18%;left:42%;font-size:26px;animation-delay:-2s;animation-duration:8s}
-.hero-decor-e3{top:72%;left:18%;font-size:32px;animation-delay:-4s;animation-duration:12s}
-.hero-decor-e4{top:32%;right:14%;font-size:22px;animation-delay:-1s;animation-duration:10s}
-.hero-decor-e5{top:55%;left:48%;font-size:18px;animation-delay:-3s;animation-duration:7s;opacity:.65}
-.hero-decor-e6{top:62%;right:22%;font-size:24px;animation-delay:-6s;animation-duration:9s}
-.hero-decor-e7{top:14%;right:5%;font-size:28px;animation-delay:-5s;animation-duration:13s}
-.hero-decor-e8{top:80%;right:38%;font-size:16px;color:var(--pink-deep);animation-delay:-2.5s;animation-duration:8s;opacity:.5}
-@keyframes heroEmojiFloat{
-  0%,100%{transform:translateY(0) rotate(-4deg)}
-  50%{transform:translateY(-18px) rotate(4deg)}
+@keyframes heroGlowPulse{
+  0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+}
+
+/* Sparkles minimalistas (puntos brillantes que aparecen y desaparecen) */
+.hero-decor-spark{
+  position:absolute;
+  width:6px;height:6px;border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 12px 2px rgba(232,90,154,.7), 0 0 24px 4px rgba(255,255,255,.45);
+  opacity:0;
+  animation:heroSpark 4s ease-in-out infinite;
+}
+.hero-decor-spark.s1{top:18%;left:22%;animation-delay:0s}
+.hero-decor-spark.s2{top:30%;left:78%;width:4px;height:4px;animation-delay:1.2s}
+.hero-decor-spark.s3{top:62%;left:14%;animation-delay:2.4s}
+.hero-decor-spark.s4{top:74%;left:68%;width:5px;height:5px;animation-delay:3.6s}
+.hero-decor-spark.s5{top:46%;left:88%;width:4px;height:4px;animation-delay:0.6s}
+@keyframes heroSpark{
+  0%,100%{opacity:0;transform:scale(.6)}
+  40%{opacity:1;transform:scale(1)}
+  60%{opacity:1;transform:scale(1.2)}
 }
 
 /* Reduced motion: parar animaciones */
 @media (prefers-reduced-motion:reduce){
-  .hero-decor-blob,.hero-decor-emoji{animation:none}
+  .hero-decor-ring,.hero-decor-glow,.hero-decor-spark{animation:none}
 }
 
-@media (max-width:767px){
-  /* En móvil dejamos solo 2 blobs y menos emojis para no saturar */
-  .hero-decor-blob-3{display:none}
-  .hero-decor-blob-1{width:240px;height:240px}
-  .hero-decor-blob-2{width:200px;height:200px}
-  .hero-decor-e2,.hero-decor-e4,.hero-decor-e5,.hero-decor-e8{display:none}
-  .hero-decor-e1{font-size:28px}
-  .hero-decor-e3{font-size:22px}
-  .hero-decor-e6{font-size:20px}
-  .hero-decor-e7{font-size:22px}
+@media (max-width:899px){
+  /* Al colapsar a 1 col, la mascota se va arriba. La decor pasa a ser
+     centrada superior, no a la derecha. */
+  .hero-decor{inset:0;}
+  .hero-decor-ring{width:min(80%, 420px);top:30%}
+  .hero-decor-glow{top:30%;width:min(50%, 240px)}
+  .hero-decor-spark{display:none}
+  .hero-decor-spark.s2,.hero-decor-spark.s5{display:block;top:25%}
+  .hero-decor-spark.s2{left:18%}
+  .hero-decor-spark.s5{left:80%}
 }
 .hero-left h1{
   font-size:clamp(56px,8vw,104px);line-height:.98;letter-spacing:-.025em;
