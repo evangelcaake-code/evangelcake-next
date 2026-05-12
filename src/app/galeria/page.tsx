@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import GalGridClient from "@/components/GalGridClient";
 
 export const metadata: Metadata = {
   title: "Galería de Tartas · EvangelCake Zaragoza",
@@ -135,27 +136,10 @@ const especiales: Photo[] = [
   { src: "/images/gallery/navidad-grinch.jpg", alt: "Tarta El Grinch verde con gorro de Papá Noel", caption: "Navidad · Grinch" },
 ];
 
+// El grid con lightbox vive en GalGridClient (client component). Aquí solo
+// re-exportamos el wrapper con el mismo nombre para no tocar el resto del JSX.
 function GalGrid({ photos }: { photos: Photo[] }) {
-  return (
-    <div className="gal-grid gal-grid-3">
-      {photos.map((p) => (
-        <figure
-          key={p.src}
-          className={`gal-item${p.wide ? " gal-item-wide" : ""}`}
-        >
-          <Image
-            src={p.src}
-            alt={p.alt}
-            width={800}
-            height={1000}
-            loading="lazy"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-          <figcaption>{p.caption}</figcaption>
-        </figure>
-      ))}
-    </div>
-  );
+  return <GalGridClient photos={photos} />;
 }
 
 export default function GaleriaPage() {

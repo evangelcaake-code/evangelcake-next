@@ -3415,7 +3415,11 @@ footer ul a:hover{color:var(--pink)}
   transition:transform .6s var(--ease);
 }
 .gal-item:hover img{transform:scale(1.06)}
-.gal-item figcaption{
+/* Captions estilo "etiqueta" sobre thumbnails: ocultas (tapaban la imagen).
+   El caption real aparece al abrir el lightbox debajo de la foto ampliada.
+   No afecta a .gal-item-feature (figcaption de Andreia en gal-obrador) que
+   usa otro estilo. */
+.gal-item:not(.gal-item-feature) figcaption{
   position:absolute;left:14px;bottom:14px;z-index:2;
   background:rgba(255,255,255,.94);
   backdrop-filter:blur(6px);
@@ -3430,6 +3434,63 @@ footer ul a:hover{color:var(--pink)}
   grid-column:span 2;
   aspect-ratio:auto;
   min-height:280px;
+}
+
+/* Cuando el item es un <button> (versión clicable con lightbox) — reset */
+.gal-item-button{
+  border:none;padding:0;background:var(--paper-2);
+  cursor:pointer;font:inherit;color:inherit;
+  display:block;
+}
+
+/* === LIGHTBOX para galería ampliada === */
+.gal-lightbox{
+  position:fixed;inset:0;z-index:1500;
+  background:rgba(15,12,11,.92);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  animation:galleryModalFade .25s ease;
+}
+.gal-lightbox-figure{
+  position:relative;
+  margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;
+  max-width:100%;
+}
+.gal-lightbox-caption{
+  color:rgba(255,255,255,.92);
+  font-size:14px;letter-spacing:.04em;text-align:center;
+  background:rgba(255,255,255,.10);
+  padding:8px 18px;border-radius:999px;
+  max-width:90vw;
+}
+.gal-lightbox-close{
+  position:fixed;top:18px;right:18px;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.12);color:#fff;border:none;
+  font-size:20px;cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s,transform .2s;
+}
+.gal-lightbox-close:hover{background:rgba(255,255,255,.22);transform:rotate(90deg)}
+.gal-lightbox-nav{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:50px;height:60px;border-radius:12px;
+  background:rgba(255,255,255,.10);color:#fff;border:none;
+  font-size:34px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s;
+}
+.gal-lightbox-nav:hover{background:rgba(255,255,255,.22)}
+.gal-lightbox-prev{left:18px}
+.gal-lightbox-next{right:18px}
+@media (max-width:600px){
+  .gal-lightbox{padding:12px}
+  .gal-lightbox-close{top:10px;right:10px;width:36px;height:36px;font-size:17px}
+  .gal-lightbox-nav{width:38px;height:48px;font-size:26px}
+  .gal-lightbox-prev{left:6px}
+  .gal-lightbox-next{right:6px}
+  .gal-lightbox-caption{font-size:12px;padding:6px 14px}
 }
 
 /* === OBRADOR (foto destacada Andreia) === */
