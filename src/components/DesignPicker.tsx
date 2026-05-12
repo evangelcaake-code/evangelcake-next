@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ALL_GALLERY_PHOTOS, CATEGORY_LABELS, type GalleryPhoto } from "@/data/gallery-photos";
 
@@ -71,9 +71,11 @@ export default function DesignPicker({ value, onChange }: Props) {
         {tab === "gallery" && (
           <GalleryTab
             selectedUrl={value?.kind === "gallery" ? value.url : null}
+            selectedCaption={value?.kind === "gallery" ? value.caption : null}
             onPick={(photo) =>
               onChange({ kind: "gallery", url: photo.src, caption: photo.caption })
             }
+            onClear={() => onChange(null)}
           />
         )}
         {tab === "upload" && (
@@ -100,52 +102,188 @@ export default function DesignPicker({ value, onChange }: Props) {
 // ===== Tab: Galería =====
 function GalleryTab({
   selectedUrl,
+  selectedCaption,
+  onPick,
+  onClear,
+}: {
+  selectedUrl: string | null;
+  selectedCaption: string | null;
+  onPick: (p: GalleryPhoto) => void;
+  onClear: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      {selectedUrl ? (
+        <div className="design-picker-selected-preview">
+          <p className="design-picker-hint" style={{ marginBottom: 10 }}>
+            Foto seleccionada:
+          </p>
+          <div className="design-picker-selected-img-wrap">
+            <Image
+              src={selectedUrl}
+              alt={selectedCaption || "Foto seleccionada"}
+              width={400}
+              height={400}
+              loading="eager"
+              style={{
+                width: "100%",
+                maxWidth: 220,
+                height: "auto",
+                borderRadius: 12,
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
+          </div>
+          {selectedCaption && (
+            <p style={{ textAlign: "center", marginTop: 8, fontSize: 13, color: "var(--ink-2)" }}>
+              {selectedCaption}
+            </p>
+          )}
+          <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 12, flexWrap: "wrap" }}>
+            <button
+              type="button"
+              className="btn btn-pink"
+              style={{ padding: "8px 18px", fontSize: 13 }}
+              onClick={() => setOpen(true)}
+            >
+              Cambiar foto
+            </button>
+            <button
+              type="button"
+              className="btn"
+              style={{ background: "rgba(0,0,0,.06)", padding: "8px 18px", fontSize: 13 }}
+              onClick={onClear}
+            >
+              Quitar
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="design-picker-empty">
+          <p className="design-picker-hint" style={{ marginBottom: 14 }}>
+            Abre la galería completa, busca el diseño que más te guste y pulsa
+            sobre la foto.
+          </p>
+          <button
+            type="button"
+            className="btn btn-pink"
+            style={{ padding: "12px 24px", fontSize: 14 }}
+            onClick={() => setOpen(true)}
+          >
+            🎨 Abrir galería completa →
+          </button>
+        </div>
+      )}
+
+      {open && (
+        <GalleryModal
+          selectedUrl={selectedUrl}
+          onClose={() => setOpen(false)}
+          onPick={(p) => {
+            onPick(p);
+            setOpen(false);
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+// ===== Modal fullscreen de galería =====
+function GalleryModal({
+  selectedUrl,
+  onClose,
   onPick,
 }: {
   selectedUrl: string | null;
+  onClose: () => void;
   onPick: (p: GalleryPhoto) => void;
 }) {
+  // Cerrar con Esc + bloquear scroll del body mientras está abierto
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
   return (
-    <div>
-      <p className="design-picker-hint">
-        Pulsa una foto para usarla como referencia. Se enviará junto a tu pedido.
-      </p>
-      {CATEGORY_ORDER.map((cat) => {
-        const photos = ALL_GALLERY_PHOTOS.filter((p) => p.category === cat);
-        if (photos.length === 0) return null;
-        return (
-          <div key={cat} className="design-picker-cat">
-            <h4>{CATEGORY_LABELS[cat]}</h4>
-            <div className="design-picker-grid">
-              {photos.map((p) => {
-                const selected = selectedUrl === p.src;
-                return (
-                  <button
-                    key={p.src}
-                    type="button"
-                    className={`design-picker-thumb${selected ? " is-selected" : ""}`}
-                    onClick={() => onPick(p)}
-                    aria-label={`Seleccionar ${p.caption}`}
-                    aria-pressed={selected}
-                  >
-                    <Image
-                      src={p.src}
-                      alt={p.alt}
-                      width={200}
-                      height={200}
-                      loading="lazy"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                    {selected && (
-                      <span className="design-picker-check" aria-hidden="true">✓</span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+    <div
+      className="gallery-modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Galería de tartas"
+      onClick={onClose}
+    >
+      <div
+        className="gallery-modal-panel"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <header className="gallery-modal-head">
+          <div>
+            <h2 className="gallery-modal-title">Elige una tarta de referencia</h2>
+            <p className="gallery-modal-sub">
+              Pulsa sobre cualquier foto para usarla en tu pedido.
+            </p>
           </div>
-        );
-      })}
+          <button
+            type="button"
+            className="gallery-modal-close"
+            onClick={onClose}
+            aria-label="Cerrar"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div className="gallery-modal-body">
+          {CATEGORY_ORDER.map((cat) => {
+            const photos = ALL_GALLERY_PHOTOS.filter((p) => p.category === cat);
+            if (photos.length === 0) return null;
+            return (
+              <section key={cat} className="gallery-modal-cat">
+                <h3 className="gallery-modal-cat-title">{CATEGORY_LABELS[cat]}</h3>
+                <div className="gallery-modal-grid">
+                  {photos.map((p) => {
+                    const isSelected = selectedUrl === p.src;
+                    return (
+                      <button
+                        key={p.src}
+                        type="button"
+                        className={`gallery-modal-thumb${isSelected ? " is-selected" : ""}`}
+                        onClick={() => onPick(p)}
+                        aria-label={`Seleccionar ${p.caption}`}
+                      >
+                        <Image
+                          src={p.src}
+                          alt={p.alt}
+                          width={400}
+                          height={400}
+                          loading="lazy"
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                        <div className="gallery-modal-thumb-caption">{p.caption}</div>
+                        {isSelected && (
+                          <span className="gallery-modal-thumb-check" aria-hidden="true">✓</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

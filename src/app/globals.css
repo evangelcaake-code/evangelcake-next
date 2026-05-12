@@ -4706,6 +4706,115 @@ footer ul a:hover{color:var(--pink)}
   box-shadow:0 0 0 3px rgba(232,90,154,.18);
 }
 
+/* Selector galería: preview de foto elegida + estado vacío con CTA */
+.design-picker-empty{
+  text-align:center;padding:14px 8px 6px;
+}
+.design-picker-selected-preview{
+  text-align:center;padding:6px 0;
+}
+.design-picker-selected-img-wrap{
+  background:var(--paper-2);padding:10px;border-radius:14px;
+}
+
+/* ==========================================================================
+   Galería fullscreen modal — se abre desde DesignPicker
+   ========================================================================== */
+.gallery-modal-backdrop{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(15,12,11,.78);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:24px;overflow-y:auto;
+  animation:galleryModalFade .2s ease;
+}
+@keyframes galleryModalFade{from{opacity:0}to{opacity:1}}
+.gallery-modal-panel{
+  background:#fff;border-radius:18px;
+  width:100%;max-width:1100px;
+  margin:auto;
+  display:flex;flex-direction:column;
+  max-height:calc(100vh - 48px);
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+  animation:galleryModalSlide .25s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes galleryModalSlide{
+  from{opacity:0;transform:translateY(20px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.gallery-modal-head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:24px 28px;gap:16px;
+  border-bottom:1px solid rgba(0,0,0,.08);
+  background:#fff;flex-shrink:0;
+}
+.gallery-modal-title{
+  font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.1;
+  margin:0;color:var(--ink);
+}
+.gallery-modal-sub{
+  margin:6px 0 0;font-size:13px;color:var(--ink-2);
+}
+.gallery-modal-close{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(0,0,0,.06);border:none;color:var(--ink);
+  font-size:18px;cursor:pointer;
+  display:grid;place-items:center;flex-shrink:0;
+  transition:background .2s,transform .2s;
+}
+.gallery-modal-close:hover{background:var(--ink);color:#fff;transform:rotate(90deg)}
+.gallery-modal-body{
+  overflow-y:auto;padding:24px 28px 32px;
+  -webkit-overflow-scrolling:touch;
+}
+.gallery-modal-cat{margin-bottom:28px}
+.gallery-modal-cat:last-child{margin-bottom:0}
+.gallery-modal-cat-title{
+  font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--pink-deep);
+  margin:0 0 10px;
+}
+.gallery-modal-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+}
+@media (max-width:899px){.gallery-modal-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.gallery-modal-grid{grid-template-columns:repeat(2,1fr)}}
+.gallery-modal-thumb{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:12px;overflow:hidden;
+  background:var(--paper-2);border:3px solid transparent;
+  padding:0;cursor:pointer;
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+}
+.gallery-modal-thumb:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.gallery-modal-thumb.is-selected{
+  border-color:var(--pink-deep);
+  box-shadow:0 0 0 4px rgba(232,90,154,.18);
+}
+.gallery-modal-thumb-caption{
+  position:absolute;bottom:8px;left:8px;right:8px;
+  background:rgba(255,255,255,.94);
+  font-size:11px;font-weight:600;color:var(--ink);
+  padding:5px 10px;border-radius:999px;
+  text-align:center;
+  opacity:0;transform:translateY(4px);
+  transition:opacity .2s,transform .2s;
+}
+.gallery-modal-thumb:hover .gallery-modal-thumb-caption,
+.gallery-modal-thumb.is-selected .gallery-modal-thumb-caption{
+  opacity:1;transform:translateY(0);
+}
+.gallery-modal-thumb-check{
+  position:absolute;top:8px;right:8px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--pink-deep);color:#fff;
+  display:grid;place-items:center;
+  font-size:15px;font-weight:700;
+  box-shadow:0 4px 10px rgba(232,90,154,.4);
+}
+
 /* Banner promo en home: versión XL del CTA "Gana tu tarta gratis", solo
    visible al entrar a /. Se posiciona justo bajo el header para que sea
    lo primero que la gente vea. */
