@@ -71,46 +71,103 @@ const bakerySchema = {
   },
 };
 
+// Selección representativa de la galería completa — usamos las mismas fotos
+// que en /galeria para mantener coherencia visual entre páginas.
 const galleryHome: Array<{ src: string; alt: string; caption: string }> = [
   {
-    src: "/images/home/andreia-tarta-frambuesa.jpg",
-    alt: "Andreia con tarta de chantilly y frambuesas en EvangelCake Zaragoza",
-    caption: "Andreia · Chantilly",
+    src: "/images/gallery/boda-rosas.jpg",
+    alt: "Tarta de boda con cobertura de chantilly y rosas blancas",
+    caption: "Boda · Chantilly",
   },
   {
-    src: "/images/home/cumple-unicornio.jpg",
-    alt: "Tarta de cumpleaños unicornio-gato con drip rosa y arcoíris",
-    caption: "Cumple · Unicornio",
+    src: "/images/gallery/comunion-zalome.jpg",
+    alt: "Tarta de comunión de dos pisos en tono rosa con figura, IHS y rosario",
+    caption: "Comunión · Zalome",
   },
   {
-    src: "/images/home/proceso-pisos.jpg",
-    alt: "Montaje de pisos de bizcocho con rellenos de chocolate y frutos rojos",
-    caption: "Proceso · Pisos",
+    src: "/images/gallery/corazon-eternidad.jpg",
+    alt: "Tarta corazón blanca con piping vintage Por la Eternidad",
+    caption: "Corazón vintage",
   },
   {
-    src: "/images/home/corazon-pistacho.jpg",
-    alt: "Tarta corazón de chocolate con buttercream de pistacho artesanal",
-    caption: "Corazón · Pistacho",
+    src: "/images/gallery/cumple-telma.jpg",
+    alt: "Tarta de cumpleaños vintage clásica con lazos negros estilo coquette",
+    caption: "Vintage · Coquette",
   },
   {
-    src: "/images/home/primer-cumple-osito.jpg",
-    alt: "Tarta primer cumpleaños azul con osito y estrellas doradas",
+    src: "/images/gallery/cumple-santorini.jpg",
+    alt: "Tarta de cumpleaños inspirada en Santorini con rosas y casa azul",
+    caption: "Temática · Santorini",
+  },
+  {
+    src: "/images/gallery/drip-chocolate-frutas.jpg",
+    alt: "Tarta drip de chocolate con fresas frambuesas y oro comestible",
+    caption: "Drip · Chocolate",
+  },
+  {
+    src: "/images/gallery/cumple-isabel-1ano.jpg",
+    alt: "Tarta primer cumple ISABEL de dos pisos rosa con osito",
     caption: "Primer cumple",
   },
   {
-    src: "/images/home/proceso-masa.jpg",
-    alt: "Manos amasando masa artesanal en el obrador de EvangelCake",
-    caption: "Proceso · Masa",
+    src: "/images/gallery/cumple-oh-shit.jpg",
+    alt: "Tarta divertida con cara y piernas Oh shit Im 26",
+    caption: "Humor · Cumple",
   },
   {
-    src: "/images/home/cumple-dragon-ball.jpg",
-    alt: "Tarta temática Dragon Ball Z con Goku en plateado y naranja",
-    caption: "Dragon Ball",
+    src: "/images/gallery/navidad-grinch.jpg",
+    alt: "Tarta El Grinch verde con gorro de Papá Noel",
+    caption: "Humor · Grinch",
   },
   {
-    src: "/images/home/cookie-caramelo.jpg",
-    alt: "Cookie artesanal partida con relleno de dulce de leche fundente",
-    caption: "Cookie · Caramelo",
+    src: "/images/gallery/flamenca.jpg",
+    alt: "Tarta temática con bailaora flamenca, lunares y guitarra",
+    caption: "Temática · Flamenca",
+  },
+  {
+    src: "/images/gallery/andreia-obrador.jpg",
+    alt: "Andreia trabajando en el obrador de EvangelCake Zaragoza",
+    caption: "Andreia · Obrador",
+  },
+  {
+    src: "/images/gallery/cumple-mariposas-lila.jpg",
+    alt: "Tarta lila con mariposas brillantes y rosetones",
+    caption: "Lila · Mariposas",
+  },
+  {
+    src: "/images/gallery/cumple-sirena.jpg",
+    alt: "Tarta de cumpleaños con cola de sirena, conchas y perlas",
+    caption: "Temática · Sirena",
+  },
+  {
+    src: "/images/gallery/aniversario-50.jpg",
+    alt: "Tarta de aniversario en forma de número 50 con chocolate y plata",
+    caption: "Aniversario · 50",
+  },
+  {
+    src: "/images/gallery/cumple-doctora.jpg",
+    alt: "Tarta temática medicina con figura de doctora estetoscopio y electrocardiograma",
+    caption: "Profesión · Doctora",
+  },
+  {
+    src: "/images/gallery/cumple-rosa-flor.jpg",
+    alt: "Tarta rosa con rosa de tela y topper Feliz Cumpleaños",
+    caption: "Rosa · Flor",
+  },
+  {
+    src: "/images/gallery/cumple-estrella-negra.jpg",
+    alt: "Tarta forma de estrella negra Feliz cumpleaños Alberto",
+    caption: "Estrella · Negra",
+  },
+  {
+    src: "/images/gallery/cumple-frozen.jpg",
+    alt: "Tarta temática Frozen con Elsa y copos de nieve",
+    caption: "Temática · Frozen",
+  },
+  {
+    src: "/images/gallery/drip-rojo-aniversario.jpg",
+    alt: "Tarta drip roja con flor y donuts dorados Te Queremos",
+    caption: "Drip · Rojo",
   },
 ];
 
