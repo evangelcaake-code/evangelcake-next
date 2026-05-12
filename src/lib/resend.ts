@@ -3,6 +3,7 @@
  * Solo se usa en API routes (server-side).
  */
 import { Resend } from "resend";
+import { buildUnsubscribeUrl } from "@/lib/unsubscribeToken";
 
 let _resend: Resend | null = null;
 
@@ -17,6 +18,27 @@ function getResend() {
 }
 
 const FROM = process.env.RESEND_FROM || "EvangelCake <onboarding@resend.dev>";
+const REPLY_TO = "hola@evangelcake.com";
+
+// Headers que mejoran la entregabilidad y cumplen los requisitos de Gmail /
+// Yahoo (2024+) para senders masivos. El one-click unsubscribe lo gestiona
+// /api/unsubscribe vía POST.
+function deliverabilityHeaders(toEmail: string) {
+  const unsubUrl = buildUnsubscribeUrl(toEmail);
+  return {
+    "List-Unsubscribe": `<${unsubUrl}>, <mailto:hola@evangelcake.com?subject=unsubscribe>`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
+}
+
+function unsubFooterHtml(toEmail: string) {
+  const url = buildUnsubscribeUrl(toEmail);
+  return `<p style="margin:12px 0 0;font-size:11px;color:#999">Si no quieres recibir más emails, <a href="${url}" style="color:#999">date de baja con un clic</a>.</p>`;
+}
+
+function unsubFooterText(toEmail: string) {
+  return `\n\n—\nSi no quieres recibir más emails: ${buildUnsubscribeUrl(toEmail)}`;
+}
 
 /**
  * Genera un código de descuento de 4 dígitos numéricos (1000-9999).
@@ -40,13 +62,17 @@ export async function sendWelcomeDiscount({
   name: string;
   code: string;
 }) {
-  const html = welcomeEmailHTML({ name, code });
+  const html = welcomeEmailHTML({ name, code, to });
   const res = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `🎂 Bienvenida a EvangelCake — aquí tu código del 5%`,
+    replyTo: REPLY_TO,
+    headers: deliverabilityHeaders(to),
+    subject: `Bienvenida a EvangelCake — aquí tu código del 5%`,
     html,
-    text: `Hola ${name},\n\nGracias por suscribirte a EvangelCake. Tu código de descuento del 5% para tu primera tarta personalizada es: ${code}\n\nÚsalo al hacer el pedido en WhatsApp o en evangelcake.com.\n\nAndreia & Tiago`,
+    text:
+      `Hola ${name},\n\nGracias por suscribirte a EvangelCake. Tu código de descuento del 5% para tu primera tarta personalizada es: ${code}\n\nÚsalo al hacer el pedido en WhatsApp o en evangelcake.com.\n\nAndreia & Tiago` +
+      unsubFooterText(to),
   });
   if (res.error) {
     // Resend devuelve {data: null, error: {...}} cuando rechaza un envío.
@@ -73,13 +99,17 @@ export async function sendAlreadySubscribed({
   name: string;
   code: string;
 }) {
-  const html = alreadySubscribedHTML({ name, code });
+  const html = alreadySubscribedHTML({ name, code, to });
   const res = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `🍰 Ey ${name}, ya estás dentro (sí, otra vez)`,
+    replyTo: REPLY_TO,
+    headers: deliverabilityHeaders(to),
+    subject: `Ey ${name}, ya estabas dentro`,
     html,
-    text: `¡Hola ${name}!\n\nGracias por intentar suscribirte... otra vez 😉 Pero ya formas parte del club EvangelCake.\n\nTu código del 5% sigue siendo: ${code}\n\nSe acepta y nos vemos en el obrador. Andreia & Tiago`,
+    text:
+      `¡Hola ${name}!\n\nGracias por intentar suscribirte... otra vez. Pero ya formas parte del club EvangelCake.\n\nTu código del 5% sigue siendo: ${code}\n\nSe acepta y nos vemos en el obrador.\n\nAndreia & Tiago` +
+      unsubFooterText(to),
   });
   if (res.error) {
     console.error("[resend already-subscribed]", res.error);
@@ -106,13 +136,18 @@ export async function sendTopRankNotification({
   score: number;
   month: string;
 }) {
-  const html = topRankHTML({ name, position, score, month });
-  const trophy = position === 1 ? "🥇" : position === 2 ? "🥈" : "🥉";
+  const html = topRankHTML({ name, position, score, month, to });
+  const ordinal = position === 1 ? "primer" : position === 2 ? "segundo" : "tercer";
   const res = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `${trophy} ¡${name}, estás en el TOP ${position} del mes!`,
+    replyTo: REPLY_TO,
+    headers: deliverabilityHeaders(to),
+    subject: `${name}, estás en el ${ordinal} puesto del mes`,
     html,
+    text:
+      `Hola ${name},\n\nAcabas de meter ${score} puntos en Dulci's Sweet Challenge y eso te coloca en el ${ordinal} puesto del ranking de ${month}.\n\nSi te mantienes hasta fin de mes, te llevas una tarta personalizada gratis.\n\nAndreia & Tiago — EvangelCake Zaragoza` +
+      unsubFooterText(to),
   });
   if (res.error) {
     console.error("[resend top-rank]", res.error);
@@ -137,12 +172,18 @@ export async function sendDethronedNotification({
   newScore: number;
   yourScore: number;
 }) {
-  const html = dethronedHTML({ oldKingName, newKingName, newScore, yourScore });
+  const html = dethronedHTML({ oldKingName, newKingName, newScore, yourScore, to });
+  const diff = newScore - yourScore;
   const res = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `⚔️ Te han destronado del #1`,
+    replyTo: REPLY_TO,
+    headers: deliverabilityHeaders(to),
+    subject: `${oldKingName}, has perdido el primer puesto del mes`,
     html,
+    text:
+      `Hola ${oldKingName},\n\n${newKingName} acaba de subirse al primer puesto del ranking con ${newScore} puntos (te saca ${diff}). Tu récord se queda en ${yourScore}.\n\nAún queda mes. Si recuperas el #1 antes del último día, la tarta personalizada gratis es tuya.\n\nAndreia & Tiago — EvangelCake Zaragoza` +
+      unsubFooterText(to),
   });
   if (res.error) {
     console.error("[resend dethroned]", res.error);
@@ -170,13 +211,18 @@ export async function sendMonthWinnerNotification({
   monthLabel: string;
   winnerCode: string;
 }) {
-  const html = monthWinnerHTML({ name, position, score, monthLabel, winnerCode });
-  const trophy = position === 1 ? "🥇" : position === 2 ? "🥈" : "🥉";
+  const html = monthWinnerHTML({ name, position, score, monthLabel, winnerCode, to });
+  const ordinal = position === 1 ? "primer" : position === 2 ? "segundo" : "tercer";
   const res = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `${trophy} ¡Has ganado el ranking de ${monthLabel}!`,
+    replyTo: REPLY_TO,
+    headers: deliverabilityHeaders(to),
+    subject: `${name}, tu tarta gratis del ranking de ${monthLabel} te espera`,
     html,
+    text:
+      `Hola ${name},\n\nHas terminado en el ${ordinal} puesto del ranking de ${monthLabel} con ${score} puntos. Te has ganado una tarta personalizada gratis.\n\nTu código de ganador: ${winnerCode}\n\nEscríbenos por WhatsApp al 624 131 348 con este código para concretar día y diseño. Tienes 30 días para canjearla.\n\nAndreia & Tiago — EvangelCake Zaragoza` +
+      unsubFooterText(to),
   });
   if (res.error) {
     console.error("[resend month-winner]", res.error);
@@ -216,7 +262,7 @@ export async function sendLeadNotification(lead: {
 }
 
 // ===== Plantillas HTML inline =====
-function welcomeEmailHTML({ name, code }: { name: string; code: string }) {
+function welcomeEmailHTML({ name, code, to }: { name: string; code: string; to: string }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com";
   // El botón principal lleva al configurador con el código pre-aplicado.
   const configuratorUrl = `${site}/tartas-personalizadas?code=${encodeURIComponent(code)}#sabores`;
@@ -228,7 +274,7 @@ function welcomeEmailHTML({ name, code }: { name: string; code: string }) {
 <html><head><meta charset="utf-8"></head><body style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fbf3df;padding:24px">
   <table role="presentation" width="100%" style="max-width:560px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden">
     <tr><td style="padding:32px 32px 0">
-      <h1 style="font-family:Georgia,serif;font-size:28px;color:#1a1614;margin:0 0 8px">¡Hola, ${escapeHtml(name)}! 🎂</h1>
+      <h1 style="font-family:Georgia,serif;font-size:28px;color:#1a1614;margin:0 0 8px">¡Hola, ${escapeHtml(name)}!</h1>
       <p style="color:#3a322c;line-height:1.6">Gracias por unirte a la familia EvangelCake. Como bienvenida, te dejamos un <strong>5% de descuento</strong> para tu primera tarta personalizada.</p>
     </td></tr>
     <tr><td style="padding:24px 32px">
@@ -247,13 +293,13 @@ function welcomeEmailHTML({ name, code }: { name: string; code: string }) {
     </td></tr>
     <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
       <p style="margin:0">Andreia & Tiago Evangelista<br>Pº María Agustín 13 · Zaragoza</p>
-      <p style="margin:12px 0 0;font-size:11px;color:#999">Si no querías suscribirte, <a href="https://evangelcake.com/" style="color:#999">date de baja aquí</a>.</p>
+      ${unsubFooterHtml(to)}
     </td></tr>
   </table>
 </body></html>`;
 }
 
-function alreadySubscribedHTML({ name, code }: { name: string; code: string }) {
+function alreadySubscribedHTML({ name, code, to }: { name: string; code: string; to: string }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com";
   const configuratorUrl = `${site}/tartas-personalizadas?code=${encodeURIComponent(code)}#sabores`;
   return `
@@ -261,8 +307,8 @@ function alreadySubscribedHTML({ name, code }: { name: string; code: string }) {
 <html><head><meta charset="utf-8"></head><body style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fbf3df;padding:24px">
   <table role="presentation" width="100%" style="max-width:560px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden">
     <tr><td style="padding:32px 32px 0">
-      <h1 style="font-family:Georgia,serif;font-size:28px;color:#1a1614;margin:0 0 8px">Ey ${escapeHtml(name)}, ya estás dentro 🍰</h1>
-      <p style="color:#3a322c;line-height:1.6">Vemos que has vuelto a intentar suscribirte. Y nos hace mucha ilusión, en serio. <strong>Pero ya formas parte del club EvangelCake</strong> 😉</p>
+      <h1 style="font-family:Georgia,serif;font-size:28px;color:#1a1614;margin:0 0 8px">Ey ${escapeHtml(name)}, ya estás dentro</h1>
+      <p style="color:#3a322c;line-height:1.6">Vemos que has vuelto a intentar suscribirte. Y nos hace ilusión, en serio. <strong>Pero ya formas parte del club EvangelCake.</strong></p>
       <p style="color:#3a322c;line-height:1.6">Sabemos que probablemente querías otro 5%. Lo entendemos. Nosotros también querríamos otro descuento. Pero el universo aún no nos deja repartir códigos infinitos…</p>
     </td></tr>
     <tr><td style="padding:24px 32px">
@@ -276,10 +322,11 @@ function alreadySubscribedHTML({ name, code }: { name: string; code: string }) {
       <p style="text-align:center;margin:24px 0">
         <a href="${configuratorUrl}" style="display:inline-block;background:#e85a9a;color:#fff;padding:14px 28px;border-radius:999px;text-decoration:none;font-weight:600">Pedir mi tarta &rarr;</a>
       </p>
-      <p style="color:#3a322c;line-height:1.6;font-size:14px;text-align:center">Si lo que buscas es probar tartas, te toca venir al obrador. Te esperamos 💗</p>
+      <p style="color:#3a322c;line-height:1.6;font-size:14px;text-align:center">Si lo que buscas es probar tartas, te toca venir al obrador. Te esperamos.</p>
     </td></tr>
     <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
       <p style="margin:0">Andreia & Tiago Evangelista<br>Pº María Agustín 13 · Zaragoza</p>
+      ${unsubFooterHtml(to)}
     </td></tr>
   </table>
 </body></html>`;
@@ -290,11 +337,13 @@ function topRankHTML({
   position,
   score,
   month,
+  to,
 }: {
   name: string;
   position: number;
   score: number;
   month: string;
+  to: string;
 }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com";
   const trophy = position === 1 ? "🥇" : position === 2 ? "🥈" : "🥉";
@@ -322,6 +371,7 @@ function topRankHTML({
     </td></tr>
     <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
       <p style="margin:0">Andreia & Tiago · EvangelCake Zaragoza</p>
+      ${unsubFooterHtml(to)}
     </td></tr>
   </table>
 </body></html>`;
@@ -332,11 +382,13 @@ function dethronedHTML({
   newKingName,
   newScore,
   yourScore,
+  to,
 }: {
   oldKingName: string;
   newKingName: string;
   newScore: number;
   yourScore: number;
+  to: string;
 }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com";
   const diff = newScore - yourScore;
@@ -361,6 +413,7 @@ function dethronedHTML({
     </td></tr>
     <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
       <p style="margin:0">Andreia & Tiago · EvangelCake Zaragoza</p>
+      ${unsubFooterHtml(to)}
     </td></tr>
   </table>
 </body></html>`;
@@ -372,12 +425,14 @@ function monthWinnerHTML({
   score,
   monthLabel,
   winnerCode,
+  to,
 }: {
   name: string;
   position: number;
   score: number;
   monthLabel: string;
   winnerCode: string;
+  to: string;
 }) {
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com";
   const trophy = position === 1 ? "🥇" : position === 2 ? "🥈" : "🥉";
@@ -411,6 +466,7 @@ function monthWinnerHTML({
     <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
       <p style="margin:0">Andreia & Tiago · EvangelCake<br>Pº María Agustín 13 · Zaragoza</p>
       <p style="margin:12px 0 0;font-size:11px;color:#999">¿Quieres seguir jugando? <a href="${site}/" style="color:#999">Vuelve al juego</a> — el ranking se reinicia cada mes.</p>
+      ${unsubFooterHtml(to)}
     </td></tr>
   </table>
 </body></html>`;
