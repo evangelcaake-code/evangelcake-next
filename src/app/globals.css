@@ -4772,13 +4772,13 @@ footer ul a:hover{color:var(--pink)}
 .newsletter-popup-form-stacked button:hover{background:var(--pink-deep)}
 .newsletter-popup-form-stacked button:disabled{opacity:.7;cursor:wait}
 
-/* Home: tira fina horizontal en desktop (name | email | button) con birthday
-   compacto debajo. En mobile vuelve a stacked. */
+/* Home: tira fina con name + email en fila y botón centrado debajo,
+   alineado con el título. En mobile vuelve a stacked. */
 .newsletter .newsletter-form-stacked{
   display:grid !important;gap:8px;
-  grid-template-columns:1fr 1fr auto;
+  grid-template-columns:1fr 1fr;
   align-items:center;
-  max-width:680px;margin:0 auto;
+  max-width:560px;margin:0 auto;
   border:none !important;background:transparent !important;
   padding:0 !important;border-radius:0 !important;
 }
@@ -4797,11 +4797,13 @@ footer ul a:hover{color:var(--pink)}
 }
 .newsletter .newsletter-form-stacked button{
   width:auto;white-space:nowrap;
+  grid-column:1 / -1;justify-self:center;
   background:var(--ink) !important;color:var(--paper) !important;
   border:none;border-radius:var(--r-pill) !important;
-  padding:11px 22px !important;
+  padding:11px 32px !important;
   font-size:14px !important;font-weight:600;cursor:pointer;
   transition:background .25s,transform .25s;
+  margin-top:4px;
 }
 .newsletter .newsletter-form-stacked button:hover{
   background:var(--pink-deep) !important;transform:translateY(-2px);
