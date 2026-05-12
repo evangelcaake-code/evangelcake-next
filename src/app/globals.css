@@ -280,7 +280,7 @@ p{margin:0 0 12px}
 
 /* === HERO STICKER (sello "Tartas Personalizadas") === */
 .hero-sticker{
-  position:absolute;top:-6%;right:-4%;
+  position:absolute;top:-18%;right:-4%;
   width:138px;height:138px;
   border-radius:50%;
   background:var(--pink-deep);
