@@ -9,7 +9,8 @@ const links = [
   { href: "/", label: "Inicio" },
   { href: "/tartas-personalizadas", label: "Tartas personalizadas" },
   { href: "/galeria", label: "Galería" },
-  { href: "/encargos", label: "Encargos" },
+  // TEMP: link a /encargos desactivado — reactivar cuando vuelva la página
+  // { href: "/encargos", label: "Encargos" },
   { href: "/sobre-nosotros", label: "Sobre nosotros" },
   { href: "/blog", label: "Hoy aprende" },
   { href: "/contacto", label: "Contacto" },

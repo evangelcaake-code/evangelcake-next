@@ -205,9 +205,10 @@ export default function Home() {
             <Link className="btn" href="/tartas-personalizadas#sabores">
               Pide tu tarta personalizada →
             </Link>
-            <a className="btn btn-secondary" href="#productos">
-              Ver catálogo
-            </a>
+            {/* TEMP: catálogo desactivado — apuntamos a galería mientras tanto */}
+            <Link className="btn btn-secondary" href="/galeria">
+              Ver galería
+            </Link>
           </div>
           <div className="hero-stats">
             <div className="hero-stat">
@@ -279,6 +280,10 @@ export default function Home() {
         </div>
       </div>
 
+      {/* TEMP: sección de productos/catálogo desactivada — para reactivarla
+          descomenta este bloque y vuelve a poner el botón "Ver catálogo" en
+          el hero apuntando a "#productos" */}
+      {/*
       <section
         id="productos"
         className="section"
@@ -364,6 +369,7 @@ export default function Home() {
           </a>
         </div>
       </section>
+      */}
 
       <section className="hook" aria-labelledby="hook-about">
         <div className="hook-text">

@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1.0, changeFrequency: "weekly" },
     { path: "/tartas-personalizadas", priority: 0.95, changeFrequency: "weekly" },
     { path: "/galeria", priority: 0.9, changeFrequency: "weekly" },
-    { path: "/encargos", priority: 0.85, changeFrequency: "monthly" },
+    // TEMP: /encargos quitado del sitemap mientras está desactivado
     { path: "/game", priority: 0.85, changeFrequency: "weekly" },
     { path: "/sobre-nosotros", priority: 0.8, changeFrequency: "monthly" },
     { path: "/contacto", priority: 0.8, changeFrequency: "monthly" },

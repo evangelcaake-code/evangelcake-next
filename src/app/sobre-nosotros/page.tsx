@@ -280,8 +280,13 @@ export default function SobreNosotrosPage() {
           </h2>
           <p>Cuéntanos qué celebras. Diseñamos contigo cada detalle.</p>
           <div className="ctas">
+            {/* TEMP: botón a /encargos desactivado. Reactivar cuando vuelva la página.
             <Link className="btn btn-pink" href="/encargos">
               Pedir un encargo →
+            </Link>
+            */}
+            <Link className="btn btn-pink" href="/tartas-personalizadas#sabores">
+              Pide tu tarta personalizada →
             </Link>
             <a
               className="btn btn-secondary"

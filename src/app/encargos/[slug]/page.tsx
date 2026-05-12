@@ -15,8 +15,11 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// TEMP: páginas individuales /encargos/[slug] desactivadas — devolvemos lista
+// vacía para que Next no las pregenere y, en runtime, el componente abajo
+// llama a notFound(). Para reactivar: vuelve al map original.
 export async function generateStaticParams() {
-  return getCatalogProducts().map((p) => ({ slug: p.slug }));
+  return [];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -50,7 +53,12 @@ function relatedProducts(current: Product): Product[] {
   return PRODUCTS.filter((p) => p.slug !== current.slug).slice(0, 3);
 }
 
+// TEMP: pon false para reactivar /encargos/[slug]
+const DISABLED = true;
+
 export default async function ProductPage({ params }: PageProps) {
+  if (DISABLED) notFound();
+
   const { slug } = await params;
   const product = getProduct(slug);
 

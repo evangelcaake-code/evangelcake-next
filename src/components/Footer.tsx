@@ -16,6 +16,10 @@ export default function Footer() {
           </p>
           <FooterNewsletter />
         </div>
+        {/* TEMP: columna Catálogo desactivada — los links apuntaban a la
+            sección #productos de la home (también desactivada). Reactivar
+            cuando vuelva el catálogo. */}
+        {/*
         <div>
           <h5>Catálogo</h5>
           <ul>
@@ -33,12 +37,18 @@ export default function Footer() {
             </li>
           </ul>
         </div>
+        */}
         <div>
           <h5>Estudio</h5>
           <ul>
             <li>
+              <Link href="/tartas-personalizadas">Tartas personalizadas</Link>
+            </li>
+            {/* TEMP: link a /encargos desactivado
+            <li>
               <Link href="/encargos">Encargos a medida</Link>
             </li>
+            */}
             <li>
               <Link href="/sobre-nosotros">Sobre nosotros</Link>
             </li>

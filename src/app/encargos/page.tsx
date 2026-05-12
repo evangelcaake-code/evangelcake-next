@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/data/products";
 
+// TEMP: página /encargos desactivada temporalmente. Para reactivarla, borra
+// el `notFound()` del body del componente y restaura los metadata robots.
 export const metadata: Metadata = {
-  title: "Encargos · Catálogo de productos | EvangelCake Zaragoza",
-  description:
-    "Catálogo de EvangelCake: tartas personalizadas, tres leches, bizcocho de zanahoria brasileño y Crumbl cookies. Encarga por WhatsApp o personaliza la tuya.",
-  alternates: { canonical: "/encargos" },
+  title: "Página no encontrada · EvangelCake",
+  robots: { index: false, follow: false },
 };
 
 const catalogSchema = {
@@ -37,6 +38,8 @@ const catalogSchema = {
 };
 
 export default function EncargosCatalogoPage() {
+  // TEMP: desactivado — quita esta línea para reactivar la página
+  notFound();
   return (
     <>
       <Script
