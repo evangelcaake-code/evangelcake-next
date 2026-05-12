@@ -134,6 +134,29 @@ export default async function AnalyticsPage() {
   const recentEvents = (recentEventsRes.data ?? []) as EventRow[];
   const totalEvents30d = totalsRes.count ?? 0;
 
+  // A/B test del popup — agregar por variante en los últimos 30 días
+  type VariantStats = { shown: number; dismissed: number; converted: number };
+  const { data: popupEvents } = await sb
+    .from("events")
+    .select("event_type, meta")
+    .in("event_type", ["popup_shown", "popup_dismissed", "popup_converted"])
+    .gte("created_at", since30);
+
+  const variantStats: Record<string, VariantStats> = {
+    A: { shown: 0, dismissed: 0, converted: 0 },
+    B: { shown: 0, dismissed: 0, converted: 0 },
+  };
+  ((popupEvents ?? []) as Array<{
+    event_type: string;
+    meta: { variant?: string } | null;
+  }>).forEach((e) => {
+    const v = e.meta?.variant;
+    if (v !== "A" && v !== "B") return;
+    if (e.event_type === "popup_shown") variantStats[v].shown += 1;
+    if (e.event_type === "popup_dismissed") variantStats[v].dismissed += 1;
+    if (e.event_type === "popup_converted") variantStats[v].converted += 1;
+  });
+
   return (
     <div className="admin-shell">
       <header className="admin-header">
@@ -199,6 +222,78 @@ export default async function AnalyticsPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="admin-card">
+        <header className="admin-card-head">
+          <h2>A/B test del pop-up (30 días)</h2>
+          <span className="admin-count">
+            Ganadora:{" "}
+            {(() => {
+              const rateA = variantStats.A.shown
+                ? variantStats.A.converted / variantStats.A.shown
+                : 0;
+              const rateB = variantStats.B.shown
+                ? variantStats.B.converted / variantStats.B.shown
+                : 0;
+              if (rateA === 0 && rateB === 0) return "sin datos aún";
+              return rateA > rateB ? "A 🥇" : rateB > rateA ? "B 🥇" : "empate";
+            })()}
+          </span>
+        </header>
+        <div className="admin-table-wrap">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Variante</th>
+                <th>Copy</th>
+                <th>Mostrado</th>
+                <th>Cerrado</th>
+                <th>Convertido</th>
+                <th>Conversión</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(["A", "B"] as const).map((v) => {
+                const s = variantStats[v];
+                const rate = s.shown ? (s.converted / s.shown) * 100 : 0;
+                return (
+                  <tr key={v}>
+                    <td>
+                      <strong style={{ fontSize: 18 }}>{v}</strong>
+                    </td>
+                    <td style={{ fontSize: 11 }}>
+                      {v === "A"
+                        ? '"Un 5% para tu primera tarta y cosas exclusivas"'
+                        : '"Las recetas de Andreia + tu primer 5%"'}
+                    </td>
+                    <td>{s.shown}</td>
+                    <td>{s.dismissed}</td>
+                    <td>
+                      <strong style={{ color: "var(--pink-deep)" }}>
+                        {s.converted}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>{rate.toFixed(1)}%</strong>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p
+          style={{
+            margin: "12px 16px 16px",
+            fontSize: 12,
+            color: "var(--ink-2)",
+          }}
+        >
+          Se necesitan ~100 muestras de cada variante para considerar el
+          resultado significativo. Cuando una gane claramente, avísame y
+          mato la otra.
+        </p>
       </section>
 
       <section className="admin-card">

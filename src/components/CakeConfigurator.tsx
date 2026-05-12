@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { markCodeUsed } from "@/lib/markCodeUsed";
 
 type Size = {
   value: string;
@@ -555,6 +556,9 @@ export default function CakeConfigurator() {
                 href={waHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (discountCode) markCodeUsed(discountCode);
+                }}
               >
                 Pedir por WhatsApp →
               </a>

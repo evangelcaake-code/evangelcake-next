@@ -152,6 +152,40 @@ export async function sendDethronedNotification({
 }
 
 /**
+ * Email "¡Has ganado el mes!" — se manda el día 1 del mes siguiente a los
+ * tres mejores del ranking del mes que acaba de cerrar.
+ */
+export async function sendMonthWinnerNotification({
+  to,
+  name,
+  position,
+  score,
+  monthLabel,
+  winnerCode,
+}: {
+  to: string;
+  name: string;
+  position: number;
+  score: number;
+  monthLabel: string;
+  winnerCode: string;
+}) {
+  const html = monthWinnerHTML({ name, position, score, monthLabel, winnerCode });
+  const trophy = position === 1 ? "🥇" : position === 2 ? "🥈" : "🥉";
+  const res = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: `${trophy} ¡Has ganado el ranking de ${monthLabel}!`,
+    html,
+  });
+  if (res.error) {
+    console.error("[resend month-winner]", res.error);
+    throw new Error(`Resend: ${res.error.message || res.error.name}`);
+  }
+  return res;
+}
+
+/**
  * Notificación interna cuando alguien rellena el formulario de contacto.
  */
 export async function sendLeadNotification(lead: {
@@ -327,6 +361,56 @@ function dethronedHTML({
     </td></tr>
     <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
       <p style="margin:0">Andreia & Tiago · EvangelCake Zaragoza</p>
+    </td></tr>
+  </table>
+</body></html>`;
+}
+
+function monthWinnerHTML({
+  name,
+  position,
+  score,
+  monthLabel,
+  winnerCode,
+}: {
+  name: string;
+  position: number;
+  score: number;
+  monthLabel: string;
+  winnerCode: string;
+}) {
+  const site = process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com";
+  const trophy = position === 1 ? "🥇" : position === 2 ? "🥈" : "🥉";
+  const medal = position === 1 ? "PRIMER" : position === 2 ? "SEGUNDO" : "TERCER";
+  const waUrl = `https://wa.me/34624131348?text=${encodeURIComponent(
+    `Hola! Soy ${name}, he ganado el ${medal.toLowerCase()} puesto del ranking de ${monthLabel} con código ${winnerCode}. ¿Cuándo puedo pasar a recoger mi tarta?`,
+  )}`;
+  return `
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head><body style="margin:0;font-family:-apple-system,sans-serif;background:#fbf3df;padding:24px">
+  <table role="presentation" width="100%" style="max-width:560px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden">
+    <tr><td style="padding:48px 32px 0;text-align:center">
+      <div style="font-size:72px;line-height:1;margin-bottom:8px">${trophy}</div>
+      <h1 style="font-family:Georgia,serif;font-size:32px;color:#1a1614;margin:0 0 8px">¡${escapeHtml(name)}, HAS GANADO!</h1>
+      <p style="color:#3a322c;line-height:1.55;font-size:16px">Has terminado en <strong>${medal} PUESTO</strong> del ranking del juego de <strong>${escapeHtml(monthLabel)}</strong>, con ${score} puntos.</p>
+      <p style="color:#3a322c;line-height:1.55;font-size:16px">Te has ganado una <strong>tarta personalizada gratis</strong> 🎂</p>
+    </td></tr>
+    <tr><td style="padding:24px 32px">
+      <div style="background:linear-gradient(135deg,#fce4ee,#fbf3df);border:2px dashed #e85a9a;border-radius:14px;padding:24px;text-align:center">
+        <p style="font-size:12px;letter-spacing:.12em;color:#3a322c;text-transform:uppercase;margin:0 0 6px">Tu código de ganador</p>
+        <p style="font-family:Georgia,serif;font-size:38px;color:#e85a9a;margin:0;letter-spacing:.12em"><strong>${escapeHtml(winnerCode)}</strong></p>
+        <p style="font-size:12px;color:#3a322c;margin:12px 0 0">Enseña este código por WhatsApp o presencial</p>
+      </div>
+    </td></tr>
+    <tr><td style="padding:0 32px 24px">
+      <p style="color:#3a322c;line-height:1.6">Escríbenos por WhatsApp para concretar día y diseño de tu tarta. Tienes <strong>30 días</strong> para canjearla.</p>
+      <p style="text-align:center;margin:24px 0">
+        <a href="${waUrl}" style="display:inline-block;background:#e85a9a;color:#fff;padding:14px 28px;border-radius:999px;text-decoration:none;font-weight:600">Reclamar mi tarta &rarr;</a>
+      </p>
+    </td></tr>
+    <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
+      <p style="margin:0">Andreia & Tiago · EvangelCake<br>Pº María Agustín 13 · Zaragoza</p>
+      <p style="margin:12px 0 0;font-size:11px;color:#999">¿Quieres seguir jugando? <a href="${site}/" style="color:#999">Vuelve al juego</a> — el ranking se reinicia cada mes.</p>
     </td></tr>
   </table>
 </body></html>`;

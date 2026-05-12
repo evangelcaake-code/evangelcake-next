@@ -14,6 +14,48 @@ const SUPPRESS_DAYS = 7;
 // Así el contador acumula tiempo total en el sitio, no por página.
 const VISIT_START_KEY = "evangelcake_visit_started_at";
 
+// === A/B TEST ===
+// Cada visitante recibe aleatoriamente una variante de copy, la fijamos en
+// localStorage para que vea siempre la misma (si no, distorsionaría las
+// métricas de conversión).
+const VARIANT_KEY = "evangelcake_popup_variant";
+type Variant = "A" | "B";
+const VARIANTS: Record<Variant, { title: React.ReactNode; description: string; cta: string }> = {
+  A: {
+    title: (
+      <>
+        Un 5% para tu primera tarta y <em>cosas muy exclusivas.</em>
+      </>
+    ),
+    description:
+      "Suscríbete y te mandamos el código al instante. Una vez al mes: novedades del obrador, recetas y avances que solo verás aquí.",
+    cta: "Quiero mi 5% →",
+  },
+  B: {
+    title: (
+      <>
+        Las recetas de Andreia + <em>tu primer 5%.</em>
+      </>
+    ),
+    description:
+      "Antes que en redes, antes que en el blog. Déjanos tu email y te llega el código al momento. Sin spam, solo cosas buenas.",
+    cta: "Apúntame →",
+  },
+};
+
+function pickVariant(): Variant {
+  if (typeof window === "undefined") return "A";
+  try {
+    const saved = localStorage.getItem(VARIANT_KEY);
+    if (saved === "A" || saved === "B") return saved;
+    const v: Variant = Math.random() < 0.5 ? "A" : "B";
+    localStorage.setItem(VARIANT_KEY, v);
+    return v;
+  } catch {
+    return "A";
+  }
+}
+
 export default function NewsletterPopup() {
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -23,6 +65,7 @@ export default function NewsletterPopup() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const [variant, setVariant] = useState<Variant>("A");
   const trackedShownRef = useRef(false);
 
   useEffect(() => {
@@ -64,11 +107,13 @@ export default function NewsletterPopup() {
 
     const elapsed = Date.now() - visitStart;
     const remaining = Math.max(0, DELAY_MS - elapsed);
+    const assigned = pickVariant();
+    setVariant(assigned);
     const t = setTimeout(() => {
       setOpen(true);
       if (!trackedShownRef.current) {
         trackedShownRef.current = true;
-        track("popup_shown");
+        track("popup_shown", { meta: { variant: assigned } });
       }
     }, remaining);
     return () => clearTimeout(t);
@@ -92,7 +137,7 @@ export default function NewsletterPopup() {
     try {
       localStorage.setItem(DISMISS_KEY, String(Date.now()));
     } catch {}
-    track("popup_dismissed");
+    track("popup_dismissed", { meta: { variant } });
     setClosing(true);
     setTimeout(() => {
       setOpen(false);
@@ -129,8 +174,8 @@ export default function NewsletterPopup() {
           localStorage.setItem(SUBSCRIBED_KEY, "yes");
         } catch {}
         saveSubscribedEmail(email);
-        track("popup_converted", { email });
-        track("newsletter_signup", { email, meta: { source: "popup" } });
+        track("popup_converted", { email, meta: { variant } });
+        track("newsletter_signup", { email, meta: { source: "popup", variant } });
         setDone(true);
       } else {
         const data = await res.json().catch(() => ({}));
@@ -185,13 +230,8 @@ export default function NewsletterPopup() {
           </>
         ) : (
           <>
-            <h3 id="popup-title">
-              Un 5% para tu primera tarta y <em>novedades exclusivas.</em>
-            </h3>
-            <p>
-              Déjanos tu email y te mandamos el código al instante. Una vez al
-              mes, recetas y novedades que solo verás aquí.
-            </p>
+            <h3 id="popup-title">{VARIANTS[variant].title}</h3>
+            <p>{VARIANTS[variant].description}</p>
 
             <form
               className="newsletter-popup-form newsletter-popup-form-stacked"
@@ -232,7 +272,7 @@ export default function NewsletterPopup() {
                 </small>
               </label>
               <button type="submit" disabled={loading}>
-                {loading ? "Enviando…" : "Quiero mi 5% →"}
+                {loading ? "Enviando…" : VARIANTS[variant].cta}
               </button>
             </form>
 

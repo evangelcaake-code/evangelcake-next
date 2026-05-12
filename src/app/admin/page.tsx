@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import LogoutButton from "./LogoutButton";
+import MarkUsedButton from "./MarkUsedButton";
 
 export const metadata: Metadata = {
   title: "Admin · EvangelCake",
@@ -410,12 +411,13 @@ export default async function AdminPage() {
                 <th>Estado</th>
                 <th>Usado en</th>
                 <th>Caduca</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {codes.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="admin-empty">
+                  <td colSpan={7} className="admin-empty">
                     Sin códigos.
                   </td>
                 </tr>
@@ -442,6 +444,9 @@ export default async function AdminPage() {
                   </td>
                   <td>{fmtDate(c.used_at)}</td>
                   <td>{fmtDay(c.expires_at)}</td>
+                  <td>
+                    {c.used ? "—" : <MarkUsedButton code={c.code} />}
+                  </td>
                 </tr>
               ))}
             </tbody>

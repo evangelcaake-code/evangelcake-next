@@ -4870,3 +4870,17 @@ footer ul a:hover{color:var(--pink)}
   font:inherit;font-size:13px;
   color-scheme:dark;
 }
+
+/* Botón "Marcar usado" en tabla de códigos */
+.admin-mark-used{
+  padding:6px 12px;
+  background:rgba(232,90,154,.10);
+  color:var(--pink-deep);
+  border:1px solid rgba(232,90,154,.25);
+  border-radius:var(--r-pill);
+  font:inherit;font-size:11px;font-weight:600;
+  cursor:pointer;
+  transition:background .25s, color .25s;
+}
+.admin-mark-used:hover{background:var(--pink-deep);color:#fff}
+.admin-mark-used:disabled{opacity:.6;cursor:wait}
