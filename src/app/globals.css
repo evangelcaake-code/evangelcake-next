@@ -4331,9 +4331,15 @@ footer ul a:hover{color:var(--pink)}
   box-shadow:0 0 0 3px rgba(238,130,159,.18);
 }
 .game-check.game-check-compact{
-  font-size:10px;gap:6px;line-height:1.3;align-items:flex-start;
+  font-size:10px;gap:6px;line-height:1.3;
+  /* Centrado horizontalmente bajo el form (antes se alineaba a la izq
+     y en el grid 2-cols del banner compacto quedaba pegado a la dcha). */
+  justify-content:center;align-items:flex-start;
+  text-align:center;
+  max-width:340px;margin:2px auto 0;
 }
-.game-check.game-check-compact input{margin-top:2px}
+.game-check.game-check-compact input{margin-top:2px;flex-shrink:0}
+.game-check.game-check-compact > span{text-align:center}
 .game-cta.game-cta-compact{
   padding:9px 18px !important;font-size:13px !important;
   margin-top:2px;
