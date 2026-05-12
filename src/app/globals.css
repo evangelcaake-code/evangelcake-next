@@ -4796,14 +4796,17 @@ footer ul a:hover{color:var(--pink)}
   box-shadow:0 0 0 3px rgba(238,130,159,.18) !important;
 }
 .newsletter .newsletter-form-stacked button{
-  width:auto;white-space:nowrap;
-  grid-column:1 / -1;justify-self:center;
+  width:auto !important;white-space:nowrap;
+  grid-column:1 / -1 !important;
+  justify-self:center !important;
+  place-self:center !important;
+  margin:4px auto 0 !important;
+  flex:0 0 auto !important;
   background:var(--ink) !important;color:var(--paper) !important;
   border:none;border-radius:var(--r-pill) !important;
   padding:11px 32px !important;
   font-size:14px !important;font-weight:600;cursor:pointer;
   transition:background .25s,transform .25s;
-  margin-top:4px;
 }
 .newsletter .newsletter-form-stacked button:hover{
   background:var(--pink-deep) !important;transform:translateY(-2px);
