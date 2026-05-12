@@ -4608,6 +4608,37 @@ footer ul a:hover{color:var(--pink)}
   .nav-cta-game{padding:8px 12px;font-size:12px}
 }
 
+/* Banner promo en home: versión XL del CTA "Gana tu tarta gratis", solo
+   visible al entrar a /. Se posiciona justo bajo el header para que sea
+   lo primero que la gente vea. */
+.home-promo-banner{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  background:linear-gradient(135deg, var(--pink-deep) 0%, #ff7eb6 50%, var(--gold) 100%);
+  background-size:200% 200%;
+  color:#fff;text-decoration:none;
+  padding:14px 24px;
+  font-size:17px;font-weight:600;letter-spacing:.01em;
+  text-align:center;
+  animation:navCtaShift 8s ease-in-out infinite;
+  transition:filter .25s;
+}
+.home-promo-banner:hover{filter:brightness(1.05)}
+.home-promo-banner strong{font-weight:700}
+.home-promo-banner-icon{
+  font-size:22px;
+  display:inline-block;
+  animation:navCtaIcon 2.4s ease-in-out infinite;
+}
+.home-promo-banner-arrow{
+  font-size:20px;font-weight:400;
+  transition:transform .25s;
+}
+.home-promo-banner:hover .home-promo-banner-arrow{transform:translateX(4px)}
+@media (max-width:767px){
+  .home-promo-banner{padding:12px 16px;font-size:14px;gap:10px}
+  .home-promo-banner-icon{font-size:18px}
+}
+
 /* Box de "código activo" en el carrito + summary del modal */
 .cart-code-box{
   display:flex;align-items:center;justify-content:space-between;gap:10px;

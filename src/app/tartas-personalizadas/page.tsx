@@ -140,14 +140,6 @@ const momentos = [
   { ic: "◉", t: "Eventos empresa", d: "Inauguraciones, aniversarios o regalo corporativo. Logo y branding incluidos." },
 ];
 
-const proceso = [
-  { n: 1, t: "Cuéntanos", d: "WhatsApp, email o ven al obrador. Comparte tu idea, fecha, número de personas e inspiración." },
-  { n: 2, t: "Perfeccionamos tu idea", d: "Andreia la escucha, la mejora y la transforma. Desarrollamos juntos la idea hasta que la tarta sea perfecta." },
-  { n: 3, t: "Confirmas con señal", d: "Cuando todo está claro, recibimos la señal que confirma tu pedido y reservamos la fecha." },
-  { n: 4, t: "Elaboramos", d: "Andreia y Tiago la preparan a mano en el obrador. Sin atajos. Sin moldes prefabricados." },
-  { n: 5, t: "Recoges en el local", d: "Pasas a recogerla por Pº María Agustín 13, lista para ser el centro de tu celebración." },
-];
-
 const galeriaTP = [
   { src: "/images/gallery/boda-rosas.jpg", alt: "Tarta de boda con cobertura de chantilly y rosas blancas", label: "Boda" },
   { src: "/images/gallery/comunion-alma.jpg", alt: "Tarta de comunión rosa con rosetones y figura de niña", label: "Comunión" },
@@ -318,29 +310,6 @@ export default function TartasPersonalizadasPage() {
               <h3>{m.t}</h3>
               <p>{m.d}</p>
             </article>
-          ))}
-        </div>
-      </section>
-
-      <section
-        className="section tp-proc tp-proc-compact"
-        aria-labelledby="p-title"
-      >
-        <div className="section-head section-head-compact">
-          <h2 id="p-title">
-            Cómo nace <em>tu tarta.</em>
-          </h2>
-          <p className="section-sub">
-            De la idea al primer bocado, en 5 pasos.
-          </p>
-        </div>
-        <div className="proc-timeline">
-          {proceso.map((p) => (
-            <div key={p.n} className="proc">
-              <div className="dot">{p.n}</div>
-              <h4>{p.t}</h4>
-              <p>{p.d}</p>
-            </div>
           ))}
         </div>
       </section>

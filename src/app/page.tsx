@@ -197,6 +197,14 @@ function GoogleG({ size = 28 }: { size?: number }) {
 export default function Home() {
   return (
     <>
+      <a className="home-promo-banner" href="#juego">
+        <span className="home-promo-banner-icon" aria-hidden="true">🎂</span>
+        <span className="home-promo-banner-text">
+          Juega y <strong>gana una tarta personalizada gratis</strong>
+        </span>
+        <span className="home-promo-banner-arrow" aria-hidden="true">→</span>
+      </a>
+
       <Script
         id="bakery-schema"
         type="application/ld+json"
