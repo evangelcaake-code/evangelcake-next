@@ -286,7 +286,7 @@ p{margin:0 0 12px}
 
 /* === HERO STICKER (sello "Tartas Personalizadas") === */
 .hero-sticker{
-  position:absolute;top:-6%;right:-4%;
+  position:absolute;top:-12%;right:-8%;
   width:138px;height:138px;
   border-radius:50%;
   background:var(--pink-deep);
@@ -331,7 +331,13 @@ p{margin:0 0 12px}
   50%{transform:rotate(-7deg) scale(1.04)}
 }
 @media (max-width:899px){
-  .hero-sticker{width:110px;height:110px;top:-4%;right:2%;padding:8px}
+  /* Sello rosa: lo sacamos a la esquina top-right FUERA del hero-pic para
+     que no tape a la mascota */
+  .hero-sticker{
+    width:90px;height:90px;
+    top:-12%;right:-10%;
+    padding:6px;
+  }
   .hero-sticker-big{font-size:15px}
   .hero-sticker-line{font-size:9px}
 }
