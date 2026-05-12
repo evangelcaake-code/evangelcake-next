@@ -43,11 +43,11 @@ export default async function TemplateEditPage({ params }: { params: Promise<{ k
         templateKey={key}
         initial={{
           subject: tpl.subject,
-          html: tpl.html,
-          text_body: tpl.text_body || "",
+          blocks: tpl.blocks,
+          text_body: tpl.text_body,
         }}
-        vars={[...def.vars]}
-        sample={def.sample}
+        blockFields={def.blockFields}
+        defaults={def.defaults.blocks}
       />
     </div>
   );

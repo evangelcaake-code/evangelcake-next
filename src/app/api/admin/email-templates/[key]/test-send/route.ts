@@ -1,15 +1,20 @@
 /**
  * POST /api/admin/email-templates/[key]/test-send
- * Body: { to: string, subject: string, html: string, text_body?: string }
+ * Body: { to, subject, blocks, text_body? }
  *
- * Sustituye las variables con los datos de muestra (sample) y manda el email
- * a la dirección indicada. Útil para previsualizar en cliente real (Gmail,
- * Apple Mail) cómo se ve el email antes de guardar la plantilla.
+ * Renderiza con datos de muestra (def.sample) usando el layout fijo de la
+ * plantilla y manda a la dirección indicada. Sirve para previsualizar el
+ * email en un cliente real ANTES de guardar la edición.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { sendTestRendered } from "@/lib/resend";
-import { TEMPLATE_DEFS, substitute, type TemplateKey } from "@/lib/emailTemplates";
+import {
+  TEMPLATE_DEFS,
+  substitute,
+  type TemplateKey,
+  type BlockMap,
+} from "@/lib/emailTemplates";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -29,22 +34,30 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ key
   const body = await req.json();
   const to = String(body.to || "").trim().toLowerCase();
   const subject = String(body.subject || "");
-  const html = String(body.html || "");
+  const blocksIn = (body.blocks as BlockMap | undefined) || {};
   const text_body = String(body.text_body || "");
 
   if (!EMAIL_REGEX.test(to)) {
     return NextResponse.json({ error: "Email no válido" }, { status: 400 });
   }
-  if (!subject || !html) {
-    return NextResponse.json({ error: "Faltan subject o html" }, { status: 400 });
+  if (!subject) {
+    return NextResponse.json({ error: "Falta el subject" }, { status: 400 });
   }
 
   const def = TEMPLATE_DEFS[key];
+  const merged: BlockMap = { ...def.defaults.blocks, ...blocksIn };
+
+  // Sustituir vars en cada bloque con los datos de muestra
+  const substituted: BlockMap = {};
+  for (const [k, v] of Object.entries(merged)) {
+    substituted[k] = substitute(v, def.sample);
+  }
+
   try {
     await sendTestRendered({
       to,
       subject: substitute(subject, def.sample),
-      html: substitute(html, def.sample),
+      html: def.layout(substituted, def.sample),
       text: substitute(text_body || "", def.sample),
     });
     return NextResponse.json({ ok: true });

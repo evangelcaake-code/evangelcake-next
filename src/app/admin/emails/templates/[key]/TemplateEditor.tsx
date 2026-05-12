@@ -1,34 +1,81 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+interface BlockField {
+  key: string;
+  label: string;
+  type: "input" | "textarea";
+  hint?: string;
+}
 
 interface Props {
   templateKey: string;
-  initial: { subject: string; html: string; text_body: string };
-  vars: string[];
-  sample: Record<string, string | number>;
+  initial: {
+    subject: string;
+    blocks: Record<string, string>;
+    text_body: string;
+  };
+  blockFields: BlockField[];
+  defaults: Record<string, string>;
 }
 
-function substitute(template: string, vars: Record<string, string | number>): string {
-  return template.replace(/\{\{\s*([a-z_][a-z0-9_]*)\s*\}\}/gi, (_m, key) => {
-    const v = vars[key];
-    return v === undefined || v === null ? "" : String(v);
-  });
-}
-
-export default function TemplateEditor({ templateKey, initial, vars, sample }: Props) {
+export default function TemplateEditor({ templateKey, initial, blockFields, defaults }: Props) {
   const [subject, setSubject] = useState(initial.subject);
-  const [html, setHtml] = useState(initial.html);
+  const [blocks, setBlocks] = useState<Record<string, string>>(initial.blocks);
   const [textBody, setTextBody] = useState(initial.text_body);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [err, setErr] = useState("");
+  const [previewHtml, setPreviewHtml] = useState("");
+  const [previewSubject, setPreviewSubject] = useState("");
+  const [previewing, setPreviewing] = useState(false);
   const [testTo, setTestTo] = useState("");
   const [testStatus, setTestStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [testMsg, setTestMsg] = useState("");
 
-  const previewSubject = useMemo(() => substitute(subject, sample), [subject, sample]);
-  const previewHtml = useMemo(() => substitute(html, sample), [html, sample]);
+  function updateBlock(k: string, v: string) {
+    setBlocks((prev) => ({ ...prev, [k]: v }));
+  }
+
+  function resetBlock(k: string) {
+    setBlocks((prev) => ({ ...prev, [k]: defaults[k] || "" }));
+  }
+
+  // Re-renderizar preview pidiendo al server con los valores actuales.
+  // Lo hacemos con debounce de 350 ms para no hacer fetch en cada tecla.
+  const previewBody = useMemo(
+    () => JSON.stringify({ subject, blocks, text_body: textBody }),
+    [subject, blocks, textBody],
+  );
+
+  useEffect(() => {
+    const ctrl = new AbortController();
+    const t = setTimeout(async () => {
+      try {
+        setPreviewing(true);
+        const res = await fetch(`/api/admin/email-templates/${templateKey}/preview`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: previewBody,
+          signal: ctrl.signal,
+        });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        setPreviewHtml(data.html);
+        setPreviewSubject(data.subject);
+      } catch {
+        // silencio: preview de fallback es la última que se cargó
+      } finally {
+        setPreviewing(false);
+      }
+    }, 350);
+    return () => {
+      clearTimeout(t);
+      ctrl.abort();
+    };
+  }, [previewBody, templateKey]);
 
   async function onSave() {
     setSaving(true);
@@ -37,7 +84,7 @@ export default function TemplateEditor({ templateKey, initial, vars, sample }: P
       const res = await fetch(`/api/admin/email-templates/${templateKey}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, html, text_body: textBody }),
+        body: JSON.stringify({ subject, blocks, text_body: textBody }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error guardando");
@@ -49,16 +96,9 @@ export default function TemplateEditor({ templateKey, initial, vars, sample }: P
     }
   }
 
-  async function onReset() {
-    if (!confirm("Esto vuelve a los textos por defecto del código. ¿Seguro?")) return;
-    // Reload defaults from server (without DB row).
-    // Simplest path: ask the API for the default by deleting the row.
-    // Pero no quiero crear un endpoint DELETE para algo raro. En su lugar
-    // simplemente recargo la página y le pido al usuario que sobreescriba.
-    // ALTERNATIVA: hacemos un fetch a /api/admin/email-templates/[key]?defaults=1
-    // y dejamos el subject/html/text en los campos. Más simple: implementamos eso
-    // como un campo en respuesta GET. (Por ahora: alert con instrucciones).
-    alert("Para volver al default, ve a Supabase → email_templates → borra la fila con este key. La próxima vez que recargues, verás los defaults del código.");
+  function onResetAll() {
+    if (!confirm("Esto vuelve TODOS los campos a los valores por defecto. ¿Seguro?")) return;
+    setBlocks({ ...defaults });
   }
 
   async function onTestSend() {
@@ -73,7 +113,7 @@ export default function TemplateEditor({ templateKey, initial, vars, sample }: P
       const res = await fetch(`/api/admin/email-templates/${templateKey}/test-send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ to: testTo, subject, html, text_body: textBody }),
+        body: JSON.stringify({ to: testTo, subject, blocks, text_body: textBody }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error enviando");
@@ -85,116 +125,163 @@ export default function TemplateEditor({ templateKey, initial, vars, sample }: P
     }
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "10px 12px",
+    borderRadius: 8,
+    border: "1px solid rgba(0,0,0,.15)",
+    fontSize: 14,
+    fontFamily: "inherit",
+  };
+
   return (
     <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 20 }}>
       <div className="admin-card" style={{ alignSelf: "start" }}>
-        <header className="admin-card-head"><h2>Editor</h2></header>
-        <div style={{ padding: "12px 20px 20px", display: "flex", flexDirection: "column", gap: 14 }}>
-          <label style={{ display: "block", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)" }}>
-            Subject
+        <header className="admin-card-head"><h2>Editar texto</h2></header>
+        <div style={{ padding: "12px 20px 20px", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)", marginBottom: 4 }}>
+              Asunto del email (Subject)
+            </label>
             <input
               type="text"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              style={{ marginTop: 4, width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.15)", fontSize: 14 }}
+              style={inputStyle}
               maxLength={200}
             />
-          </label>
-
-          <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <label style={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)" }}>
-                HTML
-              </label>
-              <span style={{ fontSize: 11, color: "var(--ink-2)" }}>{html.length} chars</span>
-            </div>
-            <textarea
-              value={html}
-              onChange={(e) => setHtml(e.target.value)}
-              rows={20}
-              style={{ marginTop: 4, width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.15)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 12, lineHeight: 1.5 }}
-            />
-          </div>
-
-          <div>
-            <label style={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)" }}>
-              Texto plano (fallback)
-            </label>
-            <textarea
-              value={textBody}
-              onChange={(e) => setTextBody(e.target.value)}
-              rows={6}
-              style={{ marginTop: 4, width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.15)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 12, lineHeight: 1.5 }}
-            />
-          </div>
-
-          <div style={{ background: "#fbf3df", padding: "12px 14px", borderRadius: 10, fontSize: 12, lineHeight: 1.55 }}>
-            <strong>Variables disponibles</strong> (escribe <code>{`{{nombre}}`}</code> para insertarlas):
-            <div style={{ marginTop: 6, display: "flex", flexWrap: "wrap", gap: 6 }}>
-              {vars.map((v) => (
-                <code key={v} style={{ background: "#fff", padding: "2px 8px", borderRadius: 6, fontSize: 11 }}>{`{{${v}}}`}</code>
-              ))}
-            </div>
-            <p style={{ margin: "8px 0 0", color: "var(--ink-2)", fontSize: 11 }}>
-              El footer con el botón "darse de baja" se añade automáticamente al final de cada email — no lo pongas en la plantilla.
+            <p style={{ margin: "4px 0 0", fontSize: 11, color: "var(--ink-2)" }}>
+              Lo que ve la gente antes de abrir el email. {subject.length}/200
             </p>
           </div>
 
+          <hr style={{ border: 0, borderTop: "1px solid rgba(0,0,0,.08)", margin: 0 }} />
+
+          {blockFields.map((field) => {
+            const value = blocks[field.key] ?? defaults[field.key] ?? "";
+            const isDirty = value !== (defaults[field.key] ?? "");
+            return (
+              <div key={field.key}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+                  <label style={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)" }}>
+                    {field.label}
+                  </label>
+                  {isDirty && (
+                    <button
+                      type="button"
+                      onClick={() => resetBlock(field.key)}
+                      style={{ background: "none", border: 0, color: "var(--pink-deep)", fontSize: 11, cursor: "pointer", padding: 0 }}
+                    >
+                      restaurar
+                    </button>
+                  )}
+                </div>
+                {field.type === "textarea" ? (
+                  <textarea
+                    value={value}
+                    onChange={(e) => updateBlock(field.key, e.target.value)}
+                    rows={3}
+                    style={{ ...inputStyle, fontSize: 13, lineHeight: 1.5 }}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => updateBlock(field.key, e.target.value)}
+                    style={inputStyle}
+                  />
+                )}
+                {field.hint && (
+                  <p style={{ margin: "4px 0 0", fontSize: 11, color: "var(--ink-2)" }}>{field.hint}</p>
+                )}
+              </div>
+            );
+          })}
+
+          <hr style={{ border: 0, borderTop: "1px solid rgba(0,0,0,.08)", margin: 0 }} />
+
+          <button
+            type="button"
+            onClick={() => setShowAdvanced((v) => !v)}
+            style={{ background: "none", border: 0, color: "var(--ink-2)", fontSize: 12, cursor: "pointer", padding: 0, textAlign: "left", textDecoration: "underline" }}
+          >
+            {showAdvanced ? "− Ocultar" : "+ Mostrar"} texto plano (fallback para clientes sin HTML)
+          </button>
+          {showAdvanced && (
+            <div>
+              <label style={{ display: "block", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)", marginBottom: 4 }}>
+                Versión texto plano
+              </label>
+              <textarea
+                value={textBody}
+                onChange={(e) => setTextBody(e.target.value)}
+                rows={8}
+                style={{ ...inputStyle, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 12, lineHeight: 1.5 }}
+              />
+              <p style={{ margin: "4px 0 0", fontSize: 11, color: "var(--ink-2)" }}>
+                Lo ve quien tiene un cliente de email antiguo o con imágenes desactivadas. También sirve para mejorar la puntuación antispam.
+              </p>
+            </div>
+          )}
+
           {err && <p style={{ color: "#d33", fontSize: 13, margin: 0 }}>{err}</p>}
 
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
             <button type="button" onClick={onSave} disabled={saving} className="btn btn-pink" style={{ padding: "10px 20px", fontSize: 14 }}>
-              {saving ? "Guardando…" : "Guardar"}
+              {saving ? "Guardando…" : "Guardar cambios"}
             </button>
-            <button type="button" onClick={onReset} className="btn" style={{ padding: "10px 20px", fontSize: 14, background: "rgba(0,0,0,.06)", color: "var(--ink-1)" }}>
+            <button type="button" onClick={onResetAll} className="btn" style={{ padding: "10px 20px", fontSize: 14, background: "rgba(0,0,0,.06)", color: "var(--ink-1)" }}>
               Volver al default
             </button>
-            {savedAt && <span style={{ alignSelf: "center", fontSize: 12, color: "var(--ink-2)" }}>✓ Guardado a las {savedAt}</span>}
+            {savedAt && <span style={{ fontSize: 12, color: "var(--ink-2)" }}>✓ Guardado a las {savedAt}</span>}
           </div>
 
-          <hr style={{ border: 0, borderTop: "1px solid rgba(0,0,0,.08)", margin: "4px 0" }} />
+          <hr style={{ border: 0, borderTop: "1px solid rgba(0,0,0,.08)", margin: 0 }} />
 
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)" }}>
-              Mandarme un email de prueba
+            <label style={{ display: "block", fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)", marginBottom: 4 }}>
+              Mandarme un test ahora
             </label>
-            <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+            <div style={{ display: "flex", gap: 8 }}>
               <input
                 type="email"
                 value={testTo}
                 onChange={(e) => setTestTo(e.target.value)}
                 placeholder="tu@email.com"
-                style={{ flex: 1, padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.15)", fontSize: 14 }}
+                style={inputStyle}
               />
-              <button type="button" onClick={onTestSend} disabled={testStatus === "sending"} className="btn btn-pink" style={{ padding: "10px 20px", fontSize: 14 }}>
-                {testStatus === "sending" ? "Enviando…" : "Enviar test"}
+              <button type="button" onClick={onTestSend} disabled={testStatus === "sending"} className="btn btn-pink" style={{ padding: "10px 20px", fontSize: 14, whiteSpace: "nowrap" }}>
+                {testStatus === "sending" ? "Enviando…" : "Enviar"}
               </button>
             </div>
             {testMsg && (
               <p style={{ margin: "8px 0 0", fontSize: 13, color: testStatus === "ok" ? "#0a8c4a" : "#d33" }}>{testMsg}</p>
             )}
-            <p style={{ margin: "6px 0 0", fontSize: 11, color: "var(--ink-2)" }}>
-              Manda el email con datos de ejemplo (sin guardar). Útil para ver cómo se ve en Gmail/Outlook antes de guardar.
+            <p style={{ margin: "4px 0 0", fontSize: 11, color: "var(--ink-2)" }}>
+              Manda el email con datos de ejemplo a tu inbox. No guarda los cambios.
             </p>
           </div>
         </div>
       </div>
 
       <div className="admin-card" style={{ alignSelf: "start", position: "sticky", top: 20 }}>
-        <header className="admin-card-head"><h2>Preview</h2></header>
+        <header className="admin-card-head">
+          <h2>Preview en vivo</h2>
+          {previewing && <span style={{ fontSize: 11, color: "var(--ink-2)" }}>actualizando…</span>}
+        </header>
         <div style={{ padding: "12px 20px 20px" }}>
-          <p style={{ margin: "0 0 4px", fontSize: 11, color: "var(--ink-2)", textTransform: "uppercase", letterSpacing: ".04em" }}>Subject</p>
-          <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>{previewSubject}</p>
+          <p style={{ margin: "0 0 4px", fontSize: 11, color: "var(--ink-2)", textTransform: "uppercase", letterSpacing: ".04em" }}>Asunto</p>
+          <p style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>{previewSubject || subject}</p>
 
-          <p style={{ margin: "16px 0 4px", fontSize: 11, color: "var(--ink-2)", textTransform: "uppercase", letterSpacing: ".04em" }}>Body</p>
+          <p style={{ margin: "16px 0 4px", fontSize: 11, color: "var(--ink-2)", textTransform: "uppercase", letterSpacing: ".04em" }}>Cómo lo verán</p>
           <iframe
             srcDoc={previewHtml}
             sandbox=""
-            style={{ width: "100%", height: 700, border: "1px solid rgba(0,0,0,.1)", borderRadius: 10, background: "#fff" }}
+            style={{ width: "100%", height: 720, border: "1px solid rgba(0,0,0,.1)", borderRadius: 10, background: "#fff" }}
             title="Preview email"
           />
           <p style={{ margin: "10px 0 0", fontSize: 11, color: "var(--ink-2)" }}>
-            Preview con datos de ejemplo. El footer de unsubscribe se añade en el envío real, no se muestra aquí.
+            Con datos de ejemplo. El botón "darse de baja" se añade automáticamente al final en el envío real.
           </p>
         </div>
       </div>

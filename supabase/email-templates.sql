@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS email_templates (
   updated_at  timestamptz DEFAULT now()
 );
 
+-- Sistema de bloques: el HTML se ensambla desde el layout fijo + bloques
+-- editables, en vez de editar el HTML completo. La columna `blocks` guarda
+-- los valores actuales como JSON; si no existe la columna o está vacía,
+-- se usan los defaults del código.
+ALTER TABLE email_templates ADD COLUMN IF NOT EXISTS blocks jsonb;
+
 ALTER TABLE email_templates ENABLE ROW LEVEL SECURITY;
 -- Sin políticas públicas → solo accesible vía service_role (admin API).
 
