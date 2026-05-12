@@ -231,37 +231,36 @@ export default function SobreNosotrosPage() {
       >
         <div className="head" style={{ marginBottom: 32 }}>
           <h2 id="values-title">
-            Tres cosas en las que <em>creemos.</em>
+            EvangelCake <em>en datos.</em>
           </h2>
           <p>
-            No vendemos una tarta, vendemos el rato que pasarás partiéndola con
-            quien quieres. Por eso cuidamos cada detalle desde la harina al
-            lazo.
+            Una pastelería en pleno centro de Zaragoza, con 20 años de oficio
+            detrás y reconocida por la prensa local.
           </p>
         </div>
         <div className="grid">
           <div className="v">
             <div className="ic">♥</div>
-            <h4>Tiempo, no prisa.</h4>
+            <h4>+800 tartas al año</h4>
             <p>
-              Cada masa reposa, cada glaseado se monta a mano. No hay atajos en
-              el sabor.
+              Una tarta personalizada cada 11 horas, todas hechas a mano en
+              nuestro obrador de Pº María Agustín 13, Zaragoza.
             </p>
           </div>
           <div className="v">
             <div className="ic">★</div>
-            <h4>Detalle a detalle.</h4>
+            <h4>20 años de oficio</h4>
             <p>
-              Desde el papel del envoltorio hasta el bizcocho de zanahoria de
-              los jueves: cada pieza se piensa entera.
+              Andreia empezó en 2004 con la tarta del primer cumpleaños de
+              Tiago. En 2024 abrimos el local en pleno centro.
             </p>
           </div>
           <div className="v">
             <div className="ic">⊕</div>
-            <h4>Toque brasileño.</h4>
+            <h4>En prensa y reseñas</h4>
             <p>
-              Recetas heredadas que cruzan océanos. Chantilly, no fondant. Sabor
-              que se nota.
+              El Heraldo, El Español y Aragón Digital nos han dedicado
+              reportajes. 5 estrellas en Google.
             </p>
           </div>
         </div>
