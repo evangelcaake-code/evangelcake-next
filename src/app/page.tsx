@@ -71,48 +71,48 @@ const bakerySchema = {
   },
 };
 
-// Selección representativa de la galería completa — usamos las mismas fotos
-// que en /galeria para mantener coherencia visual entre páginas.
+// 8 fotos originales de /images/home/ + grinch y flamenca añadidos de /galeria
+// para mostrar humor y temáticas.
 const galleryHome: Array<{ src: string; alt: string; caption: string }> = [
   {
-    src: "/images/gallery/boda-rosas.jpg",
-    alt: "Tarta de boda con cobertura de chantilly y rosas blancas",
-    caption: "Boda · Chantilly",
+    src: "/images/home/andreia-tarta-frambuesa.jpg",
+    alt: "Andreia con tarta de chantilly y frambuesas en EvangelCake Zaragoza",
+    caption: "Andreia · Chantilly",
   },
   {
-    src: "/images/gallery/comunion-zalome.jpg",
-    alt: "Tarta de comunión de dos pisos en tono rosa con figura, IHS y rosario",
-    caption: "Comunión · Zalome",
+    src: "/images/home/cumple-unicornio.jpg",
+    alt: "Tarta de cumpleaños unicornio-gato con drip rosa y arcoíris",
+    caption: "Cumple · Unicornio",
   },
   {
-    src: "/images/gallery/corazon-eternidad.jpg",
-    alt: "Tarta corazón blanca con piping vintage Por la Eternidad",
-    caption: "Corazón vintage",
+    src: "/images/home/proceso-pisos.jpg",
+    alt: "Montaje de pisos de bizcocho con rellenos de chocolate y frutos rojos",
+    caption: "Proceso · Pisos",
   },
   {
-    src: "/images/gallery/cumple-telma.jpg",
-    alt: "Tarta de cumpleaños vintage clásica con lazos negros estilo coquette",
-    caption: "Vintage · Coquette",
+    src: "/images/home/corazon-pistacho.jpg",
+    alt: "Tarta corazón de chocolate con buttercream de pistacho artesanal",
+    caption: "Corazón · Pistacho",
   },
   {
-    src: "/images/gallery/cumple-santorini.jpg",
-    alt: "Tarta de cumpleaños inspirada en Santorini con rosas y casa azul",
-    caption: "Temática · Santorini",
-  },
-  {
-    src: "/images/gallery/drip-chocolate-frutas.jpg",
-    alt: "Tarta drip de chocolate con fresas frambuesas y oro comestible",
-    caption: "Drip · Chocolate",
-  },
-  {
-    src: "/images/gallery/cumple-isabel-1ano.jpg",
-    alt: "Tarta primer cumple ISABEL de dos pisos rosa con osito",
+    src: "/images/home/primer-cumple-osito.jpg",
+    alt: "Tarta primer cumpleaños azul con osito y estrellas doradas",
     caption: "Primer cumple",
   },
   {
-    src: "/images/gallery/cumple-oh-shit.jpg",
-    alt: "Tarta divertida con cara y piernas Oh shit Im 26",
-    caption: "Humor · Cumple",
+    src: "/images/home/proceso-masa.jpg",
+    alt: "Manos amasando masa artesanal en el obrador de EvangelCake",
+    caption: "Proceso · Masa",
+  },
+  {
+    src: "/images/home/cumple-dragon-ball.jpg",
+    alt: "Tarta temática Dragon Ball Z con Goku en plateado y naranja",
+    caption: "Dragon Ball",
+  },
+  {
+    src: "/images/home/cookie-caramelo.jpg",
+    alt: "Cookie artesanal partida con relleno de dulce de leche fundente",
+    caption: "Cookie · Caramelo",
   },
   {
     src: "/images/gallery/navidad-grinch.jpg",
