@@ -4799,12 +4799,66 @@ footer ul a:hover{color:var(--pink)}
   background:var(--pink-deep) !important;transform:translateY(-2px);
 }
 
-/* Footer: vertical stack en columna pequeña */
+/* ==========================================================================
+   Newsletter del FOOTER (stacked nombre + email + botón en dark theme)
+   ==========================================================================
+   El .foot-news original era una píldora única con input+botón dentro.
+   Aquí lo rompemos: cada elemento es independiente, con su propio borde,
+   estilizado para verse bien sobre fondo --ink (#1A1614).
+*/
 .foot-news-stacked{
-  display:flex;flex-direction:column;gap:6px;margin-top:12px;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:10px !important;
+  margin-top:16px !important;
+  max-width:300px;
+  /* anular border + padding del .foot-news original */
+  border:none !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  align-items:stretch !important;
 }
-.foot-news-stacked input{width:100%}
-.foot-news-stacked button{width:100%}
+.foot-news-stacked input{
+  width:100% !important;
+  background:rgba(255,255,255,.05) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  border-radius:var(--r-pill) !important;
+  color:var(--paper) !important;
+  padding:11px 16px !important;
+  font:inherit !important;font-size:13px !important;
+  outline:none !important;
+  transition:border-color .25s, background .25s;
+}
+.foot-news-stacked input:focus{
+  background:rgba(255,255,255,.09) !important;
+  border-color:var(--pink) !important;
+  box-shadow:0 0 0 3px rgba(244,184,208,.12) !important;
+}
+.foot-news-stacked input::placeholder{
+  color:rgba(255,255,255,.45) !important;
+}
+.foot-news-stacked button{
+  width:100% !important;
+  background:var(--pink-deep) !important;
+  color:#fff !important;
+  border:none !important;
+  border-radius:var(--r-pill) !important;
+  padding:11px 18px !important;
+  font:inherit !important;font-size:13px !important;font-weight:600 !important;
+  cursor:pointer;
+  letter-spacing:.01em;
+  margin-top:2px;
+  transition:background .25s, transform .25s, box-shadow .25s !important;
+}
+.foot-news-stacked button:hover{
+  background:#ff7eb6 !important;
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(232,90,154,.30);
+}
+.foot-news-stacked button:disabled{
+  opacity:.55;cursor:wait;transform:none;
+}
 
 /* Inline (.newsletter-inline en blog): dos inputs antes del botón pink */
 .newsletter-inline .newsletter-form-stacked{
