@@ -147,12 +147,18 @@ export default async function AdminPage() {
         <div>
           <span className="game-eyebrow">Panel interno</span>
           <h1>Admin</h1>
-          <p style={{ margin: "4px 0 0", fontSize: 13 }}>
+          <p style={{ margin: "4px 0 0", fontSize: 13, display: "flex", gap: 14, flexWrap: "wrap" }}>
             <a
               href="/admin/analytics"
               style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
             >
               Ver analítica completa →
+            </a>
+            <a
+              href="/admin/emails"
+              style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
+            >
+              Gestionar emails →
             </a>
           </p>
         </div>
