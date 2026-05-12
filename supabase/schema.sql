@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS subscribers (
   email           text UNIQUE NOT NULL,
   name            text,
   source          text NOT NULL DEFAULT 'web',   -- 'game' | 'newsletter' | 'lead-magnet' | 'contact'
+  birthday        date,                          -- opcional, para campañas de cumpleaños
   discount_code   text,                          -- código asignado al registrarse
   discount_used   boolean DEFAULT false,
   consent_marketing boolean DEFAULT true,
@@ -23,6 +24,8 @@ CREATE TABLE IF NOT EXISTS subscribers (
 
 CREATE INDEX IF NOT EXISTS idx_subscribers_email ON subscribers(email);
 CREATE INDEX IF NOT EXISTS idx_subscribers_source ON subscribers(source);
+CREATE INDEX IF NOT EXISTS idx_subscribers_birthday_md
+  ON subscribers (EXTRACT(MONTH FROM birthday), EXTRACT(DAY FROM birthday));
 
 -- =====================================================
 -- TABLA: scores (ranking del juego)

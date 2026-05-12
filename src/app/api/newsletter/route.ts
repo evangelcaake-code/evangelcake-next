@@ -28,6 +28,19 @@ export async function POST(req: NextRequest) {
     const source = String(body.source || "newsletter");
     const consent = Boolean(body.consent);
 
+    // Birthday opcional. Esperamos formato ISO 'YYYY-MM-DD' (input type=date).
+    let birthday: string | null = null;
+    if (body.birthday) {
+      const raw = String(body.birthday).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+        const d = new Date(raw + "T00:00:00");
+        const y = d.getFullYear();
+        if (!Number.isNaN(d.getTime()) && y >= 1900 && d.getTime() <= Date.now()) {
+          birthday = raw;
+        }
+      }
+    }
+
     if (!EMAIL_REGEX.test(email)) {
       return NextResponse.json({ error: "Email inválido" }, { status: 400 });
     }
@@ -49,7 +62,7 @@ export async function POST(req: NextRequest) {
     // ¿Existe ya?
     const { data: existing } = await sb
       .from("subscribers")
-      .select("id, name, discount_code")
+      .select("id, name, birthday, discount_code")
       .eq("email", email)
       .maybeSingle();
 
@@ -60,11 +73,19 @@ export async function POST(req: NextRequest) {
     // newsletter solo con email, y ahora se registra en el juego con nombre),
     // actualizamos el row para enriquecerlo y evitar dashboards con celdas
     // vacías. NO se crea fila nueva.
-    if (existing && body.name && (!existing.name || existing.name === "amig@")) {
-      await sb
-        .from("subscribers")
-        .update({ name, source })
-        .eq("id", existing.id);
+    if (existing) {
+      const patch: Record<string, unknown> = {};
+      if (body.name && (!existing.name || existing.name === "amig@")) {
+        patch.name = name;
+        patch.source = source;
+      }
+      // Si nos da cumpleaños y no lo teníamos, lo guardamos.
+      if (birthday && !existing.birthday) {
+        patch.birthday = birthday;
+      }
+      if (Object.keys(patch).length > 0) {
+        await sb.from("subscribers").update(patch).eq("id", existing.id);
+      }
     }
 
     if (!existing) {
@@ -97,6 +118,7 @@ export async function POST(req: NextRequest) {
         email,
         name,
         source,
+        birthday,
         discount_code: code,
         consent_marketing: consent,
       });

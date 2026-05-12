@@ -8,6 +8,7 @@ import { track } from "@/lib/track";
 export default function HomeNewsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -28,7 +29,13 @@ export default function HomeNewsletter() {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email, source: "home", consent: true }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email,
+          birthday: birthday || undefined,
+          source: "home",
+          consent: true,
+        }),
       });
       if (res.ok) {
         saveSubscribedEmail(email);
@@ -36,6 +43,7 @@ export default function HomeNewsletter() {
         setDone(true);
         setName("");
         setEmail("");
+        setBirthday("");
       } else {
         const data = await res.json().catch(() => ({}));
         setError(data.error || "No pudimos guardarlo. Inténtalo otra vez.");
@@ -101,6 +109,17 @@ export default function HomeNewsletter() {
             autoComplete="email"
             aria-label="Tu correo electrónico"
           />
+          <label className="newsletter-birthday">
+            <span>Tu cumpleaños (opcional)</span>
+            <input
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              max={new Date().toISOString().slice(0, 10)}
+              min="1900-01-01"
+            />
+            <small>Si lo dejas, ese día te llega algo especial 🎂</small>
+          </label>
           <button type="submit" disabled={loading}>
             {loading ? "Enviando…" : "Suscribir →"}
           </button>

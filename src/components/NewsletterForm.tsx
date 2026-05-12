@@ -21,6 +21,7 @@ export default function NewsletterForm({
 }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -46,7 +47,13 @@ export default function NewsletterForm({
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email, source, consent }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email,
+          birthday: birthday || undefined,
+          source,
+          consent,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
@@ -103,6 +110,17 @@ export default function NewsletterForm({
           autoComplete="email"
           aria-label="Tu email"
         />
+        <label className="newsletter-birthday">
+          <span>Tu cumpleaños (opcional)</span>
+          <input
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+            max={new Date().toISOString().slice(0, 10)}
+            min="1900-01-01"
+          />
+          <small>Si lo dejas, ese día te llega algo especial 🎂</small>
+        </label>
         <button type="submit" className="btn btn-pink" disabled={loading}>
           {loading ? "Enviando…" : buttonLabel}
         </button>

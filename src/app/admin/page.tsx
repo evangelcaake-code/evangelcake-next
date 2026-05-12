@@ -16,6 +16,7 @@ type Subscriber = {
   email: string;
   name: string | null;
   source: string;
+  birthday: string | null;
   discount_code: string | null;
   discount_used: boolean | null;
   consent_marketing: boolean | null;
@@ -91,7 +92,7 @@ export default async function AdminPage() {
       sb
         .from("subscribers")
         .select(
-          "email, name, source, discount_code, discount_used, consent_marketing, created_at",
+          "email, name, source, birthday, discount_code, discount_used, consent_marketing, created_at",
         )
         .order("created_at", { ascending: false })
         .limit(200),
@@ -127,6 +128,17 @@ export default async function AdminPage() {
 
   const codesUsed = codes.filter((c) => c.used).length;
   const newLeadsCount = leads.filter((l) => l.status === "new").length;
+
+  // Cumpleañeros del mes en curso (con birthday rellenada).
+  const currentMonth = new Date().getMonth(); // 0..11
+  const birthdayThisMonth = subscribers
+    .filter((s) => s.birthday)
+    .map((s) => {
+      const d = new Date(s.birthday + "T00:00:00");
+      return { sub: s, month: d.getMonth(), day: d.getDate() };
+    })
+    .filter((x) => x.month === currentMonth)
+    .sort((a, b) => a.day - b.day);
 
   return (
     <div className="admin-shell">
@@ -231,6 +243,47 @@ export default async function AdminPage() {
         </div>
       </section>
 
+      {birthdayThisMonth.length > 0 && (
+        <section className="admin-card">
+          <header className="admin-card-head">
+            <h2>🎂 Cumpleañeros este mes</h2>
+            <span className="admin-count">
+              {birthdayThisMonth.length} suscriptor(es)
+            </span>
+          </header>
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Día</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Cumple</th>
+                  <th>Fuente</th>
+                </tr>
+              </thead>
+              <tbody>
+                {birthdayThisMonth.map((b) => (
+                  <tr key={b.sub.email}>
+                    <td><strong>{b.day}</strong></td>
+                    <td>{b.sub.name || "—"}</td>
+                    <td>
+                      <a href={`mailto:${b.sub.email}`}>{b.sub.email}</a>
+                    </td>
+                    <td>{fmtDay(b.sub.birthday)}</td>
+                    <td>
+                      <span className={`admin-tag admin-tag-${b.sub.source}`}>
+                        {b.sub.source}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
       <section className="admin-card">
         <header className="admin-card-head">
           <h2>Suscriptores newsletter</h2>
@@ -243,6 +296,7 @@ export default async function AdminPage() {
                 <th>Fecha</th>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Cumple</th>
                 <th>Origen</th>
                 <th>Código</th>
                 <th>Usado</th>
@@ -252,7 +306,7 @@ export default async function AdminPage() {
             <tbody>
               {subscribers.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="admin-empty">
+                  <td colSpan={8} className="admin-empty">
                     Aún no hay suscriptores.
                   </td>
                 </tr>
@@ -264,6 +318,7 @@ export default async function AdminPage() {
                   <td>
                     <a href={`mailto:${s.email}`}>{s.email}</a>
                   </td>
+                  <td>{s.birthday ? fmtDay(s.birthday) : "—"}</td>
                   <td>
                     <span className={`admin-tag admin-tag-${s.source}`}>
                       {s.source}
