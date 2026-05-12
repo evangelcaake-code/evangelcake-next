@@ -144,7 +144,10 @@ p{margin:0 0 12px}
 .hero{
   padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;
   align-items:center;min-height:680px;
-  position:relative;overflow:hidden;
+  /* position:relative para que hero-decor se ancle bien.
+     SIN overflow:hidden — el hero-sticker necesita salir por arriba.
+     El recorte lo hace el propio .hero-decor (que sí tiene overflow:hidden). */
+  position:relative;
 }
 
 /* ===== HERO DECORATION: anillo cónico rotante + glow + sparkles =====
@@ -280,7 +283,7 @@ p{margin:0 0 12px}
 
 /* === HERO STICKER (sello "Tartas Personalizadas") === */
 .hero-sticker{
-  position:absolute;top:-32%;right:-4%;
+  position:absolute;top:-22%;right:-4%;
   width:138px;height:138px;
   border-radius:50%;
   background:var(--pink-deep);
