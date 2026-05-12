@@ -545,18 +545,26 @@ export default function Game({ embed = false }: GameProps = {}) {
   // Cache de los emojis renderizados como bitmaps a un tamaño base. Cada
   // frame hace drawImage (rápido) en lugar de fillText (lento en móvil).
   const emojiCacheRef = useRef<Record<string, HTMLCanvasElement> | null>(null);
+  // Para throttle de setState: guardamos el último valor escrito a React.
+  const lastUITimeRef = useRef(-1);
+  const lastUIScoreRef = useRef(-1);
 
   function getEmojiBitmap(emoji: string): HTMLCanvasElement | null {
     if (typeof document === "undefined") return null;
     if (!emojiCacheRef.current) emojiCacheRef.current = {};
     const cache = emojiCacheRef.current;
     if (cache[emoji]) return cache[emoji];
-    const size = 128; // tamaño base — se escala con drawImage en runtime
+    // Tamaño base 256 (antes 128) para que al hacer drawImage a tamaños
+    // pequeños se mantenga la nitidez en pantallas retina. Se renderiza
+    // una sola vez al cargar el componente.
+    const size = 256;
     const c = document.createElement("canvas");
     c.width = size;
     c.height = size;
     const cctx = c.getContext("2d");
     if (!cctx) return null;
+    cctx.imageSmoothingEnabled = true;
+    cctx.imageSmoothingQuality = "high";
     cctx.font = `${Math.floor(size * 0.92)}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
     cctx.textAlign = "center";
     cctx.textBaseline = "middle";
@@ -574,6 +582,8 @@ export default function Game({ embed = false }: GameProps = {}) {
     const s = stateRef.current;
     s.score = 0;
     s.timeLeft = CONFIG.GAME_DURATION;
+    lastUITimeRef.current = -1;
+    lastUIScoreRef.current = -1;
     s.objects.length = 0;
     s.particles.length = 0;
     s.lastSpawn = 0;
@@ -605,8 +615,18 @@ export default function Game({ embed = false }: GameProps = {}) {
     s.lastTime = now;
     const elapsed = (now - s.gameStartedAt) / 1000;
     s.timeLeft = Math.max(0, CONFIG.GAME_DURATION - elapsed);
-    setTimeLeft(Math.ceil(s.timeLeft));
-    setScore(s.score);
+    // Solo actualizar React state cuando el valor realmente cambia.
+    // setState con mismo valor sigue siendo work — evitarlo nos da +fluidez
+    // sobre todo en móvil.
+    const ceilTime = Math.ceil(s.timeLeft);
+    if (lastUITimeRef.current !== ceilTime) {
+      lastUITimeRef.current = ceilTime;
+      setTimeLeft(ceilTime);
+    }
+    if (lastUIScoreRef.current !== s.score) {
+      lastUIScoreRef.current = s.score;
+      setScore(s.score);
+    }
     update(dt);
     render();
     if (s.timeLeft <= 0) {

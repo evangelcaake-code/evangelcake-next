@@ -5653,7 +5653,10 @@ footer ul a:hover{color:var(--pink)}
   .values .grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important}
 
   /* —— HERO: mascota más pequeña, no apilar masivamente —— */
-  .hero-pic{max-width:280px;margin:0 auto}
+  /* Mascota home: reducida bastante en mobile para no tapar/ocupar tanto */
+  .hero-pic{max-width:200px;margin:0 auto;aspect-ratio:1/1}
+  .hero-pic img{width:70% !important}
+  .hero-blob{display:none !important}
   .hero-stats{gap:14px;flex-wrap:wrap;justify-content:flex-start}
   .hero-stat .n{font-size:22px}
   .hero-stat .l{font-size:10px}

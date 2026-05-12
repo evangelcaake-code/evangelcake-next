@@ -81,6 +81,16 @@ export default function Header() {
           <span></span>
         </button>
       </nav>
+      {/* Banner permanente debajo del nav — visible siempre, en todas las
+          páginas, en todos los tamaños. Está dentro del <header> sticky
+          para que viaje con él al hacer scroll. */}
+      <a className="home-promo-banner" href={ctaHref} aria-label="Juega y gana una tarta gratis">
+        <span className="home-promo-banner-icon" aria-hidden="true">🎂</span>
+        <span className="home-promo-banner-text">
+          Juega y <strong>gana una tarta personalizada gratis</strong>
+        </span>
+        <span className="home-promo-banner-arrow" aria-hidden="true">→</span>
+      </a>
     </header>
   );
 }

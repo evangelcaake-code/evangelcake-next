@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import Header from "@/components/Header";
-import GameCtaBanner from "@/components/GameCtaBanner";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import CookiesBanner from "@/components/CookiesBanner";
@@ -28,7 +27,6 @@ export default function PublicChrome({
         Saltar al contenido
       </a>
       <Header />
-      <GameCtaBanner />
       <main id="main">{children}</main>
       <Footer />
       <WhatsAppFloat />
