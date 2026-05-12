@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { markCodeUsed } from "@/lib/markCodeUsed";
 import DesignPicker, { type DesignSelection } from "@/components/DesignPicker";
+import DiscountCodeBox from "@/components/DiscountCodeBox";
 
 type Size = {
   value: string;
@@ -449,28 +450,16 @@ export default function CakeModal() {
                 </li>
               </ul>
 
-              {discountCode && (
-                <div className="cart-code-box" role="status">
-                  <div className="cart-code-info">
-                    <span className="cart-code-icon" aria-hidden="true">🎁</span>
-                    <div>
-                      <strong>Código activo · −5%</strong>
-                      <span className="cart-code-value">{discountCode}</span>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="cart-code-remove"
-                    onClick={() => {
-                      setDiscountCode("");
-                      try { localStorage.removeItem(CODE_LS_KEY); } catch {}
-                    }}
-                    aria-label="Quitar código de descuento"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
+              <DiscountCodeBox
+                value={discountCode}
+                onChange={(code) => {
+                  setDiscountCode(code);
+                  try {
+                    if (code) localStorage.setItem(CODE_LS_KEY, code);
+                    else localStorage.removeItem(CODE_LS_KEY);
+                  } catch {}
+                }}
+              />
 
               <div className="cc-date-picker">
                 <label htmlFor="ccDate" className="cc-date-label">

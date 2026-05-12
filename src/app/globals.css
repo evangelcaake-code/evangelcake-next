@@ -4877,6 +4877,69 @@ footer ul a:hover{color:var(--pink)}
 }
 .cart-code-remove:hover{background:var(--pink-deep);color:#fff}
 
+/* Trigger (cuando no hay código): un link discreto para abrir el input */
+.cart-code-trigger{
+  display:flex;align-items:center;gap:8px;
+  width:100%;margin:10px 0 0;padding:10px 12px;
+  background:rgba(232,90,154,.06);
+  border:1px dashed rgba(232,90,154,.30);
+  border-radius:10px;
+  color:var(--pink-deep);font-family:inherit;font-size:13px;font-weight:500;
+  cursor:pointer;
+  transition:background .2s,border-color .2s;
+}
+.cart-code-trigger:hover{
+  background:rgba(232,90,154,.10);
+  border-color:rgba(232,90,154,.55);
+}
+.cart-code-trigger-arrow{margin-left:auto;font-size:16px;font-weight:400}
+
+/* Formulario expandido para meter el código */
+.cart-code-form{
+  margin:10px 0 0;padding:14px;
+  background:linear-gradient(135deg, var(--pink-soft) 0%, var(--cream-warm) 100%);
+  border:1px solid rgba(232,90,154,.25);
+  border-radius:14px;
+  animation:gameFadeIn .25s ease;
+}
+.cart-code-form-label{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--ink);
+  margin-bottom:8px;
+}
+.cart-code-form-row{display:flex;gap:8px;align-items:stretch}
+.cart-code-form input{
+  flex:1;min-width:0;
+  padding:10px 14px;border:1px solid rgba(0,0,0,.15);
+  border-radius:var(--r-pill);
+  background:#fff;font:inherit;font-size:16px;
+  font-family:var(--serif);letter-spacing:.15em;text-align:center;
+  color:var(--pink-deep);font-weight:500;
+}
+.cart-code-form input:focus{
+  outline:none;border-color:var(--pink-deep);
+  box-shadow:0 0 0 3px rgba(232,90,154,.18);
+}
+.cart-code-apply{
+  padding:10px 18px !important;font-size:13px !important;
+  white-space:nowrap;
+}
+.cart-code-apply:disabled{opacity:.5;cursor:not-allowed}
+.cart-code-error{
+  color:#d33;font-size:12px;margin:6px 0 0;
+}
+.cart-code-hint{
+  font-size:11px;color:var(--ink-2);margin:8px 0 0;line-height:1.4;
+}
+.cart-code-close{
+  display:block;margin:6px 0 0;
+  background:none;border:none;
+  color:var(--ink-2);font-size:11px;text-decoration:underline;
+  cursor:pointer;padding:0;font-family:inherit;
+}
+.cart-code-close:hover{color:var(--ink)}
+
 /* ==========================================================================
    NEWSLETTER POPUP (aparece 60s después de entrar)
    ========================================================================== */
