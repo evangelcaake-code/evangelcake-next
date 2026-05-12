@@ -170,7 +170,18 @@ export default function Game({ embed = false }: GameProps = {}) {
   // en el form post-partida y marcamos el consent — solo le falta poner nombre.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    let hasPlayer = false;
+
+    // Helper: si conseguimos nombre + email, restauramos al player completo
+    // (así el banner post-partida NO vuelve a salir).
+    function restorePlayer(email: string, name: string) {
+      const restored: Player = { name, email, bestScore: 0 };
+      setPlayer(restored);
+      localStorage.setItem(CONFIG.LS_KEY, JSON.stringify(restored));
+      saveSubscribedEmail(email);
+      fetchPosition(email);
+    }
+
+    // 1. localStorage con Player completo (vía rápida, sin fetch)
     try {
       const raw = localStorage.getItem(CONFIG.LS_KEY);
       if (raw) {
@@ -178,47 +189,55 @@ export default function Game({ embed = false }: GameProps = {}) {
         if (p?.email && p?.name) {
           setPlayer(p);
           fetchPosition(p.email);
-          hasPlayer = true;
+          return;
         }
       }
     } catch {}
 
-    if (!hasPlayer) {
-      const savedEmail = getSubscribedEmail();
-      if (savedEmail) {
-        // Lookup en backend: si esa persona ya está en subscribers, recuperamos
-        // su nombre y la convertimos en player → al terminar partida NO le sale
-        // el banner de registro otra vez.
-        (async () => {
-          try {
-            const res = await fetch(
-              `/api/player/lookup?email=${encodeURIComponent(savedEmail)}`,
-              { cache: "no-store" },
-            );
-            if (!res.ok) return;
+    // 2. Tenemos email en localStorage → lookup en BD por nombre
+    const savedEmail = getSubscribedEmail();
+    if (savedEmail) {
+      (async () => {
+        try {
+          const res = await fetch(
+            `/api/player/lookup?email=${encodeURIComponent(savedEmail)}`,
+            { cache: "no-store" },
+          );
+          if (res.ok) {
             const data = await res.json();
             if (data.found && data.name) {
-              const restored: Player = {
-                name: data.name,
-                email: savedEmail,
-                bestScore: 0,
-              };
-              setPlayer(restored);
-              localStorage.setItem(CONFIG.LS_KEY, JSON.stringify(restored));
-              fetchPosition(savedEmail);
-            } else {
-              // No hay nombre asociado todavía → precargamos email + consent
-              // para el banner mini (solo pedirá el nombre).
-              setRegEmail(savedEmail);
-              setRegConsent(true);
+              restorePlayer(savedEmail, data.name);
+              return;
             }
-          } catch {
-            setRegEmail(savedEmail);
+          }
+        } catch {}
+        // Lookup falló → al menos precargamos email + consent
+        setRegEmail(savedEmail);
+        setRegConsent(true);
+      })();
+      return;
+    }
+
+    // 3. Ni Player ni email en localStorage (incógnito, caché borrada…)
+    //    → probamos la COOKIE firmada vía /api/identify. Sobrevive aunque
+    //    el visitante haya limpiado el localStorage.
+    (async () => {
+      try {
+        const res = await fetch("/api/identify", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.found && data.email) {
+          if (data.name) {
+            restorePlayer(data.email, data.name);
+          } else {
+            // Tenemos email vía cookie pero sin nombre → precarga el form mini
+            saveSubscribedEmail(data.email);
+            setRegEmail(data.email);
             setRegConsent(true);
           }
-        })();
-      }
-    }
+        }
+      } catch {}
+    })();
   }, []);
 
   async function fetchPosition(email: string) {
