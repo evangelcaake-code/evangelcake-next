@@ -5525,3 +5525,161 @@ footer ul a:hover{color:var(--pink)}
   .product-hero{grid-template-columns:1fr;gap:24px}
   .product-hero-img{max-width:480px;margin:0 auto;width:100%}
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVE OVERHAUL
+   Objetivo: en móvil debe verse igual de denso y elegante que en desktop,
+   solo a escala menor. Reglas:
+   - Reducir aprox 35-40% el tamaño de headings
+   - Mantener 2 cols donde desktop tenía 3-4 (no apilar todo en 1 col)
+   - Padding compacto pero no claustrofóbico
+   - Tap targets ≥ 38px
+   ========================================================================== */
+
+@media (max-width:767px){
+  /* —— BASE —— */
+  body{font-size:14px}
+
+  /* —— HEADINGS: bajar 30-40% —— */
+  h1{font-size:clamp(28px,8vw,42px) !important;line-height:1.05}
+  .hero-left h1{font-size:clamp(30px,8.5vw,46px) !important}
+  .section-head h2,
+  h2{font-size:clamp(22px,6.2vw,32px) !important;line-height:1.08;max-width:none}
+  .hook-text h2{font-size:clamp(26px,7.2vw,36px) !important;line-height:1.04}
+  h3{font-size:clamp(18px,4.8vw,22px) !important}
+  .section-head{margin-bottom:18px}
+
+  /* —— SECCIONES: padding muy reducido —— */
+  .section{padding:32px 16px !important}
+  .hook{padding:28px 16px !important;gap:20px !important}
+  .newsletter{padding:24px 16px !important}
+  .marquee{font-size:16px;padding:10px 0}
+  .hero{padding:24px 16px;gap:20px}
+
+  /* —— LEDES + PÁRRAFOS —— */
+  .lede,p.lede,.hero-left .lede{font-size:14px;line-height:1.5}
+  .hook-text .lede{font-size:15px}
+  .section-sub{font-size:13px}
+
+  /* —— GRIDS: 2 COLS EN VEZ DE 1 —— */
+  .cards-grid,
+  .cards-grid.cols-2,
+  .cards-grid.cols-3{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:10px !important;
+  }
+  .press-grid{grid-template-columns:repeat(2,1fr) !important;gap:8px}
+  .logo-wall,.logo-wall-3{grid-template-columns:repeat(2,1fr) !important}
+  .timeline{grid-template-columns:repeat(2,1fr) !important;gap:14px !important}
+  .foot-top{grid-template-columns:repeat(2,1fr) !important;gap:20px !important}
+  .values .grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important}
+
+  /* —— HERO: mascota más pequeña, no apilar masivamente —— */
+  .hero-pic{max-width:280px;margin:0 auto}
+  .hero-stats{gap:14px;flex-wrap:wrap;justify-content:flex-start}
+  .hero-stat .n{font-size:22px}
+  .hero-stat .l{font-size:10px}
+  .hero-pill,.hero-sticker{display:none}
+  .hero-ctas{gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .hero-ctas .btn{font-size:13px;padding:10px 16px}
+
+  /* —— BANNER PROMO HOME —— */
+  .home-promo-banner{padding:10px 14px;font-size:13px;gap:8px;letter-spacing:0}
+  .home-promo-banner-icon{font-size:16px}
+  .home-promo-banner-arrow{font-size:16px}
+
+  /* —— NEWSLETTER —— */
+  .newsletter h2{font-size:clamp(22px,6vw,28px) !important;max-width:none;margin-bottom:6px !important}
+  .newsletter .lede{font-size:13px;margin-bottom:14px;max-width:none}
+  .newsletter .newsletter-form-stacked{grid-template-columns:1fr;gap:8px;max-width:none}
+  .newsletter .newsletter-form-stacked button{width:auto;max-width:200px;margin:8px auto 0 !important}
+
+  /* —— CARDS / PRODUCTOS más compactos —— */
+  .card{padding:0}
+  .card h3{font-size:15px;line-height:1.15}
+  .card .arr{font-size:11px}
+
+  /* —— FOOTER columnas más pequeñas —— */
+  .foot-top .brand{grid-column:1 / -1}
+  .foot-brand-name{font-size:34px}
+  .foot-brand-tag{font-size:10px}
+  footer h5{font-size:10px;margin-bottom:10px}
+  footer ul{font-size:12px;line-height:1.8}
+  footer{padding:36px 16px 20px}
+  .foot-bot{font-size:12px;flex-direction:column;text-align:center;gap:10px}
+
+  /* —— GAME TEASER —— */
+  .game-teaser{padding:20px 14px;gap:12px;max-width:none}
+  .game-teaser-text h2{font-size:22px;margin:4px 0 6px}
+  .game-teaser-text p{font-size:13px;line-height:1.45;max-width:none}
+  .game-embed{max-width:none;aspect-ratio:16/12}
+
+  /* —— PRENSA y RESEÑAS —— */
+  .logo-wall .logo{padding:14px 12px}
+  .logo-wall .logo .name{font-size:14px}
+  .logo-wall .logo .meta{font-size:9px}
+  .logo-wall .logo .quote{font-size:12px}
+
+  /* —— CART (configurador) —— */
+  .cart-toggle{padding:8px 12px;font-size:13px}
+  .cart-toggle-label strong{font-size:12px}
+  .cart-toggle-label span{font-size:11px}
+
+  /* —— CAKE MODAL paso a paso: ocupa toda la pantalla —— */
+  .cc-shell,.cc-overlay{padding:0 !important}
+  .cc-modal{
+    width:100% !important;max-width:none !important;height:100% !important;
+    max-height:100vh !important;border-radius:0 !important;margin:0 !important;
+  }
+  .cc-step h3{font-size:22px;margin-bottom:14px}
+  .cc-grid,.cc-options{gap:8px !important}
+  .cc-option{padding:12px 10px !important;min-height:60px}
+
+  /* —— DESIGN PICKER —— */
+  .design-picker-tabs{grid-template-columns:1fr}
+  .design-picker-tab{padding:10px 8px;font-size:12px;text-align:center}
+  .design-picker-panel{padding:14px}
+
+  /* —— GALLERY MODAL —— */
+  .gallery-modal-backdrop{padding:12px}
+  .gallery-modal-head{padding:16px 18px}
+  .gallery-modal-title{font-size:19px}
+  .gallery-modal-sub{font-size:12px}
+  .gallery-modal-body{padding:16px 14px 20px}
+  .gallery-modal-cat{margin-bottom:18px}
+
+  /* —— REVIEWS y otros bloques con texto centrado —— */
+  .review-card{padding:18px 14px}
+
+  /* —— Botones genéricos: tap target mínimo —— */
+  .btn{min-height:40px;display:inline-flex;align-items:center;justify-content:center}
+}
+
+@media (max-width:480px){
+  /* —— Phones muy estrechos: reducir aún más, algunas cosas sí stack —— */
+  .section{padding:24px 12px !important}
+  .hook{padding:22px 12px !important;gap:16px !important}
+  .newsletter{padding:20px 12px !important}
+  .hero{padding:20px 12px}
+
+  h1{font-size:clamp(26px,8.5vw,36px) !important}
+  .hero-left h1{font-size:30px !important}
+  h2{font-size:clamp(20px,6.5vw,28px) !important}
+  .hook-text h2{font-size:24px !important}
+
+  /* Cards 2 cols sigue siendo razonable hasta 360px aprox.
+     Si la pantalla es muy pequeña, se ven justos pero leíbles. */
+  .cards-grid .card{padding:0}
+  .card h3{font-size:13px}
+
+  /* Footer 1 col en móviles muy estrechos */
+  .foot-top{grid-template-columns:1fr !important;gap:18px !important}
+  .foot-top .brand{grid-column:auto}
+
+  /* Hero stats compactos */
+  .hero-stats{gap:10px}
+  .hero-stat .n{font-size:18px}
+
+  /* Game teaser título más pequeño */
+  .game-teaser-text h2{font-size:19px}
+}
