@@ -80,7 +80,7 @@ const galleryHome: Array<{ src: string; alt: string; caption: string; pos?: stri
     src: "/images/home/andreia-tarta-frambuesa.jpg",
     alt: "Andreia con tarta de chantilly y frambuesas en EvangelCake Zaragoza",
     caption: "Andreia · Chantilly",
-    pos: "center 25%",
+    pos: "center 50%",
   },
   {
     src: "/images/home/cumple-unicornio.jpg",
