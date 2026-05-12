@@ -186,8 +186,37 @@ export default function Game({ embed = false }: GameProps = {}) {
     if (!hasPlayer) {
       const savedEmail = getSubscribedEmail();
       if (savedEmail) {
-        setRegEmail(savedEmail);
-        setRegConsent(true);
+        // Lookup en backend: si esa persona ya está en subscribers, recuperamos
+        // su nombre y la convertimos en player → al terminar partida NO le sale
+        // el banner de registro otra vez.
+        (async () => {
+          try {
+            const res = await fetch(
+              `/api/player/lookup?email=${encodeURIComponent(savedEmail)}`,
+              { cache: "no-store" },
+            );
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data.found && data.name) {
+              const restored: Player = {
+                name: data.name,
+                email: savedEmail,
+                bestScore: 0,
+              };
+              setPlayer(restored);
+              localStorage.setItem(CONFIG.LS_KEY, JSON.stringify(restored));
+              fetchPosition(savedEmail);
+            } else {
+              // No hay nombre asociado todavía → precargamos email + consent
+              // para el banner mini (solo pedirá el nombre).
+              setRegEmail(savedEmail);
+              setRegConsent(true);
+            }
+          } catch {
+            setRegEmail(savedEmail);
+            setRegConsent(true);
+          }
+        })();
       }
     }
   }, []);
@@ -880,58 +909,34 @@ export default function Game({ embed = false }: GameProps = {}) {
 
       {screen === "result" && !player && (
         <section className="game-screen">
-          <div className="game-card">
-            <span className="game-eyebrow">¡Partida terminada!</span>
-            <h2>Has hecho <span>{score}</span> puntos</h2>
-            <p className="game-lede">
-              ¿Entras al <strong>ranking del mes</strong>? Los 3 mejores ganan
-              una tarta personalizada gratis y al registrarte te mandamos un{" "}
-              <strong>código del 5%</strong> para tu próxima tarta.
+          <div className="game-card game-card-compact">
+            <h2 className="game-card-compact-title">
+              <span>{score}</span> pts · ¿Entras al ranking?
+            </h2>
+            <p className="game-card-compact-sub">
+              Los 3 mejores del mes ganan tarta gratis + código 5% al registrarte.
             </p>
-            <form className="game-form" onSubmit={registerAfterGame} noValidate>
-              <label className="game-field">
-                <span>Tu nombre</span>
+            <form className="game-form game-form-inline" onSubmit={registerAfterGame} noValidate>
+              <div className="game-form-row">
                 <input
                   type="text"
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
-                  placeholder="María, Carlos…"
+                  placeholder="Tu nombre"
                   required
                   maxLength={40}
+                  aria-label="Tu nombre"
                 />
-              </label>
-              <label className="game-field">
-                <span>Tu email</span>
                 <input
                   type="email"
                   value={regEmail}
                   onChange={(e) => setRegEmail(e.target.value)}
                   placeholder="tu@email.com"
                   required
+                  aria-label="Tu email"
                 />
-              </label>
-              <label className="game-field">
-                <span>Tu cumpleaños (opcional)</span>
-                <input
-                  type="date"
-                  value={regBirthday}
-                  onChange={(e) => setRegBirthday(e.target.value)}
-                  max={new Date().toISOString().slice(0, 10)}
-                  min="1900-01-01"
-                />
-                <small
-                  style={{
-                    fontSize: 11,
-                    color: "var(--ink-2)",
-                    opacity: 0.8,
-                    display: "block",
-                    marginTop: 4,
-                  }}
-                >
-                  Si lo dejas, ese día te llega algo especial 🎂
-                </small>
-              </label>
-              <label className="game-check">
+              </div>
+              <label className="game-check game-check-compact">
                 <input
                   type="checkbox"
                   checked={regConsent}
@@ -939,31 +944,18 @@ export default function Game({ embed = false }: GameProps = {}) {
                   required
                 />
                 <span>
-                  Acepto recibir el newsletter de EvangelCake. Sin spam.{" "}
-                  <a href="/privacidad" target="_blank">Privacidad</a>.
+                  Acepto el newsletter. <a href="/privacidad" target="_blank">Privacidad</a>.
                 </span>
               </label>
               <button
                 type="submit"
-                className="btn btn-pink game-cta"
+                className="btn btn-pink game-cta game-cta-compact"
                 disabled={regLoading}
               >
-                {regLoading
-                  ? "Guardando…"
-                  : `Guardar mi score (${score} pts) →`}
+                {regLoading ? "Guardando…" : "Guardar mi score →"}
               </button>
               {regError && <p className="game-error">{regError}</p>}
             </form>
-            <p
-              style={{
-                fontSize: 11,
-                color: "var(--ink-2)",
-                margin: "10px 0 0",
-                opacity: 0.7,
-              }}
-            >
-              Sin registrar perderás tu puntuación.
-            </p>
           </div>
         </section>
       )}
