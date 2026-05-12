@@ -32,8 +32,7 @@ const RELLENOS = [
   "Maracuyá", "Nata", "Queso crema", "Coco", "Frutos Rojos", "Chocolate blanco",
 ];
 const COBERTURAS = [
-  "Chantilly (nata)", "Trufa", "Buttercream",
-  "Naked Cake", "Drip de chocolate", "Ganache de chocolate",
+  "Chantilly (nata)", "Trufa", "Merengue", "Buttercream",
 ];
 
 type State = {

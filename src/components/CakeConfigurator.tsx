@@ -36,8 +36,7 @@ const RELLENOS = [
 ];
 
 const COBERTURAS = [
-  "Chantilly (nata)", "Trufa", "Buttercream",
-  "Naked Cake", "Drip de chocolate", "Ganache de chocolate",
+  "Chantilly (nata)", "Trufa", "Merengue", "Buttercream",
 ];
 
 type Selection = {
