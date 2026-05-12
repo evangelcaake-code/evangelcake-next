@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { markCodeUsed } from "@/lib/markCodeUsed";
+import DesignPicker, { type DesignSelection } from "@/components/DesignPicker";
 
 type Size = {
   value: string;
@@ -57,6 +58,7 @@ function buildWhatsAppLink(
   date: string,
   notes: string,
   code: string,
+  design: DesignSelection,
 ): string {
   const rellenoLine =
     s.rellenos.length === 2
@@ -85,6 +87,21 @@ function buildWhatsAppLink(
       lines.push(`📅 Fecha: ${date}`);
     }
   }
+  // Diseño de referencia: foto de la galería, foto subida o descripción
+  if (design) {
+    lines.push("");
+    if (design.kind === "gallery") {
+      const site = (typeof window !== "undefined" ? window.location.origin : "https://evangelcake.com");
+      lines.push(`🎨 Diseño de referencia (galería · ${design.caption}):`);
+      lines.push(`${site}${design.url}`);
+    } else if (design.kind === "upload") {
+      lines.push(`🎨 Foto de referencia subida:`);
+      lines.push(design.url);
+    } else if (design.kind === "describe") {
+      lines.push(`🎨 Idea (sin diseño claro todavía):`);
+      lines.push(design.description.trim());
+    }
+  }
   if (notes.trim()) lines.push("", `📝 Notas: ${notes.trim()}`);
   if (code) lines.push("", `🎁 Código de descuento: ${code} (5%)`);
   lines.push("", "¿Podríais pasarme presupuesto y hablamos del diseño?");
@@ -102,6 +119,7 @@ export default function CakeConfigurator() {
   const [clearing, setClearing] = useState(false);
   const [shakeKey, setShakeKey] = useState<string | null>(null);
   const [discountCode, setDiscountCode] = useState("");
+  const [design, setDesign] = useState<DesignSelection>(null);
   const cartToggleRef = useRef<HTMLDivElement | null>(null);
 
   const maxFills = maxRellenos(sel);
@@ -211,6 +229,7 @@ export default function CakeConfigurator() {
     setSel(EMPTY);
     setDate("");
     setNotes("");
+    setDesign(null);
     setClearing(true);
     setTimeout(() => setClearing(false), 500);
   }
@@ -221,7 +240,7 @@ export default function CakeConfigurator() {
     (sel.rellenos.length ? 1 : 0) +
     (sel.cobertura ? 1 : 0);
   const complete = filled === 4;
-  const waHref = buildWhatsAppLink(sel, date, notes, discountCode);
+  const waHref = buildWhatsAppLink(sel, date, notes, discountCode, design);
 
   return (
     <>
@@ -529,6 +548,16 @@ export default function CakeConfigurator() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
             />
+          </div>
+
+          <div className="cart-design">
+            <label className="cart-notes-label" style={{ marginBottom: 4 }}>
+              <span className="cart-notes-icon" aria-hidden="true">🎨</span>
+              <span className="cart-notes-text">
+                Diseño de referencia <em>(opcional)</em>
+              </span>
+            </label>
+            <DesignPicker value={design} onChange={setDesign} />
           </div>
 
           <div className="cart-actions">

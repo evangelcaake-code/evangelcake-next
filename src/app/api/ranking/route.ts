@@ -61,7 +61,10 @@ export async function POST(req: NextRequest) {
     const name = String(body.name || "").trim() || "Anónimo";
     const score = Number(body.score);
 
-    if (!email || !Number.isFinite(score) || score < 0 || score > 100000) {
+    // Cap anti-cheat: el máximo teórico jugando perfecto es ~500 pts (30s,
+    // spawn ~240ms al final, 60% tartas × 10pts). Cualquier score >1000
+    // significa que alguien tocó el cliente.
+    if (!email || !Number.isFinite(score) || score < 0 || score > 1000) {
       return NextResponse.json({ error: "Datos inválidos" }, { status: 400 });
     }
 
