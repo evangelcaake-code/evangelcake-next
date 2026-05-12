@@ -290,8 +290,8 @@ p{margin:0 0 12px}
 .marquee b{color:var(--pink);font-weight:400;margin:0 14px;font-style:normal}
 
 /* ===== SECTION BASE ===== */
-.section{padding:72px 48px}
-.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:24px;flex-wrap:wrap}
+.section{padding:48px 48px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;gap:24px;flex-wrap:wrap}
 .section-head h2{font-size:clamp(42px,5.4vw,72px);line-height:1;max-width:14ch;margin:0}
 .section-head .link{font-size:14px;color:var(--ink-2);transition:color .25s}
 .section-head .link:hover{color:var(--pink-deep)}
@@ -891,7 +891,7 @@ p{margin:0 0 12px}
 
 /* ===== VISUAL HOOK BLOCKS (split + banner) ===== */
 .hook{
-  padding:72px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;
+  padding:48px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;
 }
 .hook.reverse .hook-text{order:2}
 .hook.reverse .hook-pic{order:1}
@@ -1026,7 +1026,7 @@ p{margin:0 0 12px}
 }
 
 @media (max-width:1199px){
-  .hook{grid-template-columns:1fr;padding:64px 32px}
+  .hook{grid-template-columns:1fr;padding:40px 32px}
   .hook.reverse .hook-text,.hook.reverse .hook-pic{order:initial}
   .cta-banner{margin:0 32px;padding:64px 40px;grid-template-columns:1fr}
   .cta-banner .pic{display:none}
@@ -1035,7 +1035,7 @@ p{margin:0 0 12px}
   .logo-wall .logo{border-bottom:1px solid rgba(0,0,0,.06)}
 }
 @media (max-width:767px){
-  .hook{padding:48px 20px}
+  .hook{padding:36px 20px}
   .hook-pic{aspect-ratio:4/5}
   .cta-banner{margin:0 20px;padding:48px 28px}
   .logo-wall{grid-template-columns:1fr}
@@ -1082,7 +1082,7 @@ p{margin:0 0 12px}
 
 /* ===== NEWSLETTER ===== */
 .newsletter{
-  padding:64px 48px;background:linear-gradient(180deg,var(--pink-soft) 0%,var(--paper) 100%);
+  padding:48px 48px;background:linear-gradient(180deg,var(--pink-soft) 0%,var(--paper) 100%);
   text-align:center;
 }
 .newsletter h2{font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 auto 16px;max-width:20ch}
@@ -1179,8 +1179,8 @@ footer ul a:hover{color:var(--pink)}
 @media (max-width:1199px){
   .nav{padding:18px 32px}
   .hero{padding:48px 32px;gap:32px}
-  .section{padding:64px 32px}
-  .about,.values,.newsletter{padding:56px 32px}
+  .section{padding:40px 32px}
+  .about,.values,.newsletter{padding:40px 32px}
   .contact-body{padding:32px}
   .cards-grid{grid-template-columns:repeat(2,1fr)}
   .cards-grid.cols-3{grid-template-columns:repeat(2,1fr)}
@@ -1217,10 +1217,10 @@ footer ul a:hover{color:var(--pink)}
   .hero-stat .n{font-size:32px}
   .hero-pill{display:none}
 
-  .section{padding:48px 20px}
+  .section{padding:36px 20px}
   .section-head{flex-direction:column;align-items:flex-start}
   .section-head h2{font-size:clamp(36px,9vw,52px)}
-  .about,.values,.newsletter{padding:48px 20px}
+  .about,.values,.newsletter{padding:36px 20px}
   .about-text h2{font-size:clamp(36px,9vw,56px)}
 
   .cards-grid,.cards-grid.cols-3,.cards-grid.cols-2,.timeline,.gallery,.press-grid{grid-template-columns:1fr}

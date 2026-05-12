@@ -529,7 +529,7 @@ export default function Home() {
         id="juego"
         className="section"
         aria-labelledby="game-teaser-title"
-        style={{ padding: "64px 24px" }}
+        style={{ padding: "40px 24px" }}
       >
         <div className="game-teaser">
           <div className="game-teaser-text">
