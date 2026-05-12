@@ -2387,11 +2387,17 @@ footer ul a:hover{color:var(--pink)}
 /* PANEL */
 .cart-panel{
   position:absolute;top:calc(100% + 12px);right:0;
-  width:340px;max-width:calc(100vw - 32px);
+  width:380px;max-width:calc(100vw - 32px);
   background:#fff;border-radius:var(--r-card);
   border:1px solid rgba(0,0,0,.08);
   box-shadow:0 30px 60px rgba(0,0,0,.18);
   padding:20px;
+  /* Scroll interno cuando el contenido (especialmente el DesignPicker con
+     galería) excede la altura del viewport */
+  max-height:calc(100vh - 120px);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
   opacity:0;transform:translateY(-10px) scale(.96);
   transition:opacity .25s ease,transform .25s ease;
   pointer-events:none;
@@ -2444,7 +2450,12 @@ footer ul a:hover{color:var(--pink)}
 @media (max-width:767px){
   .builder-cart{top:auto;bottom:88px;right:12px;left:12px;}
   .cart-toggle{justify-content:center;border-radius:var(--r-card)}
-  .cart-panel{position:fixed;top:auto;bottom:160px;right:12px;left:12px;width:auto;max-width:none}
+  .cart-panel{
+    position:fixed;top:12px;bottom:160px;right:12px;left:12px;
+    width:auto;max-width:none;
+    max-height:calc(100vh - 180px);
+    overflow-y:auto;
+  }
 }
 
 /* ==========================================================================
