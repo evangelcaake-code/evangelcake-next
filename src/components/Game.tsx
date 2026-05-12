@@ -91,6 +91,7 @@ export default function Game({ embed = false }: GameProps = {}) {
   // Register form state
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
+  const [regBirthday, setRegBirthday] = useState("");
   const [regConsent, setRegConsent] = useState(false);
   const [regLoading, setRegLoading] = useState(false);
   const [regError, setRegError] = useState("");
@@ -609,6 +610,7 @@ export default function Game({ embed = false }: GameProps = {}) {
         body: JSON.stringify({
           name,
           email,
+          birthday: regBirthday || undefined,
           source: "game",
           consent: regConsent,
         }),
@@ -907,6 +909,27 @@ export default function Game({ embed = false }: GameProps = {}) {
                   placeholder="tu@email.com"
                   required
                 />
+              </label>
+              <label className="game-field">
+                <span>Tu cumpleaños (opcional)</span>
+                <input
+                  type="date"
+                  value={regBirthday}
+                  onChange={(e) => setRegBirthday(e.target.value)}
+                  max={new Date().toISOString().slice(0, 10)}
+                  min="1900-01-01"
+                />
+                <small
+                  style={{
+                    fontSize: 11,
+                    color: "var(--ink-2)",
+                    opacity: 0.8,
+                    display: "block",
+                    marginTop: 4,
+                  }}
+                >
+                  Si lo dejas, ese día te llega algo especial 🎂
+                </small>
               </label>
               <label className="game-check">
                 <input
