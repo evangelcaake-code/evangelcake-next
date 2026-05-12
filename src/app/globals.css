@@ -142,13 +142,17 @@ p{margin:0 0 12px}
 }
 
 .hero{
-  padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;
-  align-items:center;min-height:680px;
-  /* position:relative para que hero-decor se ancle bien.
-     SIN overflow:hidden — el hero-sticker necesita salir por arriba.
-     El recorte lo hace el propio .hero-decor (que sí tiene overflow:hidden). */
+  padding:80px 48px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;
+  align-items:start;min-height:680px;
+  /* padding-top:80 deja espacio dentro del hero para que el sticker no
+     se "esconda" detrás del header sticky.
+     align-items:start (antes center) → ambas columnas arrancan arriba,
+     dándole al sticker espacio real sobre la mascota.
+     SIN overflow:hidden — el sticker necesita poder salirse por arriba.
+     El recorte lo hace .hero-decor internamente. */
   position:relative;
 }
+.hero-left{padding-top:60px}
 
 /* ===== HERO DECORATION: anillo cónico rotante + glow + sparkles =====
    Toda la decoración confinada al LADO DERECHO (left:50%) para no tapar
@@ -283,8 +287,9 @@ p{margin:0 0 12px}
 
 /* === HERO STICKER (sello "Tartas Personalizadas") === */
 .hero-sticker{
-  position:absolute;top:-22%;right:-4%;
+  position:absolute;top:-8%;right:-4%;
   width:138px;height:138px;
+  z-index:5;
   border-radius:50%;
   background:var(--pink-deep);
   color:#fff;
