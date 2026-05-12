@@ -124,51 +124,6 @@ const galleryHome: Array<{ src: string; alt: string; caption: string }> = [
     alt: "Tarta temática con bailaora flamenca, lunares y guitarra",
     caption: "Temática · Flamenca",
   },
-  {
-    src: "/images/gallery/andreia-obrador.jpg",
-    alt: "Andreia trabajando en el obrador de EvangelCake Zaragoza",
-    caption: "Andreia · Obrador",
-  },
-  {
-    src: "/images/gallery/cumple-mariposas-lila.jpg",
-    alt: "Tarta lila con mariposas brillantes y rosetones",
-    caption: "Lila · Mariposas",
-  },
-  {
-    src: "/images/gallery/cumple-sirena.jpg",
-    alt: "Tarta de cumpleaños con cola de sirena, conchas y perlas",
-    caption: "Temática · Sirena",
-  },
-  {
-    src: "/images/gallery/aniversario-50.jpg",
-    alt: "Tarta de aniversario en forma de número 50 con chocolate y plata",
-    caption: "Aniversario · 50",
-  },
-  {
-    src: "/images/gallery/cumple-doctora.jpg",
-    alt: "Tarta temática medicina con figura de doctora estetoscopio y electrocardiograma",
-    caption: "Profesión · Doctora",
-  },
-  {
-    src: "/images/gallery/cumple-rosa-flor.jpg",
-    alt: "Tarta rosa con rosa de tela y topper Feliz Cumpleaños",
-    caption: "Rosa · Flor",
-  },
-  {
-    src: "/images/gallery/cumple-estrella-negra.jpg",
-    alt: "Tarta forma de estrella negra Feliz cumpleaños Alberto",
-    caption: "Estrella · Negra",
-  },
-  {
-    src: "/images/gallery/cumple-frozen.jpg",
-    alt: "Tarta temática Frozen con Elsa y copos de nieve",
-    caption: "Temática · Frozen",
-  },
-  {
-    src: "/images/gallery/drip-rojo-aniversario.jpg",
-    alt: "Tarta drip roja con flor y donuts dorados Te Queremos",
-    caption: "Drip · Rojo",
-  },
 ];
 
 const pressLinks = [

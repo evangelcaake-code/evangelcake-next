@@ -340,33 +340,6 @@ export default function GaleriaPage() {
         </div>
       </section>
 
-      <section className="cta-banner gal-cta" aria-labelledby="gal-cta">
-        <div className="cta-inner">
-          <h2 id="gal-cta">
-            ¿Te ha <em>inspirado</em> alguna?
-          </h2>
-          <p>
-            Cuéntanos tu idea y la convertimos en realidad. Configura tu tarta o
-            háblanos directamente.
-          </p>
-          <div className="cta-actions">
-            <Link
-              className="btn btn-pink"
-              href="/tartas-personalizadas#sabores"
-            >
-              Personalizar mi tarta →
-            </Link>
-            <a
-              className="btn btn-secondary"
-              href="https://wa.me/34624131348?text=Hola!%20He%20visto%20vuestra%20galer%C3%ADa%20y%20me%20gustar%C3%ADa%20pediros%20una%20tarta"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp directo
-            </a>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

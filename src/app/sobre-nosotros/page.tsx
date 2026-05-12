@@ -267,47 +267,6 @@ export default function SobreNosotrosPage() {
         </div>
       </section>
 
-      <section
-        className="cta-banner"
-        aria-labelledby="cta-final"
-        style={{ marginTop: 48, padding: "56px 64px" }}
-      >
-        <div>
-          <h2 id="cta-final">
-            ¿Hablamos
-            <br />
-            de <em>tu tarta?</em>
-          </h2>
-          <p>Cuéntanos qué celebras. Diseñamos contigo cada detalle.</p>
-          <div className="ctas">
-            {/* TEMP: botón a /encargos desactivado. Reactivar cuando vuelva la página.
-            <Link className="btn btn-pink" href="/encargos">
-              Pedir un encargo →
-            </Link>
-            */}
-            <Link className="btn btn-pink" href="/tartas-personalizadas#sabores">
-              Pide tu tarta personalizada →
-            </Link>
-            <a
-              className="btn btn-secondary"
-              href="https://wa.me/34624131348?text=Hola!"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp directo
-            </a>
-          </div>
-        </div>
-        <div className="pic" aria-hidden="true">
-          <Image
-            src="/images/mascot.png"
-            alt=""
-            width={400}
-            height={500}
-            style={{ width: "100%", height: "auto" }}
-          />
-        </div>
-      </section>
     </>
   );
 }
