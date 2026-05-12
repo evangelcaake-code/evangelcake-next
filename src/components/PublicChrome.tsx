@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import CookiesBanner from "@/components/CookiesBanner";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import NewsletterPopup from "@/components/NewsletterPopup";
 
 export default function PublicChrome({
   children,
@@ -30,6 +31,7 @@ export default function PublicChrome({
       <WhatsAppFloat />
       <CookiesBanner />
       <RevealOnScroll />
+      <NewsletterPopup />
     </>
   );
 }

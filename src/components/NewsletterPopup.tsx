@@ -1,0 +1,197 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+const DELAY_MS = 60_000; // 60 segundos
+const DISMISS_KEY = "evangelcake_popup_dismissed_at";
+const SUBSCRIBED_KEY = "evangelcake_popup_subscribed";
+const SUPPRESS_DAYS = 7;
+
+export default function NewsletterPopup() {
+  const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // Si ya está suscrito vía popup, no mostrar nunca más
+    try {
+      if (localStorage.getItem(SUBSCRIBED_KEY) === "yes") return;
+    } catch {}
+
+    // Si fue dismissado hace < 7 días, no mostrar
+    try {
+      const at = localStorage.getItem(DISMISS_KEY);
+      if (at) {
+        const elapsed = Date.now() - Number(at);
+        if (elapsed < SUPPRESS_DAYS * 24 * 60 * 60 * 1000) return;
+      }
+    } catch {}
+
+    const t = setTimeout(() => setOpen(true), DELAY_MS);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Bloquear scroll del body cuando está abierto + Esc cierra
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") close();
+    }
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  function close() {
+    try {
+      localStorage.setItem(DISMISS_KEY, String(Date.now()));
+    } catch {}
+    setClosing(true);
+    setTimeout(() => {
+      setOpen(false);
+      setClosing(false);
+    }, 250);
+  }
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setError("Email no válido.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "popup", consent: true }),
+      });
+      if (res.ok) {
+        try {
+          localStorage.setItem(SUBSCRIBED_KEY, "yes");
+        } catch {}
+        setDone(true);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "No pudimos suscribirte. Inténtalo otra vez.");
+      }
+    } catch {
+      setError("Hubo un problema. Inténtalo otra vez.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!open) return null;
+
+  return (
+    <div
+      className={`newsletter-popup${closing ? " is-closing" : ""}`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="popup-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <div className="newsletter-popup-card">
+        <button
+          type="button"
+          className="newsletter-popup-close"
+          onClick={close}
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+        <span className="newsletter-popup-badge">−5%</span>
+
+        {done ? (
+          <>
+            <h3 id="popup-title">¡Hecho! 🎂</h3>
+            <p>
+              Mira tu correo en unos minutos. Te hemos mandado el código del 5%
+              para tu primera tarta personalizada.
+            </p>
+            <button
+              type="button"
+              className="btn btn-pink"
+              onClick={close}
+              style={{ marginTop: 10 }}
+            >
+              Seguir explorando →
+            </button>
+          </>
+        ) : (
+          <>
+            <h3 id="popup-title">
+              Un 5% para tu primera tarta y <em>novedades exclusivas.</em>
+            </h3>
+            <p>
+              Déjanos tu email y te mandamos el código al instante. Una vez al
+              mes, recetas y novedades que solo verás aquí.
+            </p>
+
+            <form
+              className="newsletter-popup-form"
+              onSubmit={onSubmit}
+              noValidate
+            >
+              <input
+                type="email"
+                placeholder="tu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoFocus
+                aria-label="Tu correo electrónico"
+              />
+              <button type="submit" disabled={loading}>
+                {loading ? "Enviando…" : "Quiero mi 5% →"}
+              </button>
+            </form>
+
+            {error && (
+              <p
+                role="alert"
+                style={{
+                  color: "var(--pink-deep)",
+                  fontSize: 13,
+                  margin: "8px 0 0",
+                }}
+              >
+                {error}
+              </p>
+            )}
+
+            <p className="newsletter-popup-tiny">
+              Sin spam. Puedes darte de baja cuando quieras.{" "}
+              <Link href="/privacidad" onClick={close}>
+                Privacidad
+              </Link>
+              .
+            </p>
+
+            <button
+              type="button"
+              className="newsletter-popup-skip"
+              onClick={close}
+            >
+              No, gracias
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
