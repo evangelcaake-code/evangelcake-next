@@ -5754,7 +5754,8 @@ footer ul a:hover{color:var(--pink)}
   .hero-stats{gap:14px;flex-wrap:wrap;justify-content:flex-start}
   .hero-stat .n{font-size:22px}
   .hero-stat .l{font-size:10px}
-  .hero-pill,.hero-sticker{display:none}
+  /* Pills decorativas ocultas en mobile, sello rosa SÍ se mantiene */
+  .hero-pill{display:none}
   .hero-ctas{gap:8px;margin-bottom:20px;flex-wrap:wrap}
   .hero-ctas .btn{font-size:13px;padding:10px 16px}
 
