@@ -1080,16 +1080,17 @@ p{margin:0 0 12px}
 }
 .blog-link:hover{color:var(--ink)}
 
-/* ===== NEWSLETTER ===== */
+/* ===== NEWSLETTER (tira fina, fondo rosa) ===== */
 .newsletter{
-  padding:48px 48px;background:linear-gradient(180deg,var(--pink-soft) 0%,var(--paper) 100%);
+  padding:28px 48px;background:linear-gradient(180deg,var(--pink-soft) 0%,var(--paper) 100%);
   text-align:center;
 }
-.newsletter h2{font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 auto 16px;max-width:20ch}
+.newsletter h2{font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin:0 auto 6px;max-width:36ch;font-weight:500}
 .newsletter .lede{
   font-family:var(--serif-2);font-style:italic;
-  font-size:17px;color:var(--ink-2);margin:0 auto 24px;max-width:48ch;
+  font-size:14px;color:var(--ink-2);margin:0 auto 14px;max-width:54ch;
 }
+.newsletter .gdpr{font-size:10px;margin-top:8px}
 .newsletter-form{
   display:flex;border:1px solid rgba(26,22,20,.15);
   border-radius:var(--r-pill);padding:6px;align-items:center;
@@ -1220,7 +1221,10 @@ footer ul a:hover{color:var(--pink)}
   .section{padding:36px 20px}
   .section-head{flex-direction:column;align-items:flex-start}
   .section-head h2{font-size:clamp(36px,9vw,52px)}
-  .about,.values,.newsletter{padding:36px 20px}
+  .about,.values,.newsletter{padding:32px 20px}
+  /* Newsletter strip: en mobile volvemos a stacked porque no caben 3 cols */
+  .newsletter .newsletter-form-stacked{grid-template-columns:1fr}
+  .newsletter .newsletter-form-stacked button{width:100%}
   .about-text h2{font-size:clamp(36px,9vw,56px)}
 
   .cards-grid,.cards-grid.cols-3,.cards-grid.cols-2,.timeline,.gallery,.press-grid{grid-template-columns:1fr}
@@ -4117,9 +4121,9 @@ footer ul a:hover{color:var(--pink)}
 .game-teaser{
   background:linear-gradient(135deg, #fff5e8 0%, #fce4ee 50%, #cfe6ea 100%);
   border-radius:var(--r-card);
-  padding:48px 36px;margin:0 auto;
+  padding:28px 28px;margin:0 auto;
   display:flex;flex-direction:column;align-items:center;
-  gap:28px;text-align:center;
+  gap:16px;text-align:center;
   max-width:920px;
   position:relative;overflow:hidden;
 }
@@ -4134,7 +4138,7 @@ footer ul a:hover{color:var(--pink)}
 .game-teaser-text{position:relative;z-index:1}
 .game-teaser-text h2{
   font-family:var(--serif);font-weight:400;
-  font-size:38px;line-height:1.05;margin:12px 0 10px;color:var(--ink);
+  font-size:30px;line-height:1.05;margin:6px 0 8px;color:var(--ink);
 }
 .game-teaser-text h2 em{color:var(--pink-deep);font-style:italic}
 .game-teaser .game-teaser-text{
@@ -4143,8 +4147,8 @@ footer ul a:hover{color:var(--pink)}
 }
 .game-teaser .game-teaser-text > *{margin-left:auto;margin-right:auto}
 .game-teaser-text p{
-  font-size:16px;line-height:1.5;color:var(--ink-2);
-  margin:0 auto 20px;max-width:480px;
+  font-size:14px;line-height:1.45;color:var(--ink-2);
+  margin:0 auto 6px;max-width:520px;
   text-align:center;
 }
 .game-teaser-ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -4159,10 +4163,10 @@ footer ul a:hover{color:var(--pink)}
   50%{transform:translateY(-8px)}
 }
 .game-teaser-rank{
-  margin-top:20px;font-size:14px;color:var(--ink-2);
+  margin-top:8px;font-size:13px;color:var(--ink-2);
   background:rgba(255,255,255,.7);
   border-radius:var(--r-card);
-  padding:14px 18px;
+  padding:10px 16px;
 }
 .game-teaser-rank strong{display:block;font-family:var(--serif);font-size:13px;color:var(--ink);margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase;font-weight:400}
 .game-teaser-rank ol{list-style:none;padding:0;margin:0;counter-reset:teaserrank}
@@ -4179,8 +4183,8 @@ footer ul a:hover{color:var(--pink)}
 /* ===== EMBED: juego incrustado en la home ===== */
 .game-embed{
   position:relative;
-  width:100%;max-width:760px;
-  aspect-ratio:16/10;
+  width:100%;max-width:560px;
+  aspect-ratio:16/11;
   margin:0 auto;
   border-radius:var(--r-card);
   overflow:hidden;
@@ -4768,16 +4772,18 @@ footer ul a:hover{color:var(--pink)}
 .newsletter-popup-form-stacked button:hover{background:var(--pink-deep)}
 .newsletter-popup-form-stacked button:disabled{opacity:.7;cursor:wait}
 
-/* Home: dos inputs + botón en pill grande (sigue siendo single pill en desktop) */
+/* Home: tira fina horizontal en desktop (name | email | button) con birthday
+   compacto debajo. En mobile vuelve a stacked. */
 .newsletter .newsletter-form-stacked{
   display:grid !important;gap:8px;
-  grid-template-columns:1fr;
-  max-width:520px;margin:0 auto;
+  grid-template-columns:1fr 1fr auto;
+  align-items:center;
+  max-width:680px;margin:0 auto;
   border:none !important;background:transparent !important;
   padding:0 !important;border-radius:0 !important;
 }
 .newsletter .newsletter-form-stacked input{
-  width:100%;padding:14px 18px !important;
+  width:100%;padding:11px 16px !important;
   border:1px solid rgba(26,22,20,.15) !important;
   border-radius:var(--r-pill) !important;
   background:#fff !important;
@@ -4790,10 +4796,10 @@ footer ul a:hover{color:var(--pink)}
   box-shadow:0 0 0 3px rgba(238,130,159,.18) !important;
 }
 .newsletter .newsletter-form-stacked button{
-  width:100%;
+  width:auto;white-space:nowrap;
   background:var(--ink) !important;color:var(--paper) !important;
   border:none;border-radius:var(--r-pill) !important;
-  padding:14px 22px !important;
+  padding:11px 22px !important;
   font-size:14px !important;font-weight:600;cursor:pointer;
   transition:background .25s,transform .25s;
 }
@@ -4910,9 +4916,17 @@ footer ul a:hover{color:var(--pink)}
 /* En el card grande de la home (.newsletter), el label también centra */
 .newsletter .newsletter-birthday{
   align-items:center;text-align:center;max-width:520px;margin:0 auto;
+  grid-column:1 / -1;
+  flex-direction:row;flex-wrap:wrap;justify-content:center;
+  gap:8px;padding:4px 0 0;
 }
+.newsletter .newsletter-birthday > span{font-size:11px}
 .newsletter .newsletter-birthday input{
-  max-width:280px;margin:0 auto;text-align:center;
+  max-width:180px;margin:0;text-align:center;
+  padding:6px 12px;font-size:13px;
+}
+.newsletter .newsletter-birthday small{
+  flex-basis:100%;font-size:10px;margin:0;padding:0;
 }
 
 /* En el footer (espacio limitado): input pequeño tipo placeholder */
