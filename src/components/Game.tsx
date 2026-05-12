@@ -499,13 +499,19 @@ export default function Game({ embed = false }: GameProps = {}) {
 
     for (const o of s.objects) {
       if (!o.alive) continue;
+      const emoji = o.type === "cake" ? CAKE_EMOJIS[o.cakeVariant] : BOMB_EMOJI;
+      const bmp = getEmojiBitmap(emoji);
       ctx.save();
       ctx.translate(o.x + o.w / 2, o.y + o.h / 2);
       ctx.rotate(o.rot);
-      ctx.font = `${o.w}px "Apple Color Emoji","Segoe UI Emoji",sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(o.type === "cake" ? CAKE_EMOJIS[o.cakeVariant] : BOMB_EMOJI, 0, 0);
+      if (bmp) {
+        ctx.drawImage(bmp, -o.w / 2, -o.h / 2, o.w, o.h);
+      } else {
+        ctx.font = `${o.w}px "Apple Color Emoji","Segoe UI Emoji",sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(emoji, 0, 0);
+      }
       ctx.restore();
     }
 
@@ -536,6 +542,28 @@ export default function Game({ embed = false }: GameProps = {}) {
   }
 
   const dulciImageRef = useRef<HTMLImageElement | null>(null);
+  // Cache de los emojis renderizados como bitmaps a un tamaño base. Cada
+  // frame hace drawImage (rápido) en lugar de fillText (lento en móvil).
+  const emojiCacheRef = useRef<Record<string, HTMLCanvasElement> | null>(null);
+
+  function getEmojiBitmap(emoji: string): HTMLCanvasElement | null {
+    if (typeof document === "undefined") return null;
+    if (!emojiCacheRef.current) emojiCacheRef.current = {};
+    const cache = emojiCacheRef.current;
+    if (cache[emoji]) return cache[emoji];
+    const size = 128; // tamaño base — se escala con drawImage en runtime
+    const c = document.createElement("canvas");
+    c.width = size;
+    c.height = size;
+    const cctx = c.getContext("2d");
+    if (!cctx) return null;
+    cctx.font = `${Math.floor(size * 0.92)}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+    cctx.textAlign = "center";
+    cctx.textBaseline = "middle";
+    cctx.fillText(emoji, size / 2, size / 2 + size * 0.04);
+    cache[emoji] = c;
+    return c;
+  }
 
   async function startGame(p: Player | null) {
     track("game_start", {
@@ -718,11 +746,16 @@ export default function Game({ embed = false }: GameProps = {}) {
     }
   }
 
-  // Preload mascota
+  // Preload mascota + pre-cachear los emojis en bitmaps (drawImage es mucho
+  // más rápido que fillText, sobre todo en móvil donde el rasterizador de
+  // emoji color es lento).
   useEffect(() => {
     const img = new window.Image();
     img.src = "/images/mascot.png";
     dulciImageRef.current = img;
+    // Pre-renderiza todos los emojis posibles
+    for (const e of CAKE_EMOJIS) getEmojiBitmap(e);
+    getEmojiBitmap(BOMB_EMOJI);
   }, []);
 
   const timeWarn = timeLeft <= 5;

@@ -4210,8 +4210,8 @@ footer ul a:hover{color:var(--pink)}
 /* ===== EMBED: juego incrustado en la home ===== */
 .game-embed{
   position:relative;
-  width:100%;max-width:560px;
-  aspect-ratio:16/11;
+  width:100%;max-width:720px;
+  aspect-ratio:5/4;
   margin:0 auto;
   border-radius:var(--r-card);
   overflow:hidden;
@@ -5618,10 +5618,35 @@ footer ul a:hover{color:var(--pink)}
   .foot-bot{font-size:12px;flex-direction:column;text-align:center;gap:10px}
 
   /* —— GAME TEASER —— */
-  .game-teaser{padding:20px 14px;gap:12px;max-width:none}
+  .game-teaser{padding:18px 10px;gap:10px;max-width:none}
   .game-teaser-text h2{font-size:22px;margin:4px 0 6px}
   .game-teaser-text p{font-size:13px;line-height:1.45;max-width:none}
-  .game-embed{max-width:none;aspect-ratio:16/12}
+  /* Embed grande: ocupa casi toda la pantalla, más cuadrado para más alto */
+  .game-embed{
+    max-width:none !important;
+    aspect-ratio:4/5 !important;
+    border-radius:14px;
+  }
+  /* HUD del juego más pequeño en móvil para dejar espacio al canvas */
+  .game-embed .game-hud{padding:6px 10px;margin-bottom:4px}
+  .game-embed .hud-val{font-size:16px}
+  .game-embed .hud-lbl{font-size:8px}
+
+  /* —— MAPA HOME: evitar overflow/raro alineamiento —— */
+  /* El .hook.reverse contiene el mapa en un .hook-pic con minHeight 520 inline.
+     Combinado con aspect-ratio y place-items:center, en móvil quedaba desplazado.
+     Aquí lo dejamos width:100%, sin aspect-ratio, dejando que el iframe mande. */
+  .hook.reverse .hook-pic{
+    aspect-ratio:auto !important;
+    min-height:0 !important;
+    width:100% !important;
+    display:block !important;
+  }
+  .hook.reverse .hook-pic iframe{
+    min-height:340px !important;
+    height:340px !important;
+    border-radius:14px;
+  }
 
   /* —— PRENSA y RESEÑAS —— */
   .logo-wall .logo{padding:14px 12px}
