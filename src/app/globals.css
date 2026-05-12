@@ -427,20 +427,23 @@ p{margin:0 0 12px}
 /* === GALLERY HOME (masonry con fotos reales, marcos compactos) === */
 .gallery-home{
   margin:0;
-  grid-template-columns:repeat(4,1fr);
-  grid-auto-rows:130px;
-  gap:10px;
+  grid-template-columns:repeat(5,1fr);
+  grid-auto-rows:110px;
+  gap:8px;
 }
 .gallery-home .gallery-item{
   margin:0;
   background:var(--paper-2);
   cursor:pointer;
 }
+@media (max-width:1199px){
+  .gallery-home{grid-template-columns:repeat(4,1fr);grid-auto-rows:110px}
+}
 @media (max-width:899px){
-  .gallery-home{grid-template-columns:repeat(3,1fr);grid-auto-rows:115px}
+  .gallery-home{grid-template-columns:repeat(3,1fr);grid-auto-rows:105px}
 }
 @media (max-width:687px){
-  .gallery-home{grid-template-columns:repeat(2,1fr);grid-auto-rows:115px}
+  .gallery-home{grid-template-columns:repeat(3,1fr);grid-auto-rows:90px}
 }
 .gallery-home .gallery-item img{
   position:absolute;inset:0;
@@ -3363,9 +3366,17 @@ footer ul a:hover{color:var(--pink)}
 .gal-section h2 em{color:var(--pink-deep)}
 
 /* === GRIDS === */
-.gal-grid{display:grid;gap:18px;margin:0}
-.gal-grid-3{grid-template-columns:repeat(3,1fr)}
-.gal-grid-2{grid-template-columns:repeat(2,1fr);max-width:920px;margin:0 auto}
+.gal-grid{display:grid;gap:12px;margin:0}
+.gal-grid-3{grid-template-columns:repeat(4,1fr)}
+.gal-grid-2{grid-template-columns:repeat(3,1fr);max-width:920px;margin:0 auto}
+@media (max-width:1199px){
+  .gal-grid-3{grid-template-columns:repeat(3,1fr)}
+  .gal-grid-2{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:767px){
+  .gal-grid-3{grid-template-columns:repeat(2,1fr)}
+  .gal-grid-2{grid-template-columns:repeat(2,1fr)}
+}
 
 /* === ITEM === */
 .gal-item{
