@@ -598,14 +598,29 @@ export default function Game({ embed = false }: GameProps = {}) {
     }
 
     setScreen("play");
-    requestAnimationFrame(() => {
-      setupCanvas();
-      window.dispatchEvent(new Event("resize"));
-      s.running = true;
-      s.gameStartedAt = performance.now();
-      s.lastTime = s.gameStartedAt;
-      loop(s.gameStartedAt, p);
-    });
+    // En móvil, un solo requestAnimationFrame no es suficiente para que
+    // React monte el canvas + el navegador haga layout con dimensiones
+    // válidas. Si arrancamos el juego antes, el canvas queda 0x0 → pantalla
+    // blanca pillada. Aquí reintentamos hasta tener dimensiones reales.
+    let attempts = 0;
+    const tryStart = () => {
+      const canvas = canvasRef.current;
+      const rect = canvas?.getBoundingClientRect();
+      const ready = canvas && rect && rect.width > 0 && rect.height > 0;
+      if (ready || attempts > 30) {
+        if (!ready) console.warn("[game] canvas no listo tras 30 frames, forzando inicio");
+        setupCanvas();
+        window.dispatchEvent(new Event("resize"));
+        s.running = true;
+        s.gameStartedAt = performance.now();
+        s.lastTime = s.gameStartedAt;
+        loop(s.gameStartedAt, p);
+      } else {
+        attempts++;
+        requestAnimationFrame(tryStart);
+      }
+    };
+    requestAnimationFrame(tryStart);
   }
 
   function loop(now: number, p: Player | null) {
