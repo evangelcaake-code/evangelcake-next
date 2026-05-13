@@ -575,6 +575,73 @@ p{margin:0 0 12px}
   opacity:1;
   transform:translateY(0);
 }
+/* ==========================================================================
+   Instagram Feed (home) — sustituye la antigua "gallery-home"
+   ========================================================================== */
+.ig-section{padding:48px 48px}
+.ig-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.ig-head h2{font-size:clamp(36px,4.6vw,56px);max-width:none}
+.ig-handle{font-size:14px;color:var(--ink-2);margin:8px 0 0}
+.ig-handle a{color:var(--pink-deep);font-weight:500;text-decoration:none}
+.ig-handle a:hover{text-decoration:underline}
+.ig-follow-btn{padding:12px 22px;font-size:13px;white-space:nowrap}
+
+.ig-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-width:1080px;margin:0 auto;
+}
+.ig-item{
+  position:relative;display:block;
+  aspect-ratio:1/1;overflow:hidden;border-radius:14px;
+  background:var(--paper-2);
+  cursor:pointer;
+  transition:transform .35s var(--ease,cubic-bezier(.2,.7,.2,1));
+}
+.ig-item:hover{transform:translateY(-3px)}
+.ig-item img{
+  transition:transform .6s var(--ease,cubic-bezier(.2,.7,.2,1));
+}
+.ig-item:hover img{transform:scale(1.06)}
+.ig-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;color:#fff;
+  background:linear-gradient(135deg, rgba(232,90,154,.85) 0%, rgba(244,184,208,.75) 100%);
+  opacity:0;transition:opacity .3s var(--ease,cubic-bezier(.2,.7,.2,1));
+  pointer-events:none;
+}
+.ig-item:hover .ig-overlay,.ig-item:focus-visible .ig-overlay{opacity:1}
+.ig-overlay-text{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+
+/* Skeleton */
+.ig-skeleton{
+  background:linear-gradient(90deg, var(--paper-2) 0%, rgba(0,0,0,.04) 50%, var(--paper-2) 100%);
+  background-size:200% 100%;
+  animation:igShimmer 1.4s linear infinite;
+}
+@keyframes igShimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+.ig-empty{
+  text-align:center;padding:32px 16px;
+  background:var(--paper-2);border-radius:14px;
+}
+.ig-empty p{margin:0 0 14px;color:var(--ink-2)}
+
+@media (max-width:899px){
+  .ig-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:767px){
+  .ig-section{padding:32px 16px}
+  .ig-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .ig-overlay svg{width:24px;height:24px}
+  .ig-overlay-text{font-size:10px}
+  .ig-head{flex-direction:column;align-items:flex-start;gap:14px}
+  .ig-follow-btn{width:100%;justify-content:center}
+}
+
 .gallery-home-section .section-head .link{
   font-size:14px;color:var(--pink-deep);
   font-weight:500;

@@ -160,6 +160,12 @@ export default async function AdminPage() {
             >
               Gestionar emails →
             </a>
+            <a
+              href="/admin/instagram"
+              style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
+            >
+              Gestionar Instagram →
+            </a>
           </p>
         </div>
         <LogoutButton />

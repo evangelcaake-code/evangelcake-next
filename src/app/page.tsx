@@ -5,6 +5,7 @@ import Game from "@/components/Game";
 import GameTeaserRank from "@/components/GameTeaserRank";
 import HomeNewsletter from "@/components/HomeNewsletter";
 import ReviewsCarousel, { ReviewsRating } from "@/components/ReviewsCarousel";
+import InstagramFeed from "@/components/InstagramFeed";
 
 const bakerySchema = {
   "@context": "https://schema.org",
@@ -515,43 +516,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="galeria"
-        className="section gallery-home-section"
-        aria-labelledby="gal-title"
-      >
-        <div className="section-head">
-          <div>
-            <span className="tag">Trabajos recientes</span>
-            <h2 id="gal-title">
-              Manos que crean, <em>corazones que aman.</em>
-            </h2>
-          </div>
-          <Link className="link" href="/galeria">
-            Ver más tartas personalizadas →
-          </Link>
-        </div>
-        <div className="gallery gallery-home">
-          {galleryHome.map((p) => (
-            <figure key={p.src} className="gallery-item tall">
-              <Image
-                src={p.src}
-                alt={p.alt}
-                width={600}
-                height={750}
-                loading="lazy"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: p.pos ?? "center",
-                }}
-              />
-              <figcaption className="gallery-label">{p.caption}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
+      <InstagramFeed />
 
       <section
         id="juego"
