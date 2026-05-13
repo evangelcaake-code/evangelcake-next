@@ -630,6 +630,13 @@ p{margin:0 0 12px}
 }
 .ig-empty p{margin:0 0 14px;color:var(--ink-2)}
 
+/* Wrap del widget oficial de Behold — máximo ancho contenido para
+   que respete los márgenes de la sección y se centre */
+.ig-behold-wrap{
+  max-width:1080px;margin:0 auto;
+}
+.ig-behold-wrap behold-widget{display:block}
+
 @media (max-width:899px){
   .ig-grid{grid-template-columns:repeat(2,1fr)}
 }

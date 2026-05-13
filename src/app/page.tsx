@@ -5,7 +5,7 @@ import Game from "@/components/Game";
 import GameTeaserRank from "@/components/GameTeaserRank";
 import HomeNewsletter from "@/components/HomeNewsletter";
 import ReviewsCarousel, { ReviewsRating } from "@/components/ReviewsCarousel";
-import InstagramFeed from "@/components/InstagramFeed";
+import BeholdInstagramFeed from "@/components/BeholdInstagramFeed";
 
 const bakerySchema = {
   "@context": "https://schema.org",
@@ -516,7 +516,7 @@ export default function Home() {
         </div>
       </section>
 
-      <InstagramFeed />
+      <BeholdInstagramFeed />
 
       <section
         id="juego"
