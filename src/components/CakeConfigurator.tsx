@@ -238,6 +238,21 @@ export default function CakeConfigurator() {
   return (
     <>
       <section className="section tp-config" id="sabores" aria-labelledby="cfg-title">
+        {/* Mobile-only: banner indicando que se abre el modal paso a paso,
+            y un botón transparente que captura los clicks de toda la sección.
+            En desktop ambos están ocultos. */}
+        <div
+          className="tp-config-mobile-hint"
+          aria-hidden="true"
+        >
+          🎂 Toca para personalizar tu tarta paso a paso →
+        </div>
+        <button
+          type="button"
+          className="tp-config-mobile-trap"
+          aria-label="Abrir configurador paso a paso"
+          onClick={() => window.dispatchEvent(new Event("open-cake-modal"))}
+        />
         <div className="section-head">
           <h2 id="cfg-title">
             Configura <em>tu tarta.</em>

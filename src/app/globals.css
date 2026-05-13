@@ -2560,33 +2560,36 @@ footer ul a:hover{color:var(--pink)}
 }
 
 @media (max-width:767px){
-  .builder-cart{top:auto;bottom:88px;right:12px;left:12px;}
-  .cart-toggle{justify-content:center;border-radius:var(--r-card)}
-  /* Carrito en mobile: ventana flotante CENTRADA estilo modal — igual
-     que el CakeModal "paso a paso". !important para ganar a la regla
-     base de .cart-panel (position:absolute relativo al parent fixed). */
-  .cart-panel{
-    position:fixed !important;
-    top:24px !important;
-    bottom:24px !important;
-    left:16px !important;
-    right:16px !important;
-    width:auto !important;
-    max-width:520px !important;
-    margin:0 auto !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch;
-    touch-action:pan-y;
-    overscroll-behavior:contain;
-    box-shadow:0 0 0 100vmax rgba(15,12,11,.55), 0 30px 60px rgba(0,0,0,.25) !important;
-    z-index:200 !important;
+  /* En mobile:
+     - El carrito flotante NO se usa (mal flujo en pantalla pequeña)
+     - El configurador inline SIGUE visible pero cualquier click en él
+       canaliza al CakeModal "paso a paso" (que está full-screen y va
+       bien). Para eso usamos un .tp-config-mobile-trap absoluto encima
+       del configurador que intercepta TODOS los taps. */
+  .builder-cart{display:none !important}
+  .tp-config{position:relative}
+  .tp-config-mobile-trap{
+    display:block !important;
+    position:absolute;inset:0;z-index:20;
+    background:transparent;border:0;
+    cursor:pointer;
+    width:100%;
   }
-  /* Cuando el panel está abierto, ocultar el toggle de fondo para evitar
-     que el botón "Tu tarta · 4" aparezca encima del backdrop */
-  .builder-cart:has(.cart-panel.open) .cart-toggle{opacity:0;pointer-events:none}
+  /* Banner visible arriba del configurador que indica claramente lo que
+     pasa al tocar */
+  .tp-config-mobile-hint{
+    display:flex !important;
+    align-items:center;justify-content:center;gap:8px;
+    margin:14px 0 0;padding:14px 18px;
+    background:linear-gradient(135deg, var(--pink-deep) 0%, #ff7eb6 100%);
+    color:#fff;font-weight:600;font-size:14px;
+    border-radius:var(--r-pill);
+    text-align:center;
+    box-shadow:0 8px 20px rgba(232,90,154,.30);
+    position:relative;z-index:30;
+  }
 }
+.tp-config-mobile-trap,.tp-config-mobile-hint{display:none}
 
 /* ==========================================================================
    FLY-TO-CART animation
