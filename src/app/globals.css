@@ -2241,7 +2241,19 @@ footer ul a:hover{color:var(--pink)}
 /* === Responsive === */
 @media (max-width:639px){
   .cake-config{padding:0;align-items:stretch}
-  .cc-box{max-height:100vh;border-radius:0;max-width:none}
+  .cc-box{
+    max-height:100vh;height:100vh;max-width:none;border-radius:0;
+    /* Asegurar que cc-box ocupa toda la pantalla y cc-stage scrollea
+       dentro. iOS Safari necesita touch-action explícito. */
+    display:flex;flex-direction:column;
+  }
+  .cc-stage{
+    flex:1 1 0;min-height:0;overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+    overscroll-behavior:contain;
+    padding-bottom:32px;
+  }
   .cc-options-grid{grid-template-columns:1fr 1fr}
   .cc-options-small{grid-template-columns:repeat(3,1fr)}
   .cc-opt{font-size:17px;padding:16px 18px}
@@ -2551,10 +2563,15 @@ footer ul a:hover{color:var(--pink)}
   .builder-cart{top:auto;bottom:88px;right:12px;left:12px;}
   .cart-toggle{justify-content:center;border-radius:var(--r-card)}
   .cart-panel{
-    position:fixed;top:12px;bottom:160px;right:12px;left:12px;
+    position:fixed;
+    top:12px;right:12px;left:12px;bottom:auto;
     width:auto;max-width:none;
-    max-height:calc(100vh - 180px);
+    height:auto;
+    max-height:calc(100dvh - 24px);
     overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+    overscroll-behavior:contain;
   }
 }
 
