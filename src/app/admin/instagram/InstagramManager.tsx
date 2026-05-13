@@ -139,7 +139,8 @@ export default function InstagramManager({ initialPosts }: Props) {
             <label style={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".04em", color: "var(--ink-2)" }}>
               Link al post de Instagram (opcional)
               <input
-                type="url"
+                type="text"
+                inputMode="url"
                 value={postUrl}
                 onChange={(e) => setPostUrl(e.target.value)}
                 placeholder="https://www.instagram.com/p/XXXXX/"
