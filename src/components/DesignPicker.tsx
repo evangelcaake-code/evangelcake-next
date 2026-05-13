@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ALL_GALLERY_PHOTOS, CATEGORY_LABELS, type GalleryPhoto } from "@/data/gallery-photos";
 
@@ -216,7 +217,11 @@ function GalleryModal({
     };
   }, [onClose]);
 
-  return (
+  // Renderizamos vía portal en document.body para escapar del stacking
+  // context del cart-panel (que tiene transform → atrapa los position:fixed
+  // descendientes y el modal salía pequeñito).
+  if (typeof document === "undefined") return null;
+  return createPortal(
     <div
       className="gallery-modal-backdrop"
       role="dialog"
@@ -284,7 +289,8 @@ function GalleryModal({
           })}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

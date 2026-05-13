@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getSubscribedEmail, saveSubscribedEmail } from "@/lib/subscriberLocal";
 import { track } from "@/lib/track";
 
-const DELAY_MS = 15_000; // 15 segundos
+const DELAY_MS = 60_000; // 1 minuto
 const DISMISS_KEY = "evangelcake_popup_dismissed_at";
 const SUBSCRIBED_KEY = "evangelcake_popup_subscribed";
 const SUPPRESS_DAYS = 7;
