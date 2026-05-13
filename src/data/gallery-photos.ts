@@ -19,7 +19,6 @@ export const ALL_GALLERY_PHOTOS: GalleryPhoto[] = [
   { src: "/images/gallery/boda-rosas.jpg", alt: "Tarta de boda con cobertura de chantilly y rosas blancas", caption: "Boda · Chantilly & rosas", category: "boda" },
   { src: "/images/gallery/boda-rosa-roja.jpg", alt: "Tarta blanca con rosa roja y perlas", caption: "Romántica · Rosa roja", category: "boda" },
   { src: "/images/gallery/corazon-eternidad.jpg", alt: "Tarta corazón blanca con piping vintage Por la Eternidad", caption: "Corazón · Por la Eternidad", category: "boda" },
-  { src: "/images/gallery/aniversario-50.jpg", alt: "Tarta de aniversario en forma de número 50 con chocolate y plata", caption: "Aniversario · 50 años", category: "boda" },
   { src: "/images/gallery/drip-rojo-aniversario.jpg", alt: "Tarta drip roja con flor y donuts dorados Te Queremos", caption: "Drip rojo · Te queremos", category: "boda" },
   { src: "/images/gallery/drip-chocolate-frutas.jpg", alt: "Tarta drip de chocolate con fresas frambuesas y oro comestible", caption: "Drip chocolate · Frutas & oro", category: "boda" },
 
