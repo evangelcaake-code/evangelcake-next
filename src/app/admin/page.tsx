@@ -172,6 +172,12 @@ export default async function AdminPage() {
             >
               Campaña Mayo 2026 →
             </a>
+            <a
+              href="/admin/dashboard-mayo"
+              style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
+            >
+              Dashboard contenido Mayo →
+            </a>
           </p>
         </div>
         <LogoutButton />

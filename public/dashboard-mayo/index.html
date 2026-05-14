@@ -1,0 +1,5381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EvangelCake · Contenido Mayo 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+  :root{
+    --paper:#f5f0e8;
+    --pink:#f4b8d0;
+    --pink-deep:#e85a9a;
+    --gold:#c79a4a;
+    --cream:#fbf3df;
+    --ink:#1a1614;
+    --ink-2:#3a322c;
+
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Inter', system-ui, sans-serif;
+    --mono:'JetBrains Mono', monospace;
+    --script:'Great Vibes', cursive;
+
+    --shadow:0 12px 40px rgba(26,22,20,.18);
+    --shadow-sm:0 4px 18px rgba(26,22,20,.10);
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+  /* ---------- DASHBOARD CHROME ---------- */
+  .dashboard-header{
+    padding:32px 40px 24px;
+    border-bottom:1px solid rgba(26,22,20,.08);
+    background:linear-gradient(180deg,var(--cream) 0%,var(--paper) 100%);
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:32px;
+    align-items:center;
+  }
+  .brand-mark{display:flex;align-items:center;gap:14px}
+  .brand-mark img{height:64px;width:auto}
+  .brand-mark .titles{line-height:1.1}
+  .brand-mark .titles h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:26px;
+    margin:0;
+    letter-spacing:-.02em;
+  }
+  .brand-mark .titles p{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-2);
+    margin:4px 0 0;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+  }
+
+  .header-tagline{
+    font-family:var(--script);
+    font-size:32px;
+    color:var(--pink-deep);
+    text-align:center;
+    line-height:1;
+  }
+
+  .stats{display:flex;gap:18px}
+  .stat{
+    background:#fff;
+    border:1px solid rgba(26,22,20,.08);
+    padding:12px 18px;
+    border-radius:12px;
+    min-width:90px;
+    text-align:center;
+    box-shadow:var(--shadow-sm);
+  }
+  .stat span{
+    display:block;
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.15em;
+    color:var(--ink-2);
+  }
+  .stat strong{
+    display:block;
+    font-family:var(--serif);
+    font-size:28px;
+    font-weight:500;
+    margin-top:4px;
+    color:var(--ink);
+  }
+
+  /* ---------- MAIN LAYOUT ---------- */
+  .dashboard-main{
+    padding:40px;
+    padding-right:calc(40px + var(--editor-w, 0px));
+    transition:padding .35s ease;
+  }
+  body.editor-open{ --editor-w: 420px; }
+
+  /* ---------- SECTION TABS ---------- */
+  .section-tabs{
+    position:sticky;top:0;z-index:50;
+    background:rgba(245,240,232,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(26,22,20,.08);
+    padding:14px 40px;
+    padding-right:calc(40px + var(--editor-w, 0px));
+    transition:padding .35s ease;
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    flex-wrap:wrap;
+  }
+  .section-tabs button{
+    background:#fff;
+    border:1px solid rgba(26,22,20,.12);
+    padding:8px 16px;
+    border-radius:99px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .2s ease;
+  }
+  .section-tabs button:hover{ border-color:var(--pink-deep); color:var(--pink-deep); }
+  .section-tabs button.active{
+    background:var(--ink);color:var(--cream);border-color:var(--ink);
+  }
+  .section-tabs button .count{
+    margin-left:8px;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0;
+    text-transform:none;
+    color:var(--pink-deep);
+  }
+  .section-tabs button.active .count{ color:var(--pink); }
+
+  /* extra stories-row variants for non-cadena sections */
+  .stories-row.flex5{ grid-template-columns:repeat(5,1fr); }
+  .stories-row.flex4{ grid-template-columns:repeat(4,1fr); }
+  .stories-row.flex2{ grid-template-columns:repeat(3,1fr); }
+  .stories-row.flex2 .piece-card{ max-width:none; }
+  .stories-row.flex2 > *:nth-child(n+3){ display:none; }
+  @media (max-width:1100px){
+    .stories-row.flex5, .stories-row.flex4{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (max-width:760px){
+    .stories-row.flex5, .stories-row.flex4{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  .section-header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin:36px 0 18px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--ink);
+  }
+  .section-header h2{
+    font-family:var(--serif);
+    font-size:36px;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-.02em;
+  }
+  .section-header h2 em{
+    font-family:var(--script);
+    color:var(--pink-deep);
+    font-style:normal;
+    font-size:.85em;
+    margin-right:8px;
+  }
+  .section-header .meta{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    color:var(--ink-2);
+  }
+
+  /* ---------- STORIES GRID ---------- */
+  .cadena{margin-bottom:34px}
+  .cadena-label{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .cadena-label .num{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:48px;
+    color:var(--pink-deep);
+    line-height:1;
+  }
+  .cadena-label .info{line-height:1.2}
+  .cadena-label .info strong{
+    font-family:var(--serif);
+    font-size:18px;
+    font-weight:500;
+    display:block;
+  }
+  .cadena-label .info span{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-2);
+    text-transform:uppercase;
+    letter-spacing:.15em;
+  }
+
+  .stories-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+
+  /* ---------- CARRUSEL GRID ---------- */
+  .carrusel-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+  }
+
+  /* ---------- PIECE CARD ---------- */
+  .piece-card{
+    background:#fff;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+    cursor:pointer;
+    transition:transform .25s ease, box-shadow .25s ease;
+    position:relative;
+    border:2px solid transparent;
+  }
+  .piece-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow);
+  }
+  .piece-card.active{
+    border-color:var(--pink-deep);
+    box-shadow:0 0 0 4px rgba(232,90,154,.18), var(--shadow);
+  }
+  .piece-card .thumb-wrap{
+    position:relative;
+    width:100%;
+    background:#000;
+    overflow:hidden;
+  }
+  .piece-card.story .thumb-wrap{ aspect-ratio:9/16; }
+  .piece-card.carrusel .thumb-wrap{ aspect-ratio:1/1; }
+
+  .piece-card .thumb-scale{
+    position:absolute;
+    top:0;left:0;
+    width:1080px;
+    transform-origin:top left;
+    pointer-events:none;
+  }
+  .piece-card.story .thumb-scale{ height:1920px; }
+  .piece-card.carrusel .thumb-scale{ height:1080px; }
+
+  .piece-card .meta-bar{
+    padding:10px 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+  }
+  .piece-card .meta-bar .label{
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.15em;
+    color:var(--ink);
+  }
+  .piece-card .meta-bar .slot{
+    font-family:var(--serif);
+    font-size:11px;
+    background:var(--ink);
+    color:var(--cream);
+    padding:3px 8px;
+    border-radius:99px;
+    letter-spacing:.05em;
+  }
+  .piece-card.carrusel .meta-bar .slot{
+    background:var(--pink-deep);
+  }
+
+  /* ---------- PIECE CANVAS (1080×canvas) ---------- */
+  .piece-canvas{
+    width:1080px;
+    background:var(--cream);
+    position:relative;
+    overflow:hidden;
+    font-family:var(--sans);
+    color:var(--ink);
+  }
+  .piece-canvas.story{ height:1920px; }
+  .piece-canvas.carrusel{ height:1080px; }
+
+  /* shared helpers inside the canvas */
+  .pc-bg{position:absolute;inset:0;z-index:0}
+  .pc-layer{position:absolute;z-index:1}
+  .pc-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+
+  /* utility text classes - rendered at 1080 scale */
+  .pc-serif{font-family:var(--serif);font-weight:500}
+  .pc-sans{font-family:var(--sans)}
+  .pc-script{font-family:var(--script)}
+  .pc-mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.2em}
+
+  /* ---------- EDITOR PANEL ---------- */
+  .editor-panel{
+    position:fixed;
+    top:0;right:0;
+    width:420px;
+    height:100vh;
+    background:#fff;
+    box-shadow:-12px 0 40px rgba(26,22,20,.12);
+    border-left:1px solid rgba(26,22,20,.08);
+    transform:translateX(100%);
+    transition:transform .35s ease;
+    display:flex;
+    flex-direction:column;
+    z-index:100;
+  }
+  .editor-panel.open{ transform:translateX(0); }
+
+  .editor-header{
+    padding:22px 24px 16px;
+    border-bottom:1px solid rgba(26,22,20,.08);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .editor-header h3{
+    margin:0;
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:22px;
+    letter-spacing:-.01em;
+  }
+  .editor-header h3 small{
+    display:block;
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--ink-2);
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    margin-top:4px;
+    font-weight:400;
+  }
+  .editor-close{
+    background:none;
+    border:none;
+    font-size:22px;
+    cursor:pointer;
+    color:var(--ink-2);
+    padding:4px 8px;
+    line-height:1;
+    border-radius:6px;
+  }
+  .editor-close:hover{background:var(--cream)}
+
+  .editor-preview{
+    padding:18px 24px;
+    background:linear-gradient(180deg,var(--cream),var(--paper));
+    border-bottom:1px solid rgba(26,22,20,.08);
+    display:flex;
+    justify-content:center;
+  }
+  .editor-preview .thumb-wrap{
+    background:#000;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+    position:relative;
+  }
+  .editor-preview.story .thumb-wrap{ width:180px; height:320px; }
+  .editor-preview.carrusel .thumb-wrap{ width:240px; height:240px; }
+  .editor-preview .thumb-scale{
+    position:absolute;top:0;left:0;
+    width:1080px;
+    transform-origin:top left;
+    pointer-events:none;
+  }
+  .editor-preview.story .thumb-scale{ height:1920px; transform:scale(0.1667); }
+  .editor-preview.carrusel .thumb-scale{ height:1080px; transform:scale(0.2222); }
+
+  .editor-body{
+    flex:1;
+    overflow-y:auto;
+    padding:20px 24px 24px;
+  }
+  .form-group{margin-bottom:18px}
+  .form-group label{
+    display:block;
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    color:var(--ink-2);
+    margin-bottom:6px;
+  }
+  .form-group textarea, .form-group input[type=text]{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid rgba(26,22,20,.15);
+    border-radius:8px;
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--ink);
+    background:var(--paper);
+    resize:vertical;
+  }
+  .form-group textarea{min-height:88px}
+  .form-group textarea:focus, .form-group input:focus{
+    outline:none;
+    border-color:var(--pink-deep);
+    background:#fff;
+  }
+  .form-group input[type=file]{
+    width:100%;
+    font-family:var(--mono);
+    font-size:11px;
+    padding:8px 0;
+  }
+
+  .variants{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+  .variant-btn{
+    padding:10px 8px;
+    border:1px solid rgba(26,22,20,.15);
+    border-radius:8px;
+    background:#fff;
+    cursor:pointer;
+    text-align:center;
+    transition:all .2s ease;
+  }
+  .variant-btn:hover{border-color:var(--pink-deep)}
+  .variant-btn.active{
+    border-color:var(--pink-deep);
+    box-shadow:0 0 0 3px rgba(232,90,154,.15);
+    background:var(--cream);
+  }
+  .variant-btn .swatch{
+    height:30px;
+    border-radius:6px;
+    margin-bottom:6px;
+    display:flex;
+    overflow:hidden;
+  }
+  .variant-btn .swatch span{flex:1;height:100%}
+  .variant-btn .name{
+    font-family:var(--mono);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--ink);
+  }
+
+  .editor-footer{
+    padding:18px 24px;
+    border-top:1px solid rgba(26,22,20,.08);
+    background:var(--cream);
+    display:flex;
+    gap:10px;
+  }
+  .btn{
+    padding:12px 16px;
+    border:none;
+    border-radius:8px;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    transition:all .2s ease;
+    letter-spacing:.02em;
+  }
+  .btn-primary{
+    background:var(--ink);
+    color:var(--cream);
+    flex:2;
+  }
+  .btn-primary:hover{background:var(--pink-deep)}
+  .btn-secondary{
+    background:#fff;
+    color:var(--ink);
+    border:1px solid rgba(26,22,20,.15);
+    flex:1;
+  }
+  .btn-secondary:hover{background:var(--paper)}
+
+  .filename-pill{
+    font-family:var(--mono);
+    font-size:10px;
+    background:var(--paper);
+    color:var(--ink-2);
+    padding:8px 10px;
+    border-radius:6px;
+    word-break:break-all;
+    margin-bottom:14px;
+  }
+
+  /* ---------- HIDDEN EXPORT STAGE ---------- */
+  .export-stage{
+    position:fixed;
+    top:0;left:0;
+    width:1080px;
+    height:1920px;
+    overflow:hidden;
+    pointer-events:none;
+    opacity:0;
+    z-index:-1;
+  }
+
+  /* ---------- TOAST ---------- */
+  .toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--ink);
+    color:var(--cream);
+    padding:12px 22px;
+    border-radius:99px;
+    font-family:var(--mono);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.15em;
+    opacity:0;
+    transition:all .3s ease;
+    z-index:200;
+    box-shadow:var(--shadow);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* =====================================================
+     PIECE LAYOUTS — each story/slide gets its own template
+     All sized at 1080×1920 (story) or 1080×1080 (carrusel)
+     ===================================================== */
+
+  /* default palette inside canvases */
+  .pc-default { --c-bg:var(--cream); --c-ink:var(--ink); --c-accent:var(--pink-deep); --c-soft:var(--pink); --c-gold:var(--gold); }
+  .pc-magenta { --c-bg:var(--pink-deep); --c-ink:var(--cream); --c-accent:var(--cream); --c-soft:var(--pink); --c-gold:var(--gold); }
+  .pc-minimal { --c-bg:var(--paper); --c-ink:var(--ink); --c-accent:var(--ink); --c-soft:#e8e0d4; --c-gold:var(--gold); }
+
+  .piece-canvas{ background:var(--c-bg); color:var(--c-ink); }
+
+  /* ===== STORY S1 HOOK : MASSIVE 5% ===== */
+  .L-s1-hook .pc-bg{
+    background:radial-gradient(circle at 30% 20%, rgba(232,90,154,.12), transparent 55%), var(--c-bg);
+  }
+  .L-s1-hook .huge-pct{
+    position:absolute;
+    top:300px; left:50%;
+    transform:translateX(-50%);
+    font-family:var(--serif);
+    font-weight:800;
+    font-size:780px;
+    line-height:.78;
+    color:var(--c-accent);
+    letter-spacing:-.06em;
+    z-index:1;
+  }
+  .L-s1-hook .huge-pct .pct{font-size:.55em;vertical-align:top;margin-left:-30px}
+  .L-s1-hook .top-tag{
+    position:absolute;
+    top:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    z-index:2;
+  }
+  .L-s1-hook .top-tag .mono{
+    font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-s1-hook .top-tag .badge{
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:1;
+  }
+  .L-s1-hook .question{
+    position:absolute;
+    top:140px;left:80px;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:300;
+    font-size:72px;
+    line-height:1.05;
+    max-width:920px;
+    z-index:2;
+  }
+  .L-s1-hook .question em{
+    background:var(--c-ink); color:var(--c-bg);
+    padding:0 14px;
+    font-style:normal;
+    font-weight:500;
+  }
+  .L-s1-hook .bottom-block{
+    position:absolute;
+    bottom:120px;left:80px;right:80px;
+    z-index:3;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:30px;
+  }
+  .L-s1-hook .bottom-block .text{
+    font-family:var(--serif);
+    font-weight:300;
+    font-size:56px;
+    line-height:1.05;
+    max-width:680px;
+  }
+  .L-s1-hook .bottom-block .text strong{
+    font-weight:600;
+    color:var(--c-accent);
+  }
+  .L-s1-hook .bottom-block .mascot{
+    width:280px;height:auto;flex-shrink:0;
+  }
+  .L-s1-hook .corner-handle{
+    position:absolute;
+    top:60px;right:80px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.15em;
+    z-index:2;
+  }
+
+  /* ===== STORY S1 CONTEXTO : NEWSLETTER CARD ===== */
+  .L-s1-ctx .pc-bg{
+    background:var(--c-bg);
+  }
+  .L-s1-ctx .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(45deg,rgba(199,154,74,.06) 0,rgba(199,154,74,.06) 2px,transparent 2px,transparent 14px);
+  }
+  .L-s1-ctx .ctx-header{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    border-bottom:2px solid var(--c-ink);
+    padding-bottom:16px;
+  }
+  .L-s1-ctx .ctx-step{
+    position:absolute;
+    top:280px;left:80px;
+    font-family:var(--script);
+    font-size:140px;color:var(--c-accent);line-height:1;
+  }
+  .L-s1-ctx .ctx-title{
+    position:absolute;
+    top:380px;left:80px;right:80px;
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:120px;
+    line-height:.95;
+    letter-spacing:-.03em;
+  }
+  .L-s1-ctx .ctx-title em{
+    font-family:var(--script);
+    font-style:normal;
+    font-weight:400;
+    color:var(--c-accent);
+    font-size:.95em;
+  }
+  .L-s1-ctx .ctx-card{
+    position:absolute;
+    bottom:280px;left:80px;right:80px;
+    background:var(--c-ink);
+    color:var(--c-bg);
+    border-radius:24px;
+    padding:60px 50px;
+    box-shadow:0 30px 60px rgba(26,22,20,.25);
+  }
+  .L-s1-ctx .ctx-card .ico{
+    font-size:80px;
+    line-height:1;
+    margin-bottom:14px;
+  }
+  .L-s1-ctx .ctx-card .label{
+    font-family:var(--mono);
+    font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--c-soft);
+    margin-bottom:14px;
+  }
+  .L-s1-ctx .ctx-card .body{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:54px;
+    line-height:1.1;
+  }
+  .L-s1-ctx .ctx-card .body strong{
+    background:var(--c-accent);
+    color:var(--c-bg);
+    padding:0 10px;
+    font-weight:600;
+  }
+  .L-s1-ctx .footnote{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--c-ink);
+  }
+
+  /* ===== STORY S1 CTA : ARROW + URL ===== */
+  .L-s1-cta .pc-bg{ background:var(--c-bg); }
+  .L-s1-cta .ph{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:780px;
+    overflow:hidden;
+  }
+  .L-s1-cta .ph img{
+    width:100%;height:100%;object-fit:cover;
+    filter:saturate(1.05) contrast(1.02);
+  }
+  .L-s1-cta .ph::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, var(--c-bg) 0%, transparent 30%);
+  }
+  .L-s1-cta .cta-eyebrow{
+    position:absolute;
+    top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .L-s1-cta .cta-action{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:200px;
+    line-height:.88;
+    letter-spacing:-.04em;
+  }
+  .L-s1-cta .cta-action em{
+    font-family:var(--script);
+    font-weight:400;
+    font-style:normal;
+    color:var(--c-accent);
+    font-size:.7em;
+    display:block;
+    margin-top:8px;
+  }
+  .L-s1-cta .arrow{
+    position:absolute;
+    top:720px;left:80px;
+    font-family:var(--serif);
+    font-size:380px;
+    line-height:.7;
+    color:var(--c-accent);
+    font-weight:300;
+  }
+  .L-s1-cta .url-pill{
+    position:absolute;
+    top:880px;left:280px;right:80px;
+    background:var(--c-ink);
+    color:var(--c-bg);
+    border-radius:99px;
+    padding:34px 50px;
+    font-family:var(--mono);
+    font-size:32px;
+    letter-spacing:.05em;
+    text-transform:lowercase;
+  }
+  .L-s1-cta .url-pill::before{
+    content:"→ ";
+    font-family:var(--serif);
+    color:var(--c-accent);
+    margin-right:8px;
+  }
+
+  /* ===== STORY S2 HOOK : FULL-BLEED PHOTO + SERIF OVERLAY ===== */
+  .L-s2-hook .pc-photo{
+    filter:saturate(1.05) brightness(.85);
+  }
+  .L-s2-hook .pc-bg{
+    background:linear-gradient(180deg, rgba(26,22,20,.55) 0%, rgba(26,22,20,.15) 40%, rgba(232,90,154,.55) 100%);
+    mix-blend-mode:multiply;
+    z-index:1;
+  }
+  .L-s2-hook .corner-tag{
+    position:absolute;
+    top:120px;left:80px;
+    background:var(--c-bg);
+    color:var(--c-ink);
+    padding:14px 26px;
+    border-radius:99px;
+    font-family:var(--mono);
+    font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    z-index:3;
+  }
+  .L-s2-hook .week-badge{
+    position:absolute;
+    top:120px;right:80px;
+    width:160px;height:160px;
+    border-radius:50%;
+    background:var(--c-accent);
+    color:var(--c-bg);
+    display:flex;align-items:center;justify-content:center;
+    flex-direction:column;
+    font-family:var(--serif);
+    transform:rotate(8deg);
+    z-index:3;
+  }
+  .L-s2-hook .week-badge .sm{
+    font-family:var(--mono);font-size:14px;letter-spacing:.2em;text-transform:uppercase;
+  }
+  .L-s2-hook .week-badge .big{
+    font-size:60px;font-weight:600;line-height:1;
+  }
+  .L-s2-hook .headline{
+    position:absolute;
+    bottom:340px;left:80px;right:80px;
+    color:#fff;
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:170px;
+    line-height:.92;
+    letter-spacing:-.03em;
+    z-index:3;
+  }
+  .L-s2-hook .headline em{
+    font-family:var(--script);
+    font-style:normal;
+    font-weight:400;
+    font-size:.7em;
+    color:var(--pink);
+    display:block;
+    margin-bottom:-30px;
+  }
+  .L-s2-hook .footer-line{
+    position:absolute;
+    bottom:140px;left:80px;right:80px;
+    color:#fff;
+    font-family:var(--mono);font-size:22px;letter-spacing:.22em;text-transform:uppercase;
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:2px solid rgba(255,255,255,.4);
+    padding-top:22px;
+    z-index:3;
+  }
+
+  /* ===== STORY S2 CONTEXTO : ROTATED BLOCK ===== */
+  .L-s2-ctx .pc-bg{
+    background:var(--c-bg);
+  }
+  .L-s2-ctx .left-block{
+    position:absolute;
+    top:0;left:0;bottom:0;
+    width:55%;
+    background:var(--c-accent);
+    color:var(--c-bg);
+    overflow:hidden;
+  }
+  .L-s2-ctx .left-block::after{
+    content:"5%";
+    position:absolute;
+    bottom:-100px;right:-60px;
+    font-family:var(--serif);
+    font-weight:800;
+    font-size:900px;
+    color:rgba(255,255,255,.10);
+    line-height:.8;
+    letter-spacing:-.06em;
+  }
+  .L-s2-ctx .rot-tag{
+    position:absolute;
+    top:50%;left:120px;
+    transform:rotate(-90deg);
+    transform-origin:left center;
+    font-family:var(--mono);
+    font-size:32px;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--c-bg);
+    z-index:2;
+  }
+  .L-s2-ctx .left-content{
+    position:absolute;
+    top:200px;left:200px;right:80px;
+    z-index:2;
+  }
+  .L-s2-ctx .left-content .eyebrow{
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    margin-bottom:40px;
+  }
+  .L-s2-ctx .left-content .word1{
+    font-family:var(--serif);font-weight:700;font-size:240px;line-height:.88;letter-spacing:-.04em;
+  }
+  .L-s2-ctx .left-content .word2{
+    font-family:var(--script);font-size:200px;color:var(--c-bg);line-height:.9;margin-top:-20px;
+  }
+  .L-s2-ctx .right-info{
+    position:absolute;
+    top:60%;
+    left:55%;right:80px;
+    z-index:2;
+  }
+  .L-s2-ctx .right-info .label{
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--c-ink);margin-bottom:18px;
+  }
+  .L-s2-ctx .right-info .body{
+    font-family:var(--serif);font-weight:400;font-size:62px;line-height:1.1;color:var(--c-ink);
+  }
+  .L-s2-ctx .right-info .body em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);
+  }
+  .L-s2-ctx .footer-mark{
+    position:absolute;
+    bottom:100px;right:80px;
+    font-family:var(--script);
+    font-size:80px;
+    color:var(--c-accent);
+    z-index:2;
+  }
+
+  /* ===== STORY S2 CTA : LINK BIO STYLE ===== */
+  .L-s2-cta .pc-bg{ background:var(--c-bg); }
+  .L-s2-cta .pc-bg::before{
+    content:"";position:absolute;
+    top:-200px;right:-200px;
+    width:900px;height:900px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--c-soft) 0%, transparent 70%);
+  }
+  .L-s2-cta .top-row{
+    position:absolute;top:120px;left:80px;right:80px;
+    display:flex;align-items:center;gap:20px;
+  }
+  .L-s2-cta .top-row .logo{ width:120px;height:auto; }
+  .L-s2-cta .top-row .handle{
+    font-family:var(--mono);font-size:26px;letter-spacing:.2em;
+  }
+  .L-s2-cta .ribbon{
+    position:absolute;
+    top:340px;left:-50px;right:-50px;
+    background:var(--c-ink);
+    color:var(--c-bg);
+    padding:30px 0;
+    transform:rotate(-3deg);
+    text-align:center;
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:88px;
+    letter-spacing:-.02em;
+    z-index:2;
+  }
+  .L-s2-cta .ribbon em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+  }
+  .L-s2-cta .links{
+    position:absolute;
+    top:580px;left:80px;right:80px;
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+  .L-s2-cta .link-btn{
+    background:#fff;
+    border:3px solid var(--c-ink);
+    border-radius:24px;
+    padding:34px 44px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:8px 8px 0 var(--c-ink);
+  }
+  .L-s2-cta .link-btn.featured{
+    background:var(--c-accent);
+    color:#fff;
+    border-color:var(--c-accent);
+    box-shadow:8px 8px 0 var(--c-ink);
+  }
+  .L-s2-cta .link-btn .lbl{
+    font-family:var(--serif);font-weight:500;font-size:54px;letter-spacing:-.01em;line-height:1;
+  }
+  .L-s2-cta .link-btn .sub{
+    font-family:var(--mono);font-size:18px;letter-spacing:.18em;text-transform:uppercase;
+    margin-top:8px;opacity:.8;
+  }
+  .L-s2-cta .link-btn .arr{
+    font-family:var(--serif);font-size:90px;line-height:.5;
+  }
+  .L-s2-cta .bottom-tag{
+    position:absolute;
+    bottom:140px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);
+    font-size:90px;
+    color:var(--c-accent);
+    line-height:1;
+  }
+
+  /* ===== STORY S3 HOOK : DIAGONAL OFF ===== */
+  .L-s3-hook .pc-bg{
+    background:var(--c-bg);
+  }
+  .L-s3-hook .grid-lines{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(26,22,20,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,22,20,.08) 1px, transparent 1px);
+    background-size:120px 120px;
+  }
+  .L-s3-hook .top-bar{
+    position:absolute;top:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    z-index:2;
+  }
+  .L-s3-hook .top-bar .label{
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .L-s3-hook .top-bar .sticker{
+    width:140px;height:auto;
+    transform:rotate(12deg);
+  }
+  .L-s3-hook .massive{
+    position:absolute;
+    top:380px;left:0;right:0;
+    text-align:center;
+    z-index:2;
+  }
+  .L-s3-hook .massive .pre{
+    font-family:var(--script);
+    font-size:120px;
+    color:var(--c-accent);
+    line-height:1;
+    margin-bottom:-30px;
+  }
+  .L-s3-hook .massive .num{
+    font-family:var(--serif);
+    font-weight:800;
+    font-size:520px;
+    line-height:.85;
+    letter-spacing:-.05em;
+    color:var(--c-ink);
+  }
+  .L-s3-hook .off-tag{
+    position:absolute;
+    top:1020px;left:50%;
+    transform:translateX(-50%) rotate(-8deg);
+    background:var(--c-accent);
+    color:var(--c-bg);
+    padding:24px 60px;
+    border-radius:99px;
+    font-family:var(--serif);font-weight:700;
+    font-size:140px;
+    letter-spacing:.04em;
+    z-index:3;
+  }
+  .L-s3-hook .descript{
+    position:absolute;
+    bottom:280px;left:80px;right:80px;
+    font-family:var(--serif);
+    font-weight:300;
+    font-style:italic;
+    font-size:62px;
+    line-height:1.1;
+    text-align:center;
+    color:var(--c-ink);
+    z-index:2;
+  }
+  .L-s3-hook .descript em{
+    font-style:normal;
+    font-weight:600;
+    background:var(--c-ink);
+    color:var(--c-bg);
+    padding:0 12px;
+  }
+  .L-s3-hook .bottom-stamp{
+    position:absolute;
+    bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    padding-top:18px;
+    border-top:1px solid var(--c-ink);
+    z-index:2;
+  }
+
+  /* ===== STORY S3 CONTEXTO : 3-CARD CHOICE ===== */
+  .L-s3-ctx .pc-bg{ background:var(--c-bg); }
+  .L-s3-ctx .top-line{
+    position:absolute;top:120px;left:80px;right:80px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    text-align:center;
+    padding-bottom:18px;
+    border-bottom:2px solid var(--c-ink);
+  }
+  .L-s3-ctx .headline{
+    position:absolute;
+    top:240px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:500;font-size:120px;line-height:.92;letter-spacing:-.02em;
+    text-align:center;
+  }
+  .L-s3-ctx .headline em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;display:block;font-size:.9em;
+  }
+  .L-s3-ctx .cards{
+    position:absolute;
+    top:680px;left:60px;right:60px;
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+  .L-s3-ctx .card{
+    background:#fff;
+    border:3px solid var(--c-ink);
+    border-radius:32px;
+    padding:48px 60px;
+    display:flex;
+    align-items:center;
+    gap:40px;
+  }
+  .L-s3-ctx .card:nth-child(2){
+    transform:translateX(80px);
+    background:var(--c-accent);
+    color:#fff;
+    border-color:var(--c-accent);
+  }
+  .L-s3-ctx .card:nth-child(3){
+    transform:translateX(-40px);
+  }
+  .L-s3-ctx .card .num{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:130px;
+    line-height:1;
+    flex-shrink:0;
+    color:var(--c-accent);
+  }
+  .L-s3-ctx .card:nth-child(2) .num{ color:#fff; }
+  .L-s3-ctx .card .info .label{
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    opacity:.7;
+  }
+  .L-s3-ctx .card .info .word{
+    font-family:var(--serif);font-weight:600;font-size:76px;line-height:1;margin-top:6px;letter-spacing:-.02em;
+  }
+  .L-s3-ctx .you-decide{
+    position:absolute;
+    bottom:200px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);
+    color:var(--c-accent);
+    font-size:140px;
+    line-height:1;
+    z-index:2;
+  }
+  .L-s3-ctx .you-decide em{
+    font-family:var(--serif);font-style:normal;font-weight:600;color:var(--c-ink);font-size:.6em;
+    display:block;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+
+  /* ===== STORY S3 CTA : MASCOT + ARROW + URL ===== */
+  .L-s3-cta .pc-bg{ background:var(--c-bg); }
+  .L-s3-cta .pc-bg::after{
+    content:"";position:absolute;
+    bottom:-300px;left:-300px;
+    width:900px;height:900px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--c-soft), transparent 65%);
+  }
+  .L-s3-cta .stamp-top{
+    position:absolute;
+    top:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    z-index:2;
+  }
+  .L-s3-cta .stamp-top .lbl{
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .L-s3-cta .stamp-top .now{
+    background:var(--c-accent);color:#fff;
+    padding:14px 28px;border-radius:99px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.2em;
+  }
+  .L-s3-cta .big-cta{
+    position:absolute;top:260px;left:80px;right:80px;
+    z-index:3;
+  }
+  .L-s3-cta .big-cta .verb{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:240px;
+    line-height:.88;
+    letter-spacing:-.04em;
+  }
+  .L-s3-cta .big-cta .verb em{
+    color:var(--c-accent);font-style:normal;
+  }
+  .L-s3-cta .big-cta .now-script{
+    font-family:var(--script);
+    font-size:200px;
+    color:var(--c-accent);
+    line-height:.85;
+    margin-top:-20px;
+    display:block;
+  }
+  .L-s3-cta .mascot-arr{
+    position:absolute;
+    top:880px;left:60px;
+    width:520px;
+    z-index:3;
+  }
+  .L-s3-cta .mascot-arr img{ width:100%; height:auto; }
+  .L-s3-cta .arrow-curve{
+    position:absolute;
+    top:1060px;left:540px;
+    font-family:var(--serif);
+    font-size:240px;
+    color:var(--c-accent);
+    line-height:1;
+    transform:rotate(20deg);
+    z-index:2;
+  }
+  .L-s3-cta .url-block{
+    position:absolute;
+    bottom:160px;left:80px;right:80px;
+    z-index:4;
+  }
+  .L-s3-cta .url-block .lbl{
+    font-family:var(--mono);font-size:22px;letter-spacing:.22em;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .L-s3-cta .url-block .url{
+    font-family:var(--mono);
+    font-size:44px;
+    background:var(--c-ink);
+    color:var(--c-bg);
+    padding:24px 36px;
+    border-radius:18px;
+    letter-spacing:.02em;
+    display:inline-block;
+  }
+
+  /* =====================================================
+     CARRUSEL LAYOUTS — 1080×1080
+     ===================================================== */
+
+  /* ===== CARRUSEL 1 : EDITORIAL FRAME ===== */
+  .L-c1 .pc-bg{ background:var(--c-bg); }
+  .L-c1 .frame{
+    position:absolute;
+    top:80px;left:80px;right:80px;bottom:260px;
+    overflow:hidden;
+    border-radius:8px;
+  }
+  .L-c1 .frame img{ width:100%;height:100%;object-fit:cover; }
+  .L-c1 .frame-number{
+    position:absolute;
+    top:60px;right:80px;
+    font-family:var(--serif);font-weight:600;font-size:120px;color:var(--c-accent);line-height:1;
+    z-index:2;
+  }
+  .L-c1 .frame-number .of{
+    font-family:var(--mono);font-size:24px;letter-spacing:.2em;color:var(--c-ink);display:block;
+    margin-top:-10px;
+  }
+  .L-c1 .label-top{
+    position:absolute;
+    top:120px;left:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-c1 .caption{
+    position:absolute;
+    bottom:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:30px;
+  }
+  .L-c1 .caption .title{
+    font-family:var(--serif);font-weight:500;font-size:72px;line-height:.96;letter-spacing:-.02em;
+  }
+  .L-c1 .caption .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;display:block;font-size:1.1em;
+  }
+  .L-c1 .caption .meta{
+    font-family:var(--mono);font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+    text-align:right;flex-shrink:0;
+  }
+
+  /* ===== CARRUSEL 2 : GRADIENT OVERLAY ===== */
+  .L-c2 .pc-photo{ filter:saturate(1.1); }
+  .L-c2 .pc-bg{
+    background:linear-gradient(180deg, rgba(26,22,20,.10) 0%, rgba(26,22,20,.55) 60%, rgba(26,22,20,.80) 100%);
+    z-index:1;
+  }
+  .L-c2 .corner-num{
+    position:absolute;
+    top:60px;left:80px;
+    font-family:var(--serif);font-weight:300;font-size:160px;color:#fff;line-height:.9;
+    z-index:2;
+  }
+  .L-c2 .badge{
+    position:absolute;
+    top:80px;right:80px;
+    background:var(--c-accent);color:#fff;
+    padding:18px 32px;border-radius:99px;
+    font-family:var(--mono);font-size:20px;letter-spacing:.22em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-c2 .cap{
+    position:absolute;
+    bottom:80px;left:80px;right:80px;
+    color:#fff;
+    z-index:2;
+  }
+  .L-c2 .cap .eyebrow{
+    font-family:var(--mono);font-size:20px;letter-spacing:.25em;text-transform:uppercase;
+    margin-bottom:18px;color:var(--pink);
+  }
+  .L-c2 .cap .title{
+    font-family:var(--serif);font-weight:500;font-size:88px;line-height:.92;letter-spacing:-.02em;
+  }
+  .L-c2 .cap .title em{
+    font-family:var(--script);font-style:normal;color:var(--pink);font-weight:400;
+  }
+
+  /* ===== CARRUSEL 3 : SPLIT 50/50 ===== */
+  .L-c3 .left{
+    position:absolute;top:0;bottom:0;left:0;width:50%;
+    overflow:hidden;
+  }
+  .L-c3 .left img{ width:100%;height:100%;object-fit:cover; }
+  .L-c3 .right{
+    position:absolute;top:0;bottom:0;right:0;width:50%;
+    background:var(--c-bg);
+    padding:80px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .L-c3 .right .top .num{
+    font-family:var(--serif);font-weight:600;font-size:120px;color:var(--c-accent);line-height:1;
+  }
+  .L-c3 .right .top .of{
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--c-ink);margin-top:-10px;
+  }
+  .L-c3 .right .mid .eyebrow{
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .L-c3 .right .mid .title{
+    font-family:var(--serif);font-weight:500;font-size:76px;line-height:.95;letter-spacing:-.02em;
+  }
+  .L-c3 .right .mid .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;font-size:1.05em;
+  }
+  .L-c3 .right .bottom{
+    font-family:var(--mono);font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--c-ink);padding-top:24px;border-top:2px solid var(--c-ink);
+    display:flex;justify-content:space-between;
+  }
+
+  /* ===== CARRUSEL 4 : CLOSE CROP ===== */
+  .L-c4 .pc-photo{
+    transform:scale(1.4);
+    transform-origin:center;
+    filter:saturate(1.05);
+  }
+  .L-c4 .pc-bg{
+    background:linear-gradient(0deg, rgba(232,90,154,.45), transparent 50%);
+    z-index:1;
+  }
+  .L-c4 .corner-pill{
+    position:absolute;
+    top:80px;left:80px;
+    background:#fff;color:var(--c-ink);
+    padding:14px 28px;border-radius:99px;
+    font-family:var(--mono);font-size:20px;letter-spacing:.22em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-c4 .num{
+    position:absolute;
+    top:60px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:160px;line-height:.9;color:#fff;
+    z-index:2;
+  }
+  .L-c4 .focus-text{
+    position:absolute;
+    bottom:80px;left:80px;right:80px;
+    color:#fff;
+    z-index:2;
+  }
+  .L-c4 .focus-text .title{
+    font-family:var(--serif);font-weight:600;font-size:96px;line-height:.92;letter-spacing:-.03em;
+  }
+  .L-c4 .focus-text .title em{
+    font-family:var(--script);font-style:normal;color:var(--pink);font-weight:400;display:block;
+  }
+  .L-c4 .focus-text .sub{
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    margin-top:14px;
+  }
+
+  /* ===== CARRUSEL 5 : CTA FINAL ===== */
+  .L-c5 .pc-bg{
+    background:linear-gradient(135deg, var(--c-accent) 0%, var(--c-soft) 100%);
+  }
+  .L-c5 .pc-bg::before{
+    content:"";position:absolute;
+    inset:60px;
+    border:3px dashed rgba(255,255,255,.6);
+    border-radius:24px;
+  }
+  .L-c5 .top-tag{
+    position:absolute;
+    top:100px;left:0;right:0;
+    text-align:center;
+    font-family:var(--mono);font-size:20px;letter-spacing:.28em;text-transform:uppercase;
+    color:#fff;
+  }
+  .L-c5 .center{
+    position:absolute;
+    top:200px;left:80px;right:80px;
+    text-align:center;
+  }
+  .L-c5 .center .script{
+    font-family:var(--script);
+    font-size:140px;
+    color:#fff;
+    line-height:.9;
+  }
+  .L-c5 .center .big{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:170px;
+    line-height:.88;
+    letter-spacing:-.04em;
+    color:#fff;
+    margin-top:14px;
+  }
+  .L-c5 .center .pct{
+    background:#fff;color:var(--c-accent);
+    padding:0 20px;border-radius:18px;
+  }
+  .L-c5 .arrow-row{
+    position:absolute;
+    bottom:280px;left:0;right:0;
+    text-align:center;
+    color:#fff;
+    z-index:2;
+  }
+  .L-c5 .arrow-row .arr{
+    font-family:var(--serif);font-size:120px;line-height:1;color:#fff;
+  }
+  .L-c5 .arrow-row .nws{
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+    margin-top:-10px;
+  }
+  .L-c5 .footer-url{
+    position:absolute;
+    bottom:120px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--mono);font-size:24px;letter-spacing:.12em;
+    border-top:2px solid rgba(255,255,255,.5);
+    padding-top:20px;
+  }
+  .L-c5 .mascot-c5{
+    position:absolute;
+    bottom:60px;right:80px;
+    width:220px;
+    z-index:3;
+  }
+
+  /* =====================================================
+     RESEÑAS — STORY LAYOUTS
+     ===================================================== */
+
+  /* ===== L-rev-hook : Stars editorial cover ===== */
+  .L-rev-hook .pc-bg{ background:var(--c-bg); }
+  .L-rev-hook .voces-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-rev-hook .stars-row{
+    position:absolute;top:330px;left:0;right:0;
+    text-align:center;
+    font-family:var(--serif);font-weight:800;
+    font-size:220px;
+    color:var(--c-gold);
+    line-height:1;
+    letter-spacing:.04em;
+  }
+  .L-rev-hook .star-count{
+    position:absolute;top:600px;left:0;right:0;text-align:center;
+    font-family:var(--script);font-size:200px;color:var(--c-accent);line-height:1;
+  }
+  .L-rev-hook .star-count em{
+    font-family:var(--serif);font-style:normal;font-weight:600;color:var(--c-ink);
+    font-size:.5em;display:block;margin-top:8px;
+  }
+  .L-rev-hook .quote-massive{
+    position:absolute;top:1000px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:500;
+    font-size:140px;line-height:.92;letter-spacing:-.03em;
+    text-align:center;
+  }
+  .L-rev-hook .quote-massive em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:1.1em;line-height:1;
+  }
+  .L-rev-hook .badge-row{
+    position:absolute;bottom:240px;left:80px;right:80px;
+    display:flex;justify-content:center;gap:18px;
+  }
+  .L-rev-hook .badge-row .b{
+    width:80px;height:80px;border-radius:50%;
+    background:var(--c-accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:34px;
+  }
+  .L-rev-hook .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+  }
+
+  /* ===== L-rev-photo : Photo BG + serif quote overlay ===== */
+  .L-rev-photo .pc-photo{ filter:brightness(.78) saturate(1.08); }
+  .L-rev-photo .pc-bg{
+    background:linear-gradient(180deg, rgba(26,22,20,.35) 0%, rgba(26,22,20,.85) 100%);
+    z-index:1;
+  }
+  .L-rev-photo .top-stars{
+    position:absolute;top:140px;left:80px;right:80px;
+    z-index:2;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .L-rev-photo .top-stars .stars{
+    font-family:var(--serif);font-weight:700;font-size:60px;color:var(--c-gold);letter-spacing:.05em;
+  }
+  .L-rev-photo .top-stars .badge{
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    color:#fff;background:rgba(255,255,255,.15);
+    padding:10px 22px;border-radius:99px;
+    backdrop-filter:blur(8px);
+  }
+  .L-rev-photo .quote-marks{
+    position:absolute;top:340px;left:80px;
+    font-family:var(--serif);font-weight:800;
+    font-size:340px;color:var(--c-accent);
+    line-height:.6;
+    z-index:2;
+  }
+  .L-rev-photo .body-quote{
+    position:absolute;top:660px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:108px;line-height:1.02;letter-spacing:-.02em;
+    color:#fff;
+    z-index:2;
+  }
+  .L-rev-photo .body-quote em{
+    font-style:italic;
+    background:var(--c-accent);color:#fff;
+    padding:0 12px;
+    font-weight:500;
+  }
+  .L-rev-photo .signature{
+    position:absolute;bottom:200px;left:80px;right:80px;
+    display:flex;align-items:flex-end;justify-content:space-between;
+    color:#fff;z-index:2;
+  }
+  .L-rev-photo .signature .name{
+    font-family:var(--script);font-size:90px;line-height:1;color:var(--pink);
+  }
+  .L-rev-photo .signature .role{
+    font-family:var(--mono);font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+    text-align:right;
+  }
+  .L-rev-photo .footer-strip{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    color:#fff;border-top:1px solid rgba(255,255,255,.4);
+    padding-top:20px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    z-index:2;
+  }
+
+  /* ===== L-rev-card : Magenta solid + huge quote marks ===== */
+  .L-rev-card .pc-bg{ background:var(--c-accent); }
+  .L-rev-card .pc-bg::before{
+    content:"";position:absolute;
+    top:-150px;right:-150px;
+    width:700px;height:700px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.15), transparent 70%);
+  }
+  .L-rev-card .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    font-family:var(--mono);font-size:22px;letter-spacing:.28em;text-transform:uppercase;
+  }
+  .L-rev-card .top-tag .stars{
+    font-family:var(--serif);font-weight:600;font-size:48px;color:#fff;letter-spacing:.04em;
+  }
+  .L-rev-card .qm{
+    position:absolute;top:240px;left:80px;
+    font-family:var(--serif);font-weight:800;
+    font-size:420px;line-height:.7;color:rgba(255,255,255,.18);
+    z-index:1;
+  }
+  .L-rev-card .quote{
+    position:absolute;top:500px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:500;
+    font-size:130px;line-height:.96;letter-spacing:-.025em;
+    color:#fff;
+    z-index:2;
+  }
+  .L-rev-card .quote em{
+    font-family:var(--script);font-style:normal;font-weight:400;
+    color:var(--paper);
+    display:block;font-size:.85em;margin-top:10px;
+  }
+  .L-rev-card .subquote{
+    position:absolute;top:1200px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:54px;line-height:1.15;color:rgba(255,255,255,.85);
+  }
+  .L-rev-card .signature-block{
+    position:absolute;bottom:240px;left:80px;right:80px;
+    display:flex;align-items:center;justify-content:space-between;
+    border-top:2px solid rgba(255,255,255,.4);
+    padding-top:30px;
+    color:#fff;
+  }
+  .L-rev-card .signature-block .name{
+    font-family:var(--serif);font-weight:600;font-size:64px;line-height:1;
+  }
+  .L-rev-card .signature-block .label{
+    font-family:var(--mono);font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+    margin-top:8px;opacity:.85;
+  }
+  .L-rev-card .signature-block .avatar{
+    width:120px;height:120px;border-radius:50%;
+    background:#fff;color:var(--c-accent);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:60px;
+  }
+  .L-rev-card .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    color:#fff;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    text-align:center;
+  }
+
+  /* ===== L-rev-magazine : Editorial pull quote ===== */
+  .L-rev-magazine .pc-bg{ background:var(--c-bg); }
+  .L-rev-magazine .pc-bg::before{
+    content:"";position:absolute;
+    top:0;left:0;width:200px;height:100%;
+    background:var(--c-accent);
+  }
+  .L-rev-magazine .vertical-num{
+    position:absolute;top:200px;left:80px;
+    font-family:var(--serif);font-weight:600;font-size:90px;color:#fff;
+    z-index:2;line-height:1;
+  }
+  .L-rev-magazine .vertical-tag{
+    position:absolute;top:780px;left:40px;
+    transform:rotate(-90deg);transform-origin:left top;
+    font-family:var(--mono);font-size:24px;letter-spacing:.4em;text-transform:uppercase;
+    color:#fff;
+    z-index:2;
+  }
+  .L-rev-magazine .header-row{
+    position:absolute;top:140px;left:280px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    padding-bottom:24px;border-bottom:2px solid var(--c-ink);
+    font-family:var(--mono);font-size:22px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .L-rev-magazine .header-row .stars{
+    font-family:var(--serif);font-size:42px;color:var(--c-gold);letter-spacing:.05em;
+  }
+  .L-rev-magazine .pull-quote{
+    position:absolute;top:340px;left:280px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:170px;line-height:.95;letter-spacing:-.035em;
+    color:var(--c-ink);
+  }
+  .L-rev-magazine .pull-quote::before{
+    content:"\201C";
+    font-family:var(--serif);font-weight:600;font-style:normal;
+    font-size:300px;color:var(--c-accent);
+    line-height:.6;
+    display:block;margin-bottom:-20px;
+  }
+  .L-rev-magazine .pull-quote em{
+    font-style:italic;color:var(--c-accent);font-weight:500;
+  }
+  .L-rev-magazine .sub{
+    position:absolute;top:1280px;left:280px;right:80px;
+    font-family:var(--serif);font-weight:400;
+    font-size:56px;line-height:1.12;color:var(--ink-2);
+  }
+  .L-rev-magazine .sub::before{
+    content:"";display:inline-block;width:80px;height:3px;background:var(--c-accent);
+    vertical-align:middle;margin-right:18px;
+  }
+  .L-rev-magazine .author-block{
+    position:absolute;bottom:240px;left:280px;right:80px;
+    border-top:2px solid var(--c-ink);
+    padding-top:28px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+  }
+  .L-rev-magazine .author-block .name{
+    font-family:var(--serif);font-weight:600;font-size:60px;line-height:1;
+  }
+  .L-rev-magazine .author-block .role{
+    font-family:var(--mono);font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);margin-top:10px;
+  }
+  .L-rev-magazine .author-block .source{
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:1;
+    text-align:right;
+  }
+  .L-rev-magazine .footer{
+    position:absolute;bottom:120px;left:280px;right:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    display:flex;justify-content:space-between;
+  }
+
+  /* ===== L-rev-stamp : Postage / certified ===== */
+  .L-rev-stamp .pc-bg{
+    background:var(--c-bg);
+  }
+  .L-rev-stamp .pc-bg::before{
+    content:"";position:absolute;inset:80px;
+    border:4px double var(--c-ink);
+    border-radius:8px;
+  }
+  .L-rev-stamp .pc-bg::after{
+    content:"";position:absolute;inset:110px;
+    border:1px dashed var(--c-ink);
+    border-radius:4px;
+  }
+  .L-rev-stamp .stamp-header{
+    position:absolute;top:200px;left:140px;right:140px;
+    display:flex;justify-content:space-between;align-items:center;
+    padding-bottom:20px;border-bottom:2px solid var(--c-ink);
+    font-family:var(--mono);font-size:20px;letter-spacing:.28em;text-transform:uppercase;
+  }
+  .L-rev-stamp .seal{
+    position:absolute;top:280px;right:140px;
+    width:200px;height:200px;border-radius:50%;
+    border:4px solid var(--c-accent);
+    background:rgba(255,255,255,.5);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transform:rotate(-12deg);
+    z-index:2;
+  }
+  .L-rev-stamp .seal .star{
+    font-family:var(--serif);font-weight:800;font-size:60px;color:var(--c-gold);line-height:1;
+  }
+  .L-rev-stamp .seal .lbl{
+    font-family:var(--mono);font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--c-accent);text-align:center;margin-top:6px;line-height:1.2;
+  }
+  .L-rev-stamp .title{
+    position:absolute;top:540px;left:140px;right:140px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+  .L-rev-stamp .quote{
+    position:absolute;top:620px;left:140px;right:140px;
+    font-family:var(--serif);font-weight:500;
+    font-size:120px;line-height:.95;letter-spacing:-.025em;
+    color:var(--c-ink);
+  }
+  .L-rev-stamp .quote em{
+    font-family:var(--script);font-style:normal;font-weight:400;
+    color:var(--c-accent);font-size:1.1em;display:block;line-height:.95;
+  }
+  .L-rev-stamp .sub{
+    position:absolute;top:1280px;left:140px;right:140px;
+    font-family:var(--serif);font-weight:400;font-style:italic;
+    font-size:52px;line-height:1.15;color:var(--ink-2);
+  }
+  .L-rev-stamp .author{
+    position:absolute;bottom:280px;left:140px;right:140px;
+    border-top:2px solid var(--c-ink);
+    padding-top:28px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .L-rev-stamp .author .name{
+    font-family:var(--serif);font-weight:600;font-size:56px;line-height:1;
+  }
+  .L-rev-stamp .author .role{
+    font-family:var(--mono);font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);margin-top:6px;
+  }
+  .L-rev-stamp .author .stars{
+    font-family:var(--serif);font-weight:700;font-size:50px;color:var(--c-gold);letter-spacing:.05em;
+  }
+  .L-rev-stamp .footer{
+    position:absolute;bottom:170px;left:140px;right:140px;
+    text-align:center;
+    font-family:var(--mono);font-size:16px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* =====================================================
+     MARCA & PROCESO — STORY LAYOUTS
+     ===================================================== */
+
+  /* ===== L-brand-mascota : Dulci intro ===== */
+  .L-brand-mascota .pc-bg{ background:var(--c-bg); }
+  .L-brand-mascota .pc-bg::before{
+    content:"";position:absolute;
+    bottom:0;right:0;width:80%;height:60%;
+    background:radial-gradient(circle at bottom right, var(--c-soft), transparent 70%);
+  }
+  .L-brand-mascota .corner-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.28em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-brand-mascota .hello{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--script);font-size:200px;color:var(--c-accent);line-height:1;
+  }
+  .L-brand-mascota .iam{
+    position:absolute;top:480px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:600;font-size:220px;line-height:.9;
+    letter-spacing:-.04em;
+  }
+  .L-brand-mascota .role-line{
+    position:absolute;top:760px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:64px;line-height:1.1;
+    max-width:600px;
+  }
+  .L-brand-mascota .role-line em{
+    font-style:normal;color:var(--c-accent);font-weight:600;
+  }
+  .L-brand-mascota .dulci-big{
+    position:absolute;bottom:140px;right:40px;
+    width:580px;
+    z-index:2;
+  }
+  .L-brand-mascota .dulci-big img{ width:100%;height:auto; }
+  .L-brand-mascota .bubble{
+    position:absolute;bottom:880px;right:80px;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:30px 40px;border-radius:30px 30px 6px 30px;
+    font-family:var(--serif);font-weight:500;
+    font-size:48px;line-height:1.05;
+    max-width:520px;
+    z-index:3;
+  }
+  .L-brand-mascota .bubble::after{
+    content:"";position:absolute;
+    bottom:-20px;right:80px;
+    width:0;height:0;
+    border:20px solid transparent;
+    border-top-color:var(--c-ink);
+    border-bottom:0;
+  }
+  .L-brand-mascota .footer{
+    position:absolute;bottom:120px;left:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+  }
+
+  /* ===== L-brand-proceso : 4 steps list ===== */
+  .L-brand-proceso .pc-bg{ background:var(--c-bg); }
+  .L-brand-proceso .header{
+    position:absolute;top:140px;left:80px;right:80px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.28em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+    display:flex;justify-content:space-between;
+  }
+  .L-brand-proceso .title{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:600;font-size:160px;line-height:.92;letter-spacing:-.03em;
+  }
+  .L-brand-proceso .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:1.05em;
+  }
+  .L-brand-proceso .steps{
+    position:absolute;top:700px;left:80px;right:80px;
+    display:flex;flex-direction:column;gap:32px;
+  }
+  .L-brand-proceso .step{
+    display:flex;align-items:center;gap:40px;
+    padding-bottom:24px;
+    border-bottom:1px solid rgba(26,22,20,.2);
+  }
+  .L-brand-proceso .step .num{
+    font-family:var(--serif);font-weight:700;font-size:130px;line-height:.9;
+    color:var(--c-accent);min-width:170px;
+  }
+  .L-brand-proceso .step .body .word{
+    font-family:var(--serif);font-weight:500;font-size:80px;line-height:1;letter-spacing:-.02em;
+  }
+  .L-brand-proceso .step .body .desc{
+    font-family:var(--mono);font-size:20px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-2);margin-top:8px;
+  }
+  .L-brand-proceso .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    font-family:var(--script);font-size:90px;color:var(--c-accent);
+    text-align:center;line-height:1;
+  }
+
+  /* ===== L-brand-detalle : Macro detail ===== */
+  .L-brand-detalle .pc-bg{ background:var(--c-bg); }
+  .L-brand-detalle .photo-circle{
+    position:absolute;top:200px;left:50%;
+    transform:translateX(-50%);
+    width:780px;height:780px;border-radius:50%;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(26,22,20,.25);
+    z-index:1;
+  }
+  .L-brand-detalle .photo-circle img{ width:100%;height:100%;object-fit:cover; transform:scale(1.5); }
+  .L-brand-detalle .photo-circle::after{
+    content:"";position:absolute;inset:0;
+    border:6px solid var(--c-bg);
+    border-radius:50%;
+  }
+  .L-brand-detalle .label-arc{
+    position:absolute;top:140px;left:80px;right:80px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.28em;text-transform:uppercase;
+    display:flex;justify-content:space-between;
+  }
+  .L-brand-detalle .big-word{
+    position:absolute;top:1080px;left:0;right:0;
+    text-align:center;
+    font-family:var(--serif);font-weight:700;font-size:280px;line-height:.85;letter-spacing:-.05em;
+    color:var(--c-ink);
+    z-index:2;
+  }
+  .L-brand-detalle .big-word em{
+    font-family:var(--script);font-style:normal;font-weight:400;color:var(--c-accent);
+    display:block;font-size:.5em;
+  }
+  .L-brand-detalle .sub{
+    position:absolute;top:1480px;left:120px;right:120px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:64px;line-height:1.1;color:var(--c-ink);
+  }
+  .L-brand-detalle .sub em{
+    font-style:normal;font-weight:600;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:0 10px;
+  }
+  .L-brand-detalle .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+  }
+
+  /* ===== L-brand-poll : Choco vs Vainilla split ===== */
+  .L-brand-poll .pc-bg{ background:var(--c-bg); }
+  .L-brand-poll .header{
+    position:absolute;top:140px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.28em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-brand-poll .question{
+    position:absolute;top:300px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:600;font-size:140px;line-height:.92;letter-spacing:-.03em;
+  }
+  .L-brand-poll .question em{
+    font-family:var(--script);font-style:normal;font-weight:400;color:var(--c-accent);
+    display:block;font-size:.95em;
+  }
+  .L-brand-poll .versus{
+    position:absolute;top:730px;left:0;right:0;bottom:430px;
+    display:flex;
+    z-index:1;
+  }
+  .L-brand-poll .versus .half{
+    flex:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;
+    padding:40px;
+  }
+  .L-brand-poll .versus .half.choco{
+    background:#3a2418;color:#fff;
+  }
+  .L-brand-poll .versus .half.vainilla{
+    background:var(--cream);color:var(--c-ink);
+  }
+  .L-brand-poll .versus .half .label{
+    font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .L-brand-poll .versus .half .name{
+    font-family:var(--serif);font-weight:700;font-size:130px;line-height:1;
+    letter-spacing:-.02em;
+  }
+  .L-brand-poll .versus .half .emoji{
+    font-size:120px;margin-bottom:14px;
+  }
+  .L-brand-poll .vs{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:160px;height:160px;border-radius:50%;
+    background:var(--c-accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:72px;
+    z-index:3;
+    box-shadow:0 12px 40px rgba(0,0,0,.3);
+  }
+  .L-brand-poll .cta-bottom{
+    position:absolute;bottom:170px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:64px;line-height:1.1;
+    color:var(--c-ink);
+  }
+  .L-brand-poll .cta-bottom em{
+    font-style:normal;color:var(--c-accent);font-weight:600;
+  }
+  .L-brand-poll .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+  }
+
+  /* =====================================================
+     RESEÑAS — CARRUSEL LAYOUTS (1080×1080)
+     ===================================================== */
+
+  /* ===== L-cv-cover : Big 5★ cover ===== */
+  .L-cv-cover .pc-bg{ background:var(--c-bg); }
+  .L-cv-cover .pc-bg::before{
+    content:"";position:absolute;
+    top:60px;left:60px;right:60px;bottom:60px;
+    border:3px solid var(--c-ink);border-radius:18px;
+  }
+  .L-cv-cover .top{
+    position:absolute;top:120px;left:120px;right:120px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.28em;text-transform:uppercase;
+  }
+  .L-cv-cover .stars{
+    position:absolute;top:280px;left:0;right:0;
+    text-align:center;
+    font-family:var(--serif);font-weight:800;font-size:200px;color:var(--c-gold);
+    line-height:1;letter-spacing:.05em;
+  }
+  .L-cv-cover .title{
+    position:absolute;top:560px;left:120px;right:120px;
+    text-align:center;
+    font-family:var(--serif);font-weight:500;font-size:110px;line-height:.95;letter-spacing:-.025em;
+  }
+  .L-cv-cover .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+  }
+  .L-cv-cover .meta{
+    position:absolute;bottom:160px;left:120px;right:120px;
+    text-align:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    padding-top:20px;border-top:2px solid var(--c-ink);
+  }
+
+  /* ===== L-cv-quote : Magazine pull quote (carrusel) ===== */
+  .L-cv-quote .pc-bg{ background:var(--c-bg); }
+  .L-cv-quote .top-bar{
+    position:absolute;top:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .L-cv-quote .top-bar .stars{
+    font-family:var(--serif);font-weight:700;font-size:42px;color:var(--c-gold);letter-spacing:.04em;
+  }
+  .L-cv-quote .qm{
+    position:absolute;top:140px;left:80px;
+    font-family:var(--serif);font-weight:800;font-size:240px;line-height:.55;color:var(--c-accent);
+  }
+  .L-cv-quote .quote{
+    position:absolute;top:320px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:400;font-style:italic;
+    font-size:74px;line-height:1.05;letter-spacing:-.02em;
+    color:var(--c-ink);
+  }
+  .L-cv-quote .quote em{
+    font-style:italic;color:var(--c-accent);font-weight:500;
+  }
+  .L-cv-quote .author{
+    position:absolute;bottom:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-top:2px solid var(--c-ink);padding-top:20px;
+  }
+  .L-cv-quote .author .name{
+    font-family:var(--serif);font-weight:600;font-size:46px;line-height:1;
+  }
+  .L-cv-quote .author .role{
+    font-family:var(--mono);font-size:14px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-2);margin-top:6px;
+  }
+  .L-cv-quote .author .badge{
+    font-family:var(--script);font-size:60px;color:var(--c-accent);line-height:1;
+  }
+
+  /* ===== L-cv-photo : Photo + quote overlay (carrusel) ===== */
+  .L-cv-photo .pc-photo{ filter:brightness(.7) saturate(1.08); }
+  .L-cv-photo .pc-bg{
+    background:linear-gradient(180deg, rgba(232,90,154,.20) 0%, rgba(26,22,20,.85) 70%);
+    z-index:1;
+  }
+  .L-cv-photo .top-pill{
+    position:absolute;top:80px;left:80px;
+    background:#fff;color:var(--c-ink);
+    padding:12px 26px;border-radius:99px;
+    font-family:var(--mono);font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-cv-photo .stars-top{
+    position:absolute;top:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:46px;color:var(--c-gold);letter-spacing:.05em;
+    z-index:2;
+    background:rgba(255,255,255,.15);padding:6px 18px;border-radius:99px;
+    backdrop-filter:blur(8px);
+  }
+  .L-cv-photo .quote{
+    position:absolute;bottom:170px;left:80px;right:80px;
+    color:#fff;z-index:2;
+    font-family:var(--serif);font-weight:400;font-style:italic;
+    font-size:64px;line-height:1.05;letter-spacing:-.02em;
+  }
+  .L-cv-photo .quote::before{
+    content:"\201C";
+    font-family:var(--serif);font-weight:700;font-style:normal;
+    font-size:140px;color:var(--pink);line-height:.5;
+    display:block;margin-bottom:8px;
+  }
+  .L-cv-photo .author{
+    position:absolute;bottom:80px;left:80px;right:80px;
+    color:#fff;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    z-index:2;
+    border-top:1px solid rgba(255,255,255,.4);padding-top:18px;
+  }
+
+  /* ===== L-cv-cta : Final invitation ===== */
+  .L-cv-cta .pc-bg{
+    background:linear-gradient(135deg, var(--c-accent) 0%, var(--c-soft) 100%);
+  }
+  .L-cv-cta .badges{
+    position:absolute;top:140px;left:0;right:0;
+    text-align:center;
+    color:#fff;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .L-cv-cta .stars-huge{
+    position:absolute;top:230px;left:0;right:0;
+    text-align:center;
+    font-family:var(--serif);font-weight:800;font-size:160px;color:#fff;line-height:1;letter-spacing:.04em;
+  }
+  .L-cv-cta .big{
+    position:absolute;top:450px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--serif);font-weight:600;font-size:120px;line-height:.92;letter-spacing:-.03em;
+  }
+  .L-cv-cta .big em{
+    font-family:var(--script);font-style:normal;font-weight:400;color:#fff;display:block;
+    font-size:1.1em;
+  }
+  .L-cv-cta .arrow{
+    position:absolute;bottom:240px;left:0;right:0;
+    text-align:center;
+    color:#fff;font-family:var(--serif);font-size:120px;line-height:1;
+  }
+  .L-cv-cta .footer-url{
+    position:absolute;bottom:100px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;border-top:2px solid rgba(255,255,255,.4);padding-top:16px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.1em;
+  }
+
+  /* =====================================================
+     CASO PASO A PASO — CARRUSEL LAYOUTS (1080×1080)
+     ===================================================== */
+
+  /* ===== L-cs-cover ===== */
+  .L-cs-cover .pc-bg{ background:var(--c-bg); }
+  .L-cs-cover .top{
+    position:absolute;top:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-cs-cover .big{
+    position:absolute;top:200px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:170px;line-height:.88;letter-spacing:-.04em;
+  }
+  .L-cs-cover .big em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;display:block;
+    font-size:1.05em;
+  }
+  .L-cs-cover .sub{
+    position:absolute;top:700px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:50px;line-height:1.1;
+    max-width:760px;
+  }
+  .L-cs-cover .dulci-corner{
+    position:absolute;bottom:60px;right:60px;width:220px;
+  }
+  .L-cs-cover .dulci-corner img{ width:100%;height:auto; }
+  .L-cs-cover .footer{
+    position:absolute;bottom:90px;left:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+  }
+
+  /* ===== L-cs-step (reusable) ===== */
+  .L-cs-step .pc-bg{ background:var(--c-bg); }
+  .L-cs-step .pc-bg::before{
+    content:"";position:absolute;
+    top:60px;right:60px;width:60%;height:280px;
+    background:var(--c-accent);
+    border-radius:18px 18px 0 0;
+  }
+  .L-cs-step .top-tag{
+    position:absolute;top:80px;left:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--c-ink);
+    z-index:2;
+  }
+  .L-cs-step .stage-num{
+    position:absolute;top:80px;right:80px;
+    color:#fff;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-cs-step .huge-num{
+    position:absolute;top:120px;left:80px;
+    font-family:var(--serif);font-weight:800;font-size:520px;line-height:.85;letter-spacing:-.05em;
+    color:var(--c-ink);
+    z-index:2;
+  }
+  .L-cs-step .word{
+    position:absolute;top:520px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:600;font-size:140px;line-height:.95;letter-spacing:-.03em;
+  }
+  .L-cs-step .word em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;display:block;
+    font-size:.9em;
+  }
+  .L-cs-step .desc{
+    position:absolute;top:820px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:48px;line-height:1.15;color:var(--c-ink);
+    max-width:760px;
+  }
+  .L-cs-step .footer{
+    position:absolute;bottom:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:2px solid var(--c-ink);padding-top:18px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+  }
+
+  /* ===== L-cs-cta : Final step CTA ===== */
+  .L-cs-cta .pc-bg{ background:var(--c-ink); }
+  .L-cs-cta .pc-bg::before{
+    content:"";position:absolute;
+    top:0;left:0;width:100%;height:100%;
+    background:radial-gradient(circle at 80% 20%, rgba(232,90,154,.3), transparent 60%);
+  }
+  .L-cs-cta .top{
+    position:absolute;top:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:var(--c-bg);
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid rgba(255,255,255,.3);
+  }
+  .L-cs-cta .num{
+    position:absolute;top:140px;left:80px;
+    font-family:var(--serif);font-weight:800;font-size:380px;line-height:.85;letter-spacing:-.05em;
+    color:var(--c-accent);
+  }
+  .L-cs-cta .body{
+    position:absolute;top:580px;left:80px;right:80px;
+    color:var(--c-bg);
+    font-family:var(--serif);font-weight:500;font-size:120px;line-height:.95;letter-spacing:-.03em;
+  }
+  .L-cs-cta .body em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;display:block;
+    font-size:1.05em;
+  }
+  .L-cs-cta .url-pill{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    background:var(--c-accent);color:#fff;
+    padding:24px 36px;border-radius:18px;
+    font-family:var(--mono);font-size:28px;letter-spacing:.05em;
+    text-align:center;
+  }
+
+  /* =====================================================
+     LUIS PILDAIN — RESEÑA DESTACADA (CARRUSEL 5 SLIDES)
+     ===================================================== */
+
+  /* ===== L-luis-cover : Editorial cover ===== */
+  .L-luis-cover .pc-bg{ background:var(--c-bg); }
+  .L-luis-cover .pc-bg::before{
+    content:"";position:absolute;top:50px;left:50px;right:50px;bottom:50px;
+    border:2px solid var(--c-ink);border-radius:14px;
+  }
+  .L-luis-cover .top{
+    position:absolute;top:100px;left:100px;right:100px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:16px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-luis-cover .stars{
+    position:absolute;top:200px;right:100px;
+    font-family:var(--serif);font-weight:700;font-size:60px;color:var(--c-gold);letter-spacing:.05em;line-height:1;
+  }
+  .L-luis-cover .lede{
+    position:absolute;top:300px;left:100px;right:100px;
+    font-family:var(--script);font-size:130px;color:var(--c-accent);line-height:.9;
+  }
+  .L-luis-cover .big{
+    position:absolute;top:430px;left:100px;right:100px;
+    font-family:var(--serif);font-weight:700;font-size:160px;line-height:.88;letter-spacing:-.04em;
+  }
+  .L-luis-cover .big em{ font-style:normal;color:var(--c-accent);font-weight:600; }
+  .L-luis-cover .sig{
+    position:absolute;bottom:160px;left:100px;right:100px;
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:2px solid var(--c-ink);padding-top:22px;
+  }
+  .L-luis-cover .sig .name{font-family:var(--serif);font-weight:600;font-size:54px;line-height:1;}
+  .L-luis-cover .sig .role{font-family:var(--mono);font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);margin-top:8px;}
+  .L-luis-cover .sig .avatar{
+    width:100px;height:100px;border-radius:50%;
+    background:var(--c-accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:50px;
+  }
+  .L-luis-cover .swipe{
+    position:absolute;bottom:80px;left:0;right:0;text-align:center;
+    font-family:var(--mono);font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-2);
+  }
+
+  /* ===== L-luis-act : Photo + act number ===== */
+  .L-luis-act .pc-photo{ filter:brightness(.92) saturate(1.05); }
+  .L-luis-act .left-photo{
+    position:absolute;top:0;bottom:0;left:0;width:50%;
+    overflow:hidden;
+  }
+  .L-luis-act .left-photo img{ width:100%;height:100%;object-fit:cover; }
+  .L-luis-act .left-photo::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(26,22,20,.15) 0%, rgba(26,22,20,.55) 100%);
+  }
+  .L-luis-act .act-tag{
+    position:absolute;top:80px;left:80px;
+    color:#fff;
+    font-family:var(--mono);font-size:18px;letter-spacing:.3em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-luis-act .act-num{
+    position:absolute;bottom:80px;left:80px;
+    color:#fff;
+    font-family:var(--serif);font-weight:800;font-size:240px;line-height:.85;letter-spacing:-.05em;
+    z-index:2;
+  }
+  .L-luis-act .act-num em{
+    font-family:var(--mono);font-style:normal;font-size:.15em;letter-spacing:.3em;
+    color:#fff;display:block;margin-top:10px;
+  }
+  .L-luis-act .right-content{
+    position:absolute;top:0;bottom:0;right:0;width:50%;
+    background:var(--c-bg);
+    padding:80px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .L-luis-act .right-content .top-r{
+    font-family:var(--mono);font-size:16px;letter-spacing:.25em;text-transform:uppercase;
+    padding-bottom:14px;border-bottom:2px solid var(--c-ink);
+    display:flex;justify-content:space-between;
+  }
+  .L-luis-act .right-content .top-r .stars{ color:var(--c-gold); font-family:var(--serif); font-weight:700; font-size:28px; letter-spacing:.05em; }
+  .L-luis-act .right-content .mid .lbl{
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:1;margin-bottom:8px;
+  }
+  .L-luis-act .right-content .mid .quote{
+    font-family:var(--serif);font-weight:400;font-style:italic;
+    font-size:60px;line-height:1.06;letter-spacing:-.02em;
+    color:var(--c-ink);
+  }
+  .L-luis-act .right-content .mid .quote em{
+    font-style:italic;font-weight:600;color:var(--c-accent);
+  }
+  .L-luis-act .right-content .bottom-r{
+    font-family:var(--mono);font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);display:flex;justify-content:space-between;
+    padding-top:14px;border-top:1px solid rgba(26,22,20,.2);
+  }
+
+  /* Right-photo variant (alternating) */
+  .L-luis-act.alt .left-photo{ left:auto;right:0; }
+  .L-luis-act.alt .right-content{ right:auto;left:0; }
+  .L-luis-act.alt .act-tag,.L-luis-act.alt .act-num{ left:auto;right:80px;text-align:right; }
+  .L-luis-act.alt .act-num em{ text-align:right; }
+
+  /* ===== L-luis-final : Final act / CTA ===== */
+  .L-luis-final .pc-bg{
+    background:radial-gradient(circle at 70% 30%, rgba(232,90,154,.25), transparent 60%), var(--c-ink);
+  }
+  .L-luis-final .stars-top{
+    position:absolute;top:80px;left:80px;right:80px;
+    color:#fff;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:16px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.3);
+  }
+  .L-luis-final .stars-top .stars{ color:var(--c-gold);font-family:var(--serif);font-weight:700;font-size:38px;letter-spacing:.05em;}
+  .L-luis-final .script{
+    position:absolute;top:200px;left:80px;right:80px;
+    font-family:var(--script);font-size:170px;color:var(--c-accent);line-height:.85;
+  }
+  .L-luis-final .verb{
+    position:absolute;top:380px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:800;font-size:280px;line-height:.85;letter-spacing:-.05em;
+    color:#fff;
+  }
+  .L-luis-final .quote{
+    position:absolute;top:680px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:44px;line-height:1.15;color:#fff;
+    opacity:.9;
+  }
+  .L-luis-final .url{
+    position:absolute;bottom:80px;left:80px;right:80px;
+    background:var(--c-accent);color:#fff;
+    padding:24px 28px;border-radius:18px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.05em;
+    text-align:center;
+  }
+
+  /* =====================================================
+     ¿QUIERES SABER QUÉ OPINAN? — CARRUSEL SOCIAL PROOF
+     ===================================================== */
+
+  /* ===== L-opinan-hook : intrigue cover ===== */
+  .L-opinan-hook .pc-bg{ background:var(--c-bg); }
+  .L-opinan-hook .pc-bg::before{
+    content:"";position:absolute;
+    top:0;right:0;width:80%;height:50%;
+    background:radial-gradient(ellipse at top right, var(--c-soft), transparent 65%);
+  }
+  .L-opinan-hook .top-tag{
+    position:absolute;top:80px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-opinan-hook .top-tag .stars{
+    font-family:var(--serif);font-weight:700;font-size:34px;color:var(--c-gold);letter-spacing:.04em;
+  }
+  .L-opinan-hook .lead{
+    position:absolute;top:200px;left:80px;
+    font-family:var(--script);font-size:130px;color:var(--c-accent);line-height:1;
+  }
+  .L-opinan-hook .big{
+    position:absolute;top:320px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:130px;line-height:.92;letter-spacing:-.03em;
+  }
+  .L-opinan-hook .big em{
+    font-family:var(--script);font-style:normal;font-weight:400;
+    color:var(--c-accent);font-size:1.15em;display:block;line-height:.9;margin-top:14px;
+  }
+  .L-opinan-hook .sub{
+    position:absolute;top:780px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:44px;line-height:1.15;color:var(--c-ink);
+    max-width:680px;
+  }
+  .L-opinan-hook .dulci-look{
+    position:absolute;bottom:80px;right:60px;
+    width:240px;
+    transform:rotate(-6deg);
+    z-index:2;
+  }
+  .L-opinan-hook .dulci-look img{ width:100%;height:auto; }
+  .L-opinan-hook .swipe{
+    position:absolute;bottom:120px;left:80px;
+    display:flex;align-items:center;gap:14px;
+    color:var(--c-accent);
+    font-family:var(--mono);font-size:16px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-opinan-hook .swipe .arr{
+    font-family:var(--serif);font-size:60px;font-weight:600;line-height:.5;
+  }
+
+  /* ===== L-opinan-card : Google review screenshot mockup ===== */
+  .L-opinan-card .pc-bg{ background:var(--c-bg); }
+  .L-opinan-card .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 15% 15%, var(--c-soft) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, var(--c-soft) 0%, transparent 40%);
+    opacity:.55;
+  }
+  .L-opinan-card .top-tag{
+    position:absolute;top:60px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:15px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--c-ink);
+    z-index:2;
+  }
+  .L-opinan-card .editorial{
+    position:absolute;top:130px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:600;font-style:italic;
+    font-size:48px;line-height:1;letter-spacing:-.02em;
+    color:var(--c-accent);
+    z-index:2;
+  }
+  .L-opinan-card .review-card{
+    position:absolute;top:230px;left:80px;right:80px;
+    background:#fff;
+    border-radius:26px;
+    padding:54px 58px;
+    box-shadow:0 24px 60px rgba(26,22,20,.18), 0 4px 12px rgba(26,22,20,.06);
+    z-index:2;
+  }
+  .L-opinan-card .review-head{
+    display:flex;align-items:center;gap:24px;
+    margin-bottom:24px;
+  }
+  .L-opinan-card .avatar{
+    width:90px;height:90px;border-radius:50%;
+    background:linear-gradient(135deg, var(--c-accent), var(--c-soft));
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:46px;
+    flex-shrink:0;
+  }
+  .L-opinan-card .who{ flex:1;line-height:1.05; }
+  .L-opinan-card .who .name{
+    font-family:var(--sans);font-weight:600;font-size:36px;letter-spacing:-.01em;color:var(--ink);
+  }
+  .L-opinan-card .who .meta{
+    font-family:var(--mono);font-size:16px;letter-spacing:.1em;
+    color:#666;margin-top:6px;
+  }
+  .L-opinan-card .more-dots{
+    color:#888;font-size:36px;line-height:1;letter-spacing:.05em;
+    flex-shrink:0;
+  }
+  .L-opinan-card .stars-row{
+    display:flex;align-items:center;gap:14px;margin-bottom:26px;
+  }
+  .L-opinan-card .stars-row .stars{
+    font-family:var(--serif);font-weight:700;font-size:32px;color:var(--c-gold);letter-spacing:.04em;
+  }
+  .L-opinan-card .stars-row .ago{
+    font-family:var(--sans);font-weight:400;font-size:22px;color:#666;
+  }
+  .L-opinan-card .stars-row .new-pill{
+    background:#1a73e8;color:#fff;
+    padding:4px 12px;border-radius:6px;
+    font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:.05em;
+  }
+  .L-opinan-card .body{
+    font-family:var(--sans);font-weight:400;
+    font-size:34px;line-height:1.42;color:var(--ink);
+    letter-spacing:-.005em;
+  }
+  .L-opinan-card .body em{
+    font-style:normal;font-weight:700;
+    background:linear-gradient(0deg, var(--c-soft) 0%, var(--c-soft) 35%, transparent 35%);
+  }
+  .L-opinan-card .footer-icons{
+    display:flex;align-items:center;gap:18px;
+    margin-top:34px;padding-top:24px;
+    border-top:1px solid #e8e8e8;
+    color:#666;
+    font-family:var(--sans);font-size:20px;
+  }
+  .L-opinan-card .footer-icons .pill{
+    background:#f1f1f1;color:#333;
+    padding:8px 16px;border-radius:8px;
+    font-family:var(--sans);font-weight:500;font-size:18px;
+  }
+  .L-opinan-card .footer-icons .heart{
+    color:var(--c-accent);font-size:26px;
+  }
+  .L-opinan-card .slide-foot{
+    position:absolute;bottom:60px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:14px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--c-ink);
+    z-index:2;
+  }
+  .L-opinan-card .slide-foot .dot{
+    color:var(--c-accent);font-family:var(--serif);font-weight:700;
+  }
+
+  /* ===== L-opinan-cta : FOMO + invite ===== */
+  .L-opinan-cta .pc-bg{
+    background:linear-gradient(135deg, var(--c-accent) 0%, #c44a85 100%);
+  }
+  .L-opinan-cta .pc-bg::after{
+    content:"";position:absolute;
+    inset:50px;
+    border:3px dashed rgba(255,255,255,.4);
+    border-radius:22px;
+  }
+  .L-opinan-cta .top{
+    position:absolute;top:100px;left:100px;right:100px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    font-family:var(--mono);font-size:16px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-opinan-cta .top .stars{
+    font-family:var(--serif);font-weight:700;font-size:30px;color:#fff;letter-spacing:.04em;
+  }
+  .L-opinan-cta .script-top{
+    position:absolute;top:180px;left:100px;right:100px;
+    font-family:var(--script);font-size:130px;color:#fff;line-height:.9;
+  }
+  .L-opinan-cta .massive{
+    position:absolute;top:310px;left:100px;right:100px;
+    color:#fff;
+    font-family:var(--serif);font-weight:700;font-size:110px;line-height:.92;letter-spacing:-.03em;
+  }
+  .L-opinan-cta .massive em{
+    font-style:normal;
+    background:#1a1614;color:#fff;
+    padding:0 14px;
+    display:inline-block;
+    transform:rotate(-1.5deg);
+  }
+  .L-opinan-cta .url-pill{
+    position:absolute;bottom:200px;left:100px;right:100px;
+    background:#fff;color:var(--c-accent);
+    padding:26px 32px;border-radius:99px;
+    font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:.04em;
+    text-align:center;
+    box-shadow:0 14px 32px rgba(0,0,0,.18);
+  }
+  .L-opinan-cta .url-pill::before{
+    content:"→ ";
+    font-family:var(--serif);font-weight:600;color:var(--c-accent);
+  }
+  .L-opinan-cta .dulci-corner{
+    position:absolute;bottom:60px;right:60px;
+    width:200px;
+    z-index:2;
+  }
+  .L-opinan-cta .dulci-corner img{ width:100%;height:auto; }
+  .L-opinan-cta .footer{
+    position:absolute;bottom:120px;left:100px;
+    color:#fff;opacity:.85;
+    font-family:var(--mono);font-size:14px;letter-spacing:.28em;text-transform:uppercase;
+  }
+
+  /* =====================================================
+     TONO CERCANO · STORIES (1080×1920) · CHISPA + CHAT MOCKS
+     ===================================================== */
+
+  /* ===== L-st-secret : "psst…" intrigue hook ===== */
+  .L-st-secret .pc-bg{ background:var(--c-bg); }
+  .L-st-secret .pc-bg::before{
+    content:"";position:absolute;
+    top:-200px;left:-200px;width:1000px;height:1000px;border-radius:50%;
+    background:radial-gradient(circle, var(--c-soft) 0%, transparent 60%);
+    opacity:.7;
+  }
+  .L-st-secret .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--c-ink);
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+    display:flex;justify-content:space-between;
+  }
+  .L-st-secret .psst{
+    position:absolute;top:280px;left:80px;
+    font-family:var(--script);font-size:240px;color:var(--c-accent);line-height:.85;
+    transform:rotate(-4deg);
+  }
+  .L-st-secret .big{
+    position:absolute;top:600px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:170px;line-height:.9;letter-spacing:-.035em;
+  }
+  .L-st-secret .big em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:1.05em;line-height:.95;
+  }
+  .L-st-secret .sub{
+    position:absolute;top:1180px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:60px;line-height:1.12;color:var(--c-ink);
+    max-width:700px;
+  }
+  .L-st-secret .dulci-peek{
+    position:absolute;bottom:60px;right:0;
+    width:520px;
+    transform:rotate(-8deg);
+    z-index:2;
+  }
+  .L-st-secret .dulci-peek img{ width:100%;height:auto; }
+  .L-st-secret .swipe-foot{
+    position:absolute;bottom:180px;left:80px;
+    color:var(--c-accent);
+    font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;
+    display:flex;align-items:center;gap:18px;
+    z-index:3;
+  }
+  .L-st-secret .swipe-foot .arr{
+    font-family:var(--serif);font-size:80px;line-height:.4;
+  }
+  .L-st-secret .handle{
+    position:absolute;bottom:100px;left:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+    z-index:3;
+  }
+
+  /* ===== L-st-chat : WhatsApp mockup ===== */
+  .L-st-chat .pc-bg{ background:#0c1418; }
+  .L-st-chat .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='4' cy='4' r='1' fill='%23202c33'/><circle cx='20' cy='12' r='1' fill='%23202c33'/></svg>");
+    opacity:.4;
+  }
+  .L-st-chat .status-bar{
+    position:absolute;top:50px;left:80px;right:80px;
+    color:#fff;
+    font-family:var(--sans);font-weight:600;font-size:28px;
+    display:flex;justify-content:space-between;align-items:center;
+    z-index:2;
+  }
+  .L-st-chat .who-bar{
+    position:absolute;top:140px;left:0;right:0;
+    background:#1f2c33;
+    padding:30px 80px;
+    display:flex;align-items:center;gap:22px;
+    z-index:2;
+  }
+  .L-st-chat .who-bar .av{
+    width:110px;height:110px;border-radius:50%;
+    background:linear-gradient(135deg, var(--c-accent), var(--c-soft));
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:54px;
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .L-st-chat .who-bar .av img{ width:130%;height:130%;object-fit:cover;object-position:center top; }
+  .L-st-chat .who-bar .info .name{
+    color:#fff;font-family:var(--sans);font-weight:600;font-size:44px;line-height:1;
+  }
+  .L-st-chat .who-bar .info .status{
+    color:#7bd779;font-family:var(--sans);font-size:26px;margin-top:6px;
+  }
+  .L-st-chat .messages{
+    position:absolute;top:380px;left:80px;right:80px;bottom:280px;
+    display:flex;flex-direction:column;justify-content:flex-end;gap:24px;
+  }
+  .L-st-chat .msg{
+    max-width:78%;
+    padding:28px 34px;
+    font-family:var(--sans);font-size:36px;line-height:1.32;
+    box-shadow:0 1px 1px rgba(0,0,0,.13);
+    position:relative;
+  }
+  .L-st-chat .msg .t{
+    font-size:22px;color:rgba(255,255,255,.55);text-align:right;margin-top:8px;
+  }
+  .L-st-chat .msg.them{
+    background:#202c33;color:#e9edef;align-self:flex-start;
+    border-radius:24px 24px 24px 4px;
+  }
+  .L-st-chat .msg.me{
+    background:#005c4b;color:#fff;align-self:flex-end;
+    border-radius:24px 24px 4px 24px;
+  }
+  .L-st-chat .msg em{ font-style:normal;background:rgba(255,255,255,.18);padding:0 6px;border-radius:4px; }
+  .L-st-chat .msg.me .t::after{
+    content:" ✓✓";color:#53bdeb;
+  }
+  .L-st-chat .input-bar{
+    position:absolute;bottom:140px;left:80px;right:80px;
+    height:90px;background:#1f2c33;border-radius:45px;
+    display:flex;align-items:center;padding:0 38px;
+    color:#8696a0;font-family:var(--sans);font-size:30px;
+  }
+  .L-st-chat .caption-bottom{
+    position:absolute;bottom:50px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--script);font-size:64px;color:var(--c-accent);line-height:1;
+  }
+
+  /* ===== L-st-fomo : Bold FOMO CTA ===== */
+  .L-st-fomo .pc-bg{ background:var(--c-bg); }
+  .L-st-fomo .pc-bg::before{
+    content:"";position:absolute;
+    top:-150px;right:-150px;width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle, var(--c-accent) 0%, transparent 65%);
+    opacity:.18;
+  }
+  .L-st-fomo .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-st-fomo .top-tag .pill{
+    background:var(--c-accent);color:#fff;
+    padding:10px 24px;border-radius:99px;
+    font-size:18px;
+  }
+  .L-st-fomo .massive{
+    position:absolute;top:340px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:800;font-size:230px;line-height:.86;letter-spacing:-.045em;
+  }
+  .L-st-fomo .massive em{
+    font-style:normal;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:0 18px;
+    display:inline-block;
+    transform:rotate(-2deg);
+  }
+  .L-st-fomo .script-line{
+    position:absolute;top:1080px;left:80px;right:80px;
+    font-family:var(--script);font-size:180px;color:var(--c-accent);line-height:.9;
+  }
+  .L-st-fomo .url-pill{
+    position:absolute;top:1430px;left:80px;right:80px;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:34px 40px;border-radius:99px;
+    font-family:var(--mono);font-weight:600;font-size:34px;letter-spacing:.04em;
+    text-align:center;
+    box-shadow:0 16px 40px rgba(0,0,0,.2);
+  }
+  .L-st-fomo .url-pill::before{
+    content:"→ ";color:var(--c-accent);font-family:var(--serif);
+  }
+  .L-st-fomo .footer{
+    position:absolute;bottom:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:20px;letter-spacing:.22em;text-transform:uppercase;
+    padding-top:24px;border-top:1px solid rgba(26,22,20,.25);
+  }
+  .L-st-fomo .dulci-side{
+    position:absolute;bottom:240px;right:0;
+    width:340px;
+    transform:rotate(8deg);
+    z-index:2;
+  }
+  .L-st-fomo .dulci-side img{ width:100%;height:auto; }
+
+  /* ===== L-st-review : Story-format review screenshot card ===== */
+  .L-st-review .pc-bg{ background:var(--c-bg); }
+  .L-st-review .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 10% 10%, var(--c-soft) 0%, transparent 35%),
+      radial-gradient(circle at 90% 90%, var(--c-soft) 0%, transparent 35%);
+    opacity:.6;
+  }
+  .L-st-review .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--c-ink);
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-review .editorial{
+    position:absolute;top:260px;left:80px;right:80px;
+    font-family:var(--script);font-size:140px;color:var(--c-accent);line-height:.95;
+  }
+  .L-st-review .review-card{
+    position:absolute;top:470px;left:80px;right:80px;
+    background:#fff;border-radius:34px;
+    padding:60px 64px;
+    box-shadow:0 32px 80px rgba(26,22,20,.18), 0 6px 14px rgba(26,22,20,.08);
+  }
+  .L-st-review .head{ display:flex;align-items:center;gap:28px;margin-bottom:28px; }
+  .L-st-review .head .av{
+    width:120px;height:120px;border-radius:50%;
+    background:linear-gradient(135deg, var(--c-accent), var(--c-soft));
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:60px;
+    flex-shrink:0;
+  }
+  .L-st-review .head .who{ flex:1; line-height:1.05; }
+  .L-st-review .head .who .name{
+    font-family:var(--sans);font-weight:600;font-size:44px;letter-spacing:-.01em;color:var(--ink);
+  }
+  .L-st-review .head .who .meta{
+    font-family:var(--mono);font-size:20px;letter-spacing:.1em;color:#666;margin-top:8px;
+  }
+  .L-st-review .head .dots{ color:#888;font-size:48px;line-height:1;letter-spacing:.05em; }
+  .L-st-review .stars-row{ display:flex;align-items:center;gap:18px;margin-bottom:32px; }
+  .L-st-review .stars-row .stars{
+    font-family:var(--serif);font-weight:700;font-size:42px;color:var(--c-gold);letter-spacing:.04em;
+  }
+  .L-st-review .stars-row .ago{
+    font-family:var(--sans);font-size:26px;color:#666;
+  }
+  .L-st-review .stars-row .pill{
+    background:#1a73e8;color:#fff;
+    padding:6px 18px;border-radius:8px;
+    font-family:var(--sans);font-weight:700;font-size:22px;letter-spacing:.05em;
+  }
+  .L-st-review .body{
+    font-family:var(--sans);font-weight:400;font-size:38px;line-height:1.42;color:var(--ink);
+    letter-spacing:-.005em;
+  }
+  .L-st-review .body em{
+    font-style:normal;font-weight:700;
+    background:linear-gradient(0deg, var(--c-soft) 0%, var(--c-soft) 38%, transparent 38%);
+  }
+  .L-st-review .icons{
+    display:flex;align-items:center;gap:20px;
+    margin-top:38px;padding-top:26px;border-top:1px solid #ececec;
+    color:#666;font-family:var(--sans);font-size:24px;
+  }
+  .L-st-review .icons .heart{ color:var(--c-accent);font-size:32px; }
+  .L-st-review .icons .pill2{
+    background:#f1f1f1;color:#333;padding:10px 18px;border-radius:8px;
+    font-family:var(--sans);font-weight:500;font-size:22px;
+  }
+  .L-st-review .caption-foot{
+    position:absolute;bottom:160px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:.95;
+  }
+  .L-st-review .handle-foot{
+    position:absolute;bottom:90px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ===== L-st-hello : Dulci speech bubble intro ===== */
+  .L-st-hello .pc-bg{ background:var(--c-bg); }
+  .L-st-hello .pc-bg::before{
+    content:"";position:absolute;
+    bottom:-200px;right:-200px;width:1000px;height:1000px;border-radius:50%;
+    background:radial-gradient(circle, var(--c-soft) 0%, transparent 60%);
+  }
+  .L-st-hello .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-hello .greet{
+    position:absolute;top:260px;left:80px;
+    font-family:var(--script);font-size:200px;color:var(--c-accent);line-height:.85;
+    transform:rotate(-4deg);
+  }
+  .L-st-hello .name{
+    position:absolute;top:460px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:800;font-size:340px;line-height:.85;letter-spacing:-.05em;
+  }
+  .L-st-hello .bubble{
+    position:absolute;top:910px;left:80px;right:380px;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:40px 46px;border-radius:32px 32px 6px 32px;
+    font-family:var(--serif);font-weight:400;font-style:italic;
+    font-size:58px;line-height:1.12;
+    box-shadow:0 12px 30px rgba(0,0,0,.18);
+    z-index:3;
+  }
+  .L-st-hello .bubble::after{
+    content:"";position:absolute;
+    bottom:-22px;right:60px;
+    width:0;height:0;
+    border:22px solid transparent;
+    border-top-color:var(--c-ink);
+    border-bottom:0;
+  }
+  .L-st-hello .bubble em{ font-style:normal;font-weight:600;color:var(--c-accent); }
+  .L-st-hello .dulci-big{
+    position:absolute;bottom:0;right:-40px;
+    width:680px;
+    z-index:2;
+  }
+  .L-st-hello .dulci-big img{ width:100%;height:auto; }
+  .L-st-hello .footer{
+    position:absolute;bottom:120px;left:80px;
+    font-family:var(--mono);font-size:20px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+    z-index:3;
+  }
+
+  /* ===== L-st-howto : chat-style numbered steps ===== */
+  .L-st-howto .pc-bg{ background:var(--c-bg); }
+  .L-st-howto .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-howto .title{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:180px;line-height:.9;letter-spacing:-.035em;
+  }
+  .L-st-howto .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:.95em;
+  }
+  .L-st-howto .chat{
+    position:absolute;top:780px;left:80px;right:80px;
+    display:flex;flex-direction:column;gap:24px;
+  }
+  .L-st-howto .step{
+    background:#fff;
+    border:2px solid var(--c-ink);
+    border-radius:28px 28px 28px 6px;
+    padding:30px 36px 26px;
+    box-shadow:6px 6px 0 var(--c-ink);
+    display:flex;align-items:center;gap:30px;
+    max-width:880px;
+  }
+  .L-st-howto .step:nth-child(even){
+    align-self:flex-end;
+    border-radius:28px 28px 6px 28px;
+    background:var(--c-accent);
+    color:#fff;border-color:var(--c-accent);
+    box-shadow:6px 6px 0 var(--c-ink);
+  }
+  .L-st-howto .step .num{
+    font-family:var(--serif);font-weight:700;font-size:100px;line-height:.9;color:var(--c-accent);
+    flex-shrink:0;
+  }
+  .L-st-howto .step:nth-child(even) .num{ color:#fff; }
+  .L-st-howto .step .txt{
+    font-family:var(--serif);font-weight:500;font-size:54px;line-height:1.02;letter-spacing:-.015em;
+  }
+  .L-st-howto .step .txt em{
+    font-family:var(--script);font-style:normal;font-weight:400;
+    color:var(--c-accent);display:block;font-size:.85em;margin-top:6px;
+  }
+  .L-st-howto .step:nth-child(even) .txt em{ color:var(--c-bg); }
+  .L-st-howto .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:1;
+  }
+
+  /* ===== L-st-zoom : Close-up + casual caption ===== */
+  .L-st-zoom .pc-bg{ background:var(--c-bg); }
+  .L-st-zoom .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-zoom .zoom-square{
+    position:absolute;top:280px;left:80px;right:80px;
+    height:920px;
+    overflow:hidden;
+    border-radius:36px;
+    box-shadow:0 30px 80px rgba(26,22,20,.22);
+  }
+  .L-st-zoom .zoom-square img{
+    width:100%;height:100%;object-fit:cover;
+    transform:scale(1.3);
+  }
+  .L-st-zoom .zoom-square::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(26,22,20,.45) 0%, transparent 50%);
+  }
+  .L-st-zoom .caption-on-photo{
+    position:absolute;top:1080px;left:130px;right:130px;
+    color:#fff;
+    font-family:var(--script);font-size:120px;line-height:.9;
+    z-index:2;
+  }
+  .L-st-zoom .big-claim{
+    position:absolute;top:1280px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:170px;line-height:.92;letter-spacing:-.035em;
+  }
+  .L-st-zoom .big-claim em{ font-style:normal;color:var(--c-accent); }
+  .L-st-zoom .sub{
+    position:absolute;top:1580px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:50px;line-height:1.18;
+    color:var(--c-ink);
+  }
+  .L-st-zoom .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ===== L-st-poll-ig : Instagram poll sticker mockup ===== */
+  .L-st-poll-ig .pc-bg{
+    background:linear-gradient(180deg, #f3a4c3 0%, #f8d2dd 100%);
+  }
+  .L-st-poll-ig .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-st-poll-ig .top-tag .pill{
+    background:rgba(255,255,255,.25);
+    padding:8px 22px;border-radius:99px;
+    backdrop-filter:blur(8px);
+  }
+  .L-st-poll-ig .intro{
+    position:absolute;top:280px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--script);font-size:130px;line-height:.9;
+  }
+  /* IG poll sticker mockup */
+  .L-st-poll-ig .poll{
+    position:absolute;top:540px;left:60px;right:60px;
+    background:#fff;border-radius:30px;
+    padding:50px 50px 60px;
+    box-shadow:0 30px 80px rgba(0,0,0,.18);
+  }
+  .L-st-poll-ig .poll .q{
+    text-align:center;
+    font-family:var(--serif);font-weight:700;font-size:80px;line-height:1;letter-spacing:-.02em;
+    color:var(--ink);
+    margin-bottom:40px;
+  }
+  .L-st-poll-ig .poll .options{
+    display:flex;gap:16px;
+  }
+  .L-st-poll-ig .poll .opt{
+    flex:1;
+    background:linear-gradient(180deg, #fff 0%, #fff 100%);
+    border:3px solid rgba(0,0,0,.06);
+    border-radius:22px;
+    padding:36px 24px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .L-st-poll-ig .poll .opt.choco{
+    background:linear-gradient(180deg, #fff 56%, #3a2418 56%);
+    color:var(--ink);
+  }
+  .L-st-poll-ig .poll .opt.vain{
+    background:linear-gradient(180deg, #fff 44%, var(--cream) 44%);
+    color:var(--ink);
+  }
+  .L-st-poll-ig .poll .opt .emoji{
+    font-size:80px;line-height:1;margin-bottom:14px;
+  }
+  .L-st-poll-ig .poll .opt .lbl{
+    font-family:var(--serif);font-weight:700;font-size:62px;line-height:1;
+  }
+  .L-st-poll-ig .poll .opt .pct{
+    position:absolute;bottom:14px;left:0;right:0;
+    text-align:center;
+    font-family:var(--sans);font-weight:600;font-size:30px;
+  }
+  .L-st-poll-ig .poll .opt.choco .pct{ color:#fff; }
+  .L-st-poll-ig .vs-dot{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    background:#fff;color:var(--c-accent);
+    width:90px;height:90px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:44px;
+    z-index:2;
+    box-shadow:0 8px 24px rgba(0,0,0,.18);
+  }
+  .L-st-poll-ig .caption-pad{
+    position:absolute;bottom:280px;left:60px;right:60px;
+    background:#fff;border-radius:22px;
+    padding:30px 36px;
+    font-family:var(--serif);font-weight:400;font-style:italic;font-size:48px;line-height:1.15;
+    color:var(--ink);
+    box-shadow:0 14px 30px rgba(0,0,0,.12);
+  }
+  .L-st-poll-ig .caption-pad em{ font-style:normal;font-weight:600;color:var(--c-accent); }
+  .L-st-poll-ig .footer{
+    position:absolute;bottom:130px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--mono);font-size:18px;letter-spacing:.25em;text-transform:uppercase;
+  }
+
+  /* =====================================================
+     FOMO STORIES · 6 LAYOUTS NUEVOS (cadenas 6-10)
+     ===================================================== */
+
+  /* ===== L-st-num : gigantic number stock FOMO ===== */
+  .L-st-num .pc-bg{ background:var(--c-bg); }
+  .L-st-num .pc-bg::before{
+    content:"";position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(135deg, rgba(232,90,154,.05) 0, rgba(232,90,154,.05) 2px, transparent 2px, transparent 14px);
+  }
+  .L-st-num .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-num .top-tag .pill{
+    background:var(--c-accent);color:#fff;
+    padding:8px 20px;border-radius:99px;
+    font-size:18px;letter-spacing:.2em;
+  }
+  .L-st-num .big-num{
+    position:absolute;top:280px;left:0;right:0;
+    text-align:center;
+    font-family:var(--serif);font-weight:900;font-size:900px;line-height:.8;color:var(--c-accent);
+    letter-spacing:-.08em;
+  }
+  .L-st-num .strike{
+    position:absolute;top:1140px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:700;font-size:140px;line-height:.95;letter-spacing:-.035em;
+  }
+  .L-st-num .strike em{
+    font-style:normal;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:0 16px;
+    display:inline-block;
+    transform:rotate(-1.5deg);
+  }
+  .L-st-num .sub{
+    position:absolute;top:1450px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:54px;line-height:1.1;
+  }
+  .L-st-num .footer{
+    position:absolute;bottom:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:20px;letter-spacing:.25em;text-transform:uppercase;
+  }
+
+  /* ===== L-st-calendar : agenda booking mockup ===== */
+  .L-st-calendar .pc-bg{ background:var(--c-bg); }
+  .L-st-calendar .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-calendar .title{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:150px;line-height:.92;letter-spacing:-.035em;
+  }
+  .L-st-calendar .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:.85em;
+  }
+  .L-st-calendar .agenda{
+    position:absolute;top:760px;left:80px;right:80px;
+    background:#fff;border-radius:24px;
+    padding:38px 44px;
+    box-shadow:0 24px 60px rgba(26,22,20,.16);
+  }
+  .L-st-calendar .agenda .month{
+    font-family:var(--mono);font-size:22px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-2);
+    padding-bottom:14px;border-bottom:1px solid #eee;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .L-st-calendar .agenda .month .pill{
+    background:var(--c-accent);color:#fff;padding:4px 14px;border-radius:99px;font-size:14px;
+  }
+  .L-st-calendar .agenda .row{
+    display:flex;align-items:center;gap:18px;
+    padding:18px 0;
+    border-bottom:1px solid #f0f0f0;
+    font-family:var(--sans);font-size:30px;
+  }
+  .L-st-calendar .agenda .row:last-child{border-bottom:0}
+  .L-st-calendar .agenda .row .date{
+    font-family:var(--serif);font-weight:700;font-size:42px;color:var(--c-accent);
+    min-width:120px;
+  }
+  .L-st-calendar .agenda .row .who{ flex:1;color:var(--ink); }
+  .L-st-calendar .agenda .row .who small{ display:block;color:#888;font-size:22px;margin-top:4px; }
+  .L-st-calendar .agenda .row.taken .badge{
+    background:#e85a9a;color:#fff;padding:6px 14px;border-radius:8px;
+    font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:.05em;
+  }
+  .L-st-calendar .agenda .row.free .badge{
+    background:#1a73e8;color:#fff;padding:6px 14px;border-radius:8px;
+    font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:.05em;
+  }
+  .L-st-calendar .punch{
+    position:absolute;bottom:240px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:60px;line-height:1.05;
+  }
+  .L-st-calendar .punch em{
+    font-style:normal;font-weight:700;color:var(--c-accent);
+  }
+  .L-st-calendar .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ===== L-st-boceto : sketch concept (notebook style) ===== */
+  .L-st-boceto .pc-bg{
+    background:
+      repeating-linear-gradient(0deg, var(--c-bg) 0, var(--c-bg) 70px, rgba(199,154,74,.12) 70px, rgba(199,154,74,.12) 71px),
+      var(--c-bg);
+  }
+  .L-st-boceto .pc-bg::after{
+    content:"";position:absolute;
+    top:0;bottom:0;left:120px;width:3px;
+    background:rgba(232,90,154,.45);
+  }
+  .L-st-boceto .stamp{
+    position:absolute;top:120px;right:80px;
+    background:var(--c-accent);color:#fff;
+    padding:14px 28px;border-radius:6px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    transform:rotate(4deg);
+    z-index:2;
+  }
+  .L-st-boceto .top-handwritten{
+    position:absolute;top:240px;left:180px;
+    font-family:var(--script);font-size:90px;color:var(--c-ink);line-height:1;
+    transform:rotate(-2deg);
+  }
+  .L-st-boceto .big{
+    position:absolute;top:380px;left:180px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:160px;line-height:.9;letter-spacing:-.035em;
+  }
+  .L-st-boceto .big em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:1em;
+  }
+  .L-st-boceto .sketch-mock{
+    position:absolute;top:900px;left:180px;right:80px;
+    background:#fff;border:3px dashed var(--c-ink);
+    border-radius:24px;
+    padding:36px 40px;
+    box-shadow:8px 8px 0 rgba(26,22,20,.85);
+  }
+  .L-st-boceto .sketch-mock .lbl{
+    font-family:var(--mono);font-size:20px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+    margin-bottom:10px;
+  }
+  .L-st-boceto .sketch-mock .items{
+    font-family:var(--script);font-size:60px;color:var(--c-accent);line-height:1.1;
+  }
+  .L-st-boceto .sketch-mock .items .check{ color:var(--c-ink); }
+  .L-st-boceto .closing{
+    position:absolute;bottom:240px;left:180px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:56px;line-height:1.1;
+  }
+  .L-st-boceto .footer{
+    position:absolute;bottom:120px;left:180px;right:80px;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+    display:flex;justify-content:space-between;
+  }
+
+  /* ===== L-st-clock : countdown urgency ===== */
+  .L-st-clock .pc-bg{ background:var(--c-ink); }
+  .L-st-clock .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 50%, rgba(232,90,154,.25), transparent 70%);
+  }
+  .L-st-clock .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:var(--c-bg);
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.25);
+  }
+  .L-st-clock .top-tag .live{
+    background:var(--c-accent);color:#fff;
+    padding:8px 20px;border-radius:99px;
+    font-size:18px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .L-st-clock .top-tag .live::before{
+    content:"●";color:#fff;
+  }
+  .L-st-clock .lede{
+    position:absolute;top:300px;left:80px;right:80px;
+    color:var(--c-bg);
+    font-family:var(--script);font-size:130px;line-height:.9;color:var(--c-accent);
+  }
+  .L-st-clock .timer{
+    position:absolute;top:480px;left:80px;right:80px;
+    display:flex;justify-content:space-between;gap:16px;
+  }
+  .L-st-clock .timer .seg{
+    flex:1;
+    background:rgba(255,255,255,.06);
+    border:2px solid rgba(255,255,255,.15);
+    border-radius:24px;
+    padding:40px 10px 30px;
+    text-align:center;
+  }
+  .L-st-clock .timer .seg .n{
+    font-family:var(--serif);font-weight:800;font-size:200px;line-height:.85;color:var(--c-accent);
+    letter-spacing:-.04em;
+  }
+  .L-st-clock .timer .seg .l{
+    font-family:var(--mono);font-size:22px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--c-bg);margin-top:14px;
+  }
+  .L-st-clock .timer .sep{
+    align-self:center;
+    font-family:var(--serif);font-weight:800;font-size:160px;line-height:1;
+    color:var(--c-accent);
+    flex:0 0 auto;
+    padding:0 4px;
+  }
+  .L-st-clock .massive{
+    position:absolute;top:1080px;left:80px;right:80px;
+    color:var(--c-bg);
+    font-family:var(--serif);font-weight:700;font-size:170px;line-height:.92;letter-spacing:-.035em;
+  }
+  .L-st-clock .massive em{
+    font-style:normal;color:var(--c-accent);
+  }
+  .L-st-clock .url-pill{
+    position:absolute;bottom:200px;left:80px;right:80px;
+    background:var(--c-accent);color:#fff;
+    padding:30px 36px;border-radius:99px;
+    font-family:var(--mono);font-weight:600;font-size:30px;letter-spacing:.04em;
+    text-align:center;
+  }
+  .L-st-clock .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    text-align:center;
+    color:rgba(255,255,255,.65);
+    font-family:var(--mono);font-size:16px;letter-spacing:.25em;text-transform:uppercase;
+  }
+
+  /* ===== L-st-notif : push notification mockup ===== */
+  .L-st-notif .pc-bg{
+    background:#0c1418;
+  }
+  .L-st-notif .pc-bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(232,90,154,.15) 0%, transparent 50%);
+  }
+  .L-st-notif .status-bar{
+    position:absolute;top:50px;left:80px;right:80px;
+    color:#fff;
+    font-family:var(--sans);font-weight:600;font-size:28px;
+    display:flex;justify-content:space-between;
+  }
+  .L-st-notif .lockscreen-time{
+    position:absolute;top:160px;left:0;right:0;
+    text-align:center;
+    color:#fff;
+    font-family:var(--sans);font-weight:200;font-size:140px;letter-spacing:-.04em;line-height:1;
+  }
+  .L-st-notif .date{
+    position:absolute;top:340px;left:0;right:0;
+    text-align:center;
+    color:rgba(255,255,255,.7);
+    font-family:var(--sans);font-weight:500;font-size:30px;letter-spacing:.05em;
+  }
+  .L-st-notif .notif{
+    position:absolute;top:480px;left:60px;right:60px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(20px);
+    border-radius:24px;
+    padding:26px 32px;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+    display:flex;align-items:flex-start;gap:18px;
+  }
+  .L-st-notif .notif.second{
+    top:740px;
+    background:rgba(255,255,255,.7);
+    transform:scale(.95);
+  }
+  .L-st-notif .notif.third{
+    top:960px;
+    background:rgba(255,255,255,.55);
+    transform:scale(.9);
+  }
+  .L-st-notif .notif .icon{
+    width:90px;height:90px;border-radius:22px;
+    background:linear-gradient(135deg, var(--c-accent), var(--c-soft));
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:42px;
+    flex-shrink:0;
+  }
+  .L-st-notif .notif .body{
+    flex:1;font-family:var(--sans);color:#111;line-height:1.2;
+  }
+  .L-st-notif .notif .body .app{
+    font-weight:600;font-size:20px;letter-spacing:.05em;text-transform:uppercase;
+    color:#555;display:flex;justify-content:space-between;
+  }
+  .L-st-notif .notif .body .app .t{ font-weight:400;color:#888; }
+  .L-st-notif .notif .body .msg{
+    font-size:32px;font-weight:500;margin-top:6px;
+  }
+  .L-st-notif .notif .body .msg em{ font-style:normal;font-weight:700;color:var(--c-accent); }
+  .L-st-notif .punch{
+    position:absolute;top:1220px;left:80px;right:80px;
+    color:#fff;
+    font-family:var(--serif);font-weight:700;font-size:140px;line-height:.92;letter-spacing:-.03em;
+    text-align:center;
+  }
+  .L-st-notif .punch em{
+    font-style:normal;color:var(--c-accent);
+  }
+  .L-st-notif .swipe-up{
+    position:absolute;bottom:140px;left:0;right:0;
+    text-align:center;
+    color:rgba(255,255,255,.6);
+    font-family:var(--mono);font-size:18px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-st-notif .swipe-up .arr{
+    display:block;
+    font-family:var(--serif);font-size:60px;color:var(--c-accent);line-height:.6;
+    margin-bottom:8px;
+  }
+
+  /* ===== L-st-reveal : poll result reveal ===== */
+  .L-st-reveal .pc-bg{
+    background:linear-gradient(180deg, var(--cream) 0%, var(--c-soft) 100%);
+  }
+  .L-st-reveal .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-reveal .top-tag .pill{
+    background:var(--c-accent);color:#fff;padding:8px 20px;border-radius:99px;font-size:18px;
+  }
+  .L-st-reveal .drum{
+    position:absolute;top:280px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:120px;color:var(--c-accent);line-height:1;
+  }
+  .L-st-reveal .winner{
+    position:absolute;top:440px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:800;font-size:260px;line-height:.85;letter-spacing:-.05em;
+  }
+  .L-st-reveal .winner em{
+    font-style:normal;
+    background:var(--c-accent);color:#fff;
+    padding:0 14px;
+    display:inline-block;
+    transform:rotate(-2deg);
+  }
+  .L-st-reveal .bars{
+    position:absolute;top:880px;left:80px;right:80px;
+    display:flex;flex-direction:column;gap:24px;
+  }
+  .L-st-reveal .bar{
+    display:flex;align-items:center;gap:20px;
+  }
+  .L-st-reveal .bar .name{
+    width:240px;
+    font-family:var(--serif);font-weight:600;font-size:54px;line-height:1;
+  }
+  .L-st-reveal .bar .track{
+    flex:1;height:60px;background:#fff;border-radius:30px;overflow:hidden;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.08);
+  }
+  .L-st-reveal .bar .fill{
+    height:100%;background:linear-gradient(90deg, var(--c-accent), #c44a85);
+    display:flex;align-items:center;justify-content:flex-end;padding-right:18px;
+    color:#fff;font-family:var(--sans);font-weight:700;font-size:28px;
+  }
+  .L-st-reveal .bar.lose .fill{ background:linear-gradient(90deg, #c79a4a, #b88a3a);opacity:.85; }
+  .L-st-reveal .promise{
+    position:absolute;top:1340px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:58px;line-height:1.12;
+  }
+  .L-st-reveal .promise em{
+    font-style:normal;font-weight:700;color:var(--c-accent);
+  }
+  .L-st-reveal .fomo-pill{
+    position:absolute;bottom:200px;left:80px;right:80px;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:26px 32px;border-radius:99px;
+    text-align:center;
+    font-family:var(--mono);font-weight:600;font-size:26px;letter-spacing:.04em;
+  }
+  .L-st-reveal .fomo-pill::before{
+    content:"⚠ ";color:var(--c-accent);
+  }
+  .L-st-reveal .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ---------- RESPONSIVE TWEAKS ---------- */
+  @media (max-width:1100px){
+    .stories-row{ grid-template-columns:repeat(3,1fr); }
+    .carrusel-grid{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (max-width:760px){
+    .stories-row{ grid-template-columns:repeat(2,1fr); }
+    .carrusel-grid{ grid-template-columns:repeat(2,1fr); }
+    .dashboard-header{grid-template-columns:1fr;text-align:center}
+    .stats{justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<header class="dashboard-header">
+  <div class="brand-mark">
+    <img src="assets/logo.png" alt="EvangelCake" />
+    <div class="titles">
+      <h1>Dashboard de Contenido</h1>
+      <p>EvangelCake · Mayo 2026 · Zaragoza</p>
+    </div>
+  </div>
+  <div class="header-tagline">dulce, hecho a mano</div>
+  <div class="stats">
+    <div class="stat"><span>Stories</span><strong id="stat-stories">0</strong></div>
+    <div class="stat"><span>Carrusel</span><strong id="stat-carrusel">0</strong></div>
+    <div class="stat"><span>Total</span><strong id="stat-total">0</strong></div>
+  </div>
+</header>
+
+<nav class="section-tabs" id="section-tabs"></nav>
+
+<main class="dashboard-main" id="dashboard-main"></main>
+
+<aside class="editor-panel" id="editor-panel">
+  <div class="editor-header">
+    <h3 id="editor-title">Editar pieza<small id="editor-subtitle">—</small></h3>
+    <button class="editor-close" id="editor-close" aria-label="Cerrar">×</button>
+  </div>
+
+  <div class="editor-preview" id="editor-preview">
+    <div class="thumb-wrap">
+      <div class="thumb-scale" id="editor-stage"></div>
+    </div>
+  </div>
+
+  <div class="editor-body">
+    <div class="filename-pill" id="filename-pill">—</div>
+
+    <div class="form-group" id="primary-group">
+      <label>Texto principal</label>
+      <textarea id="field-primary"></textarea>
+    </div>
+
+    <div class="form-group" id="secondary-group">
+      <label>Texto secundario</label>
+      <textarea id="field-secondary"></textarea>
+    </div>
+
+    <div class="form-group" id="tertiary-group" style="display:none">
+      <label>Texto adicional</label>
+      <input type="text" id="field-tertiary" />
+    </div>
+
+    <div class="form-group" id="photo-group">
+      <label>Cambiar foto</label>
+      <input type="file" id="field-photo" accept="image/*" />
+    </div>
+
+    <div class="form-group">
+      <label>Variante de paleta</label>
+      <div class="variants" id="variants-row">
+        <button class="variant-btn active" data-variant="default">
+          <div class="swatch">
+            <span style="background:#fbf3df"></span>
+            <span style="background:#e85a9a"></span>
+            <span style="background:#1a1614"></span>
+          </div>
+          <div class="name">Default</div>
+        </button>
+        <button class="variant-btn" data-variant="magenta">
+          <div class="swatch">
+            <span style="background:#e85a9a"></span>
+            <span style="background:#fbf3df"></span>
+            <span style="background:#f4b8d0"></span>
+          </div>
+          <div class="name">Magenta</div>
+        </button>
+        <button class="variant-btn" data-variant="minimal">
+          <div class="swatch">
+            <span style="background:#f5f0e8"></span>
+            <span style="background:#1a1614"></span>
+            <span style="background:#c79a4a"></span>
+          </div>
+          <div class="name">Minimal</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="editor-footer">
+    <button class="btn btn-secondary" id="btn-reset">Reset</button>
+    <button class="btn btn-primary" id="btn-download">⬇ Descargar PNG</button>
+  </div>
+</aside>
+
+<!-- Hidden stage for full-size rendering during export -->
+<div class="export-stage" id="export-stage"></div>
+
+<div class="toast" id="toast">PNG descargado</div>
+
+<script>
+// ============================================================
+// PIECES DEFINITION
+// ============================================================
+const URL_FULL = "evangelcake.com/tartas-personalizadas";
+const URL_SHORT = "evangelcake.com";
+const IG = "@evangelcake";
+
+const PIECES = [
+  // -------- CADENA 1 --------
+  { id:'s1-hook', type:'story', cadena:1, slot:'hook', layout:'L-s1-hook',
+    filename:'evangelcake_lunes15mayo_story_s1_hook.png',
+    primary:'¿Quieres descuento?',
+    secondary:'En tu tarta personalizada',
+    tertiary:'',
+    photo:null },
+  { id:'s1-ctx', type:'story', cadena:1, slot:'contexto', layout:'L-s1-ctx',
+    filename:'evangelcake_lunes15mayo_story_s1_contexto.png',
+    primary:'Newsletter',
+    secondary:'Suscríbete desde la web y recibe el 5% al instante',
+    tertiary:'',
+    photo:null },
+  { id:'s1-cta', type:'story', cadena:1, slot:'cta', layout:'L-s1-cta',
+    filename:'evangelcake_lunes15mayo_story_s1_cta.png',
+    primary:'Haz tu pedido',
+    secondary:URL_FULL,
+    tertiary:'',
+    photo:'assets/tarta1.jpg' },
+
+  // -------- CADENA 2 (rediseñada · tono cercano) --------
+  { id:'s2-hook', type:'story', cadena:2, slot:'hook', layout:'L-st-secret',
+    filename:'evangelcake_lunes22mayo_story_s2_hook.png',
+    primary:'tengo un secreto',
+    secondary:'que caduca',
+    tertiary:'es para ti · si me lo pides esta semana',
+    photo:null },
+  { id:'s2-ctx', type:'story', cadena:2, slot:'contexto', layout:'L-st-chat',
+    filename:'evangelcake_lunes22mayo_story_s2_contexto.png',
+    primary:'¿de verdad existe ese 5%?',
+    secondary:'Sí mira ↓ está en tu correo. Te dejé el código bonito 💌',
+    tertiary:'el 5% ya está en mi inbox… ¿qué hago aún aquí?',
+    photo:null },
+  { id:'s2-cta', type:'story', cadena:2, slot:'cta', layout:'L-st-fomo',
+    filename:'evangelcake_lunes22mayo_story_s2_cta.png',
+    primary:'no seas',
+    secondary:'la última',
+    tertiary:URL_FULL,
+    photo:null },
+
+  // -------- CADENA 3 --------
+  { id:'s3-hook', type:'story', cadena:3, slot:'hook', layout:'L-s3-hook',
+    filename:'evangelcake_lunes29mayo_story_s3_hook.png',
+    primary:'Tartas personalizadas',
+    secondary:'',
+    tertiary:'',
+    photo:null },
+  { id:'s3-ctx', type:'story', cadena:3, slot:'contexto', layout:'L-s3-ctx',
+    filename:'evangelcake_lunes29mayo_story_s3_contexto.png',
+    primary:'Tú decides',
+    secondary:'Diseño · Sabor · Relleno',
+    tertiary:'',
+    photo:null },
+  { id:'s3-cta', type:'story', cadena:3, slot:'cta', layout:'L-s3-cta',
+    filename:'evangelcake_lunes29mayo_story_s3_cta.png',
+    primary:'Encárgala ya',
+    secondary:URL_SHORT,
+    tertiary:'',
+    photo:null },
+
+  // -------- CARRUSEL --------
+  { id:'c1', type:'carrusel', slot:'1', layout:'L-c1',
+    filename:'evangelcake_lunes15mayo_carrusel_01.png',
+    primary:'Vintage rosa',
+    secondary:'Tartas artesanales',
+    tertiary:'01 / 05',
+    photo:'assets/tarta1.jpg' },
+  { id:'c2', type:'carrusel', slot:'2', layout:'L-c2',
+    filename:'evangelcake_lunes15mayo_carrusel_02.png',
+    primary:'Blanco eterno',
+    secondary:'Bodas & celebraciones',
+    tertiary:'02',
+    photo:'assets/tarta2.jpg' },
+  { id:'c3', type:'carrusel', slot:'3', layout:'L-c3',
+    filename:'evangelcake_lunes15mayo_carrusel_03.png',
+    primary:'Princesa',
+    secondary:'Cumpleaños mágicos',
+    tertiary:'03 / 05',
+    photo:'assets/tarta3.jpg' },
+  { id:'c4', type:'carrusel', slot:'4', layout:'L-c4',
+    filename:'evangelcake_lunes15mayo_carrusel_04.png',
+    primary:'Chocolate puro',
+    secondary:'Sabores clásicos',
+    tertiary:'04',
+    photo:'assets/tarta4.jpg' },
+  { id:'c5', type:'carrusel', slot:'CTA', layout:'L-c5',
+    filename:'evangelcake_lunes15mayo_carrusel_05.png',
+    primary:'Encárgalas con 5% OFF',
+    secondary:'Newsletter en la web',
+    tertiary:URL_FULL,
+    photo:null },
+
+  // ============================================================
+  // CADENA 4 · VOCES REALES (3)
+  // ============================================================
+  { id:'c4-hook', type:'story', cadena:4, slot:'hook', layout:'L-st-secret',
+    filename:'evangelcake_c4_voces_01_hook.png',
+    primary:'¿quieres saber?',
+    secondary:'lo que dicen mis clientas',
+    tertiary:'voces reales · ★★★★★ Google · sin filtro',
+    photo:null },
+  { id:'c4-luis', type:'story', cadena:4, slot:'reseña', layout:'L-st-review',
+    filename:'evangelcake_c4_voces_02_luis.png',
+    primary:'Diseño que emociona',
+    secondary:'Luis Pildain · Local Guide · 26 reseñas · 44 fotos',
+    tertiary:'La tarta ha quedado espectacular, de verdad. Justo lo que tenía en mente, incluso mejor. Súper bonita, muy bien acabada y con un estilo elegante que nos encantó.',
+    photo:null },
+  { id:'c4-cta', type:'story', cadena:4, slot:'cta', layout:'L-st-fomo',
+    filename:'evangelcake_c4_voces_03_cta.png',
+    primary:'la siguiente',
+    secondary:'reseña',
+    tertiary:URL_SHORT,
+    photo:null },
+
+  // ============================================================
+  // CADENA 5 · SOY DULCI (3)
+  // ============================================================
+  { id:'c5-hello', type:'story', cadena:5, slot:'hello', layout:'L-st-hello',
+    filename:'evangelcake_c5_dulci_01_hello.png',
+    primary:'hola, soy',
+    secondary:'Dulci',
+    tertiary:'y vengo a hacer realidad esa tarta que tienes en la cabeza ✨',
+    photo:null },
+  { id:'c5-howto', type:'story', cadena:5, slot:'proceso', layout:'L-st-howto',
+    filename:'evangelcake_c5_dulci_02_howto.png',
+    primary:'cómo nace',
+    secondary:'tu tarta',
+    tertiary:'',
+    photo:null },
+  { id:'c5-invite', type:'story', cadena:5, slot:'invite', layout:'L-st-fomo',
+    filename:'evangelcake_c5_dulci_03_invite.png',
+    primary:'cuéntame',
+    secondary:'tu idea',
+    tertiary:'WhatsApp · 624 131 348',
+    photo:null },
+
+  // ============================================================
+  // CADENA 6 · EL DETALLE (2)
+  // ============================================================
+  { id:'c6-zoom', type:'story', cadena:6, slot:'zoom', layout:'L-st-zoom',
+    filename:'evangelcake_c6_detalle_01_zoom.png',
+    primary:'el detalle',
+    secondary:'que nadie ve pero todos sienten',
+    tertiary:'esa flor, esa cintita, esa carta de amor en azúcar',
+    photo:'assets/tarta3.jpg' },
+  { id:'c6-fomo', type:'story', cadena:6, slot:'fomo', layout:'L-st-fomo',
+    filename:'evangelcake_c6_detalle_02_fomo.png',
+    primary:'los detalles',
+    secondary:'también tienen lista de espera',
+    tertiary:URL_SHORT,
+    photo:null },
+
+  // ============================================================
+  // CADENA 7 · CHOCO o VAINILLA (2)
+  // ============================================================
+  { id:'c7-poll', type:'story', cadena:7, slot:'poll', layout:'L-st-poll-ig',
+    filename:'evangelcake_c7_poll_01_question.png',
+    primary:'¿Chocolate',
+    secondary:'o vainilla?',
+    tertiary:'quien gane mañana lo pongo de relleno (lo prometo)',
+    photo:null },
+  { id:'c7-reveal', type:'story', cadena:7, slot:'reveal', layout:'L-st-reveal',
+    filename:'evangelcake_c7_poll_02_reveal.png',
+    primary:'Vainilla',
+    secondary:'la ganadora',
+    tertiary:'solo 5 tartas con ese relleno · esta semana · cuando se vayan, se van',
+    photo:null },
+
+  // ============================================================
+  // CADENA 8 · STOCK LIMITADO (3) — FOMO PURO
+  // ============================================================
+  { id:'c8-num', type:'story', cadena:8, slot:'num', layout:'L-st-num',
+    filename:'evangelcake_c8_stock_01_num.png',
+    primary:'3',
+    secondary:'tartas. eso queda esta semana.',
+    tertiary:'agenda casi cerrada · ★★★★★',
+    photo:null },
+  { id:'c8-agenda', type:'story', cadena:8, slot:'agenda', layout:'L-st-calendar',
+    filename:'evangelcake_c8_stock_02_agenda.png',
+    primary:'mira',
+    secondary:'mi agenda',
+    tertiary:'tres huecos. mañana puede que no quede ninguno.',
+    photo:null },
+  { id:'c8-cta', type:'story', cadena:8, slot:'cta', layout:'L-st-fomo',
+    filename:'evangelcake_c8_stock_03_cta.png',
+    primary:'que la última',
+    secondary:'no se vaya sin ti',
+    tertiary:URL_FULL,
+    photo:null },
+
+  // ============================================================
+  // CADENA 9 · DE BOCETO A TARTA (2)
+  // ============================================================
+  { id:'c9-boceto', type:'story', cadena:9, slot:'boceto', layout:'L-st-boceto',
+    filename:'evangelcake_c9_boceto_01_idea.png',
+    primary:'todo empieza',
+    secondary:'con un mensaje',
+    tertiary:'una foto, una idea, un cumpleaños que tiene que salir perfecto',
+    photo:null },
+  { id:'c9-result', type:'story', cadena:9, slot:'result', layout:'L-st-zoom',
+    filename:'evangelcake_c9_boceto_02_result.png',
+    primary:'y termina',
+    secondary:'aquí · esto · tuyo',
+    tertiary:'lo que un día fue boceto · ahora es la tarta de tu día',
+    photo:'assets/tarta1.jpg' },
+
+  // ============================================================
+  // CADENA 10 · MIENTRAS DUDAS (3) — FOMO MEGA CREATIVO
+  // ============================================================
+  { id:'c10-clock', type:'story', cadena:10, slot:'clock', layout:'L-st-clock',
+    filename:'evangelcake_c10_dudas_01_clock.png',
+    primary:'esta semana',
+    secondary:'cierra · de verdad',
+    tertiary:URL_SHORT,
+    photo:null },
+  { id:'c10-notif', type:'story', cadena:10, slot:'notif', layout:'L-st-notif',
+    filename:'evangelcake_c10_dudas_02_notif.png',
+    primary:'mientras dudas',
+    secondary:'ya pidió la suya',
+    tertiary:'no te lo cuento yo · te lo cuentan ellas',
+    photo:null },
+  { id:'c10-cta', type:'story', cadena:10, slot:'cta', layout:'L-st-fomo',
+    filename:'evangelcake_c10_dudas_03_cta.png',
+    primary:'no seas',
+    secondary:'la que se queda viendo',
+    tertiary:URL_FULL,
+    photo:null },
+
+  // ============================================================
+  // SECCIÓN — CARRUSEL · VOCES (RESEÑAS GOOGLE)
+  // ============================================================
+  { id:'cv1', type:'carrusel', section:'resenas-c', slot:'1', layout:'L-cv-cover',
+    filename:'evangelcake_voces_carrusel_01_cover.png',
+    primary:'Cinco estrellas', secondary:'cinco historias',
+    tertiary:'5 reseñas Google · Mayo 2026',
+    photo:null },
+  { id:'cv2', type:'carrusel', section:'resenas-c', slot:'2', layout:'L-cv-quote',
+    filename:'evangelcake_voces_carrusel_02_lola.png',
+    primary:'Quedó simplemente de cuento. La decoración coincidía con lo que pedíamos, todo hecho con mucha precisión.',
+    secondary:'Lola Khasyanova',
+    tertiary:'Local Guide · 25 reseñas',
+    photo:null },
+  { id:'cv3', type:'carrusel', section:'resenas-c', slot:'3', layout:'L-cv-quote',
+    filename:'evangelcake_voces_carrusel_03_luis.png',
+    primary:'Justo lo que tenía en mente, incluso mejor. Súper bonita, muy bien acabada y con un estilo elegante.',
+    secondary:'Luis Pildain',
+    tertiary:'Local Guide · 26 reseñas',
+    photo:null },
+  { id:'cv4', type:'carrusel', section:'resenas-c', slot:'4', layout:'L-cv-photo',
+    filename:'evangelcake_voces_carrusel_04_rutty.png',
+    primary:'Atención maravillosa. La tarta fue perfecta para la fiesta.',
+    secondary:'Rutty G C · ★★★★★',
+    tertiary:'',
+    photo:'assets/tarta3.jpg' },
+  { id:'cv5', type:'carrusel', section:'resenas-c', slot:'CTA', layout:'L-cv-cta',
+    filename:'evangelcake_voces_carrusel_05_cta.png',
+    primary:'Tu reseña, próximamente',
+    secondary:'Encarga tu tarta',
+    tertiary:URL_SHORT,
+    photo:null },
+
+  // ============================================================
+  // SECCIÓN — CARRUSEL · TU TARTA DE CUENTO (PASO A PASO)
+  // ============================================================
+  { id:'cs1', type:'carrusel', section:'caso-c', slot:'1', layout:'L-cs-cover',
+    filename:'evangelcake_pasoapaso_carrusel_01_cover.png',
+    primary:'Tu tarta', secondary:'paso a paso',
+    tertiary:'De tu idea a tu mesa · cuatro pasos',
+    photo:null },
+  { id:'cs2', type:'carrusel', section:'caso-c', slot:'2', layout:'L-cs-step',
+    filename:'evangelcake_pasoapaso_carrusel_02_idea.png',
+    primary:'01', secondary:'Cuéntame tu idea',
+    tertiary:'WhatsApp · DM Instagram · Email',
+    photo:null },
+  { id:'cs3', type:'carrusel', section:'caso-c', slot:'3', layout:'L-cs-step',
+    filename:'evangelcake_pasoapaso_carrusel_03_diseno.png',
+    primary:'02', secondary:'Diseñamos juntos',
+    tertiary:'Boceto + presupuesto · sin compromiso',
+    photo:null },
+  { id:'cs4', type:'carrusel', section:'caso-c', slot:'4', layout:'L-cs-step',
+    filename:'evangelcake_pasoapaso_carrusel_04_hechoamano.png',
+    primary:'03', secondary:'Hecho a mano',
+    tertiary:'Sin prisa, con cariño · materias primas frescas',
+    photo:null },
+  { id:'cs5', type:'carrusel', section:'caso-c', slot:'CTA', layout:'L-cs-cta',
+    filename:'evangelcake_pasoapaso_carrusel_05_pidela.png',
+    primary:'04', secondary:'Para tu día',
+    tertiary:URL_FULL,
+    photo:null },
+
+  // ============================================================
+  // SECCIÓN — CARRUSEL DESTACADO · LUIS PILDAIN (RESEÑA EN 4 ACTOS)
+  // ============================================================
+  { id:'lu1', type:'carrusel', section:'luis-c', slot:'cover', layout:'L-luis-cover',
+    filename:'evangelcake_luis_carrusel_01_cover.png',
+    primary:'Una reseña', secondary:'en 4 actos',
+    tertiary:'Luis Pildain',
+    photo:null },
+  { id:'lu2', type:'carrusel', section:'luis-c', slot:'Acto 01', layout:'L-luis-act',
+    filename:'evangelcake_luis_carrusel_02_diseno.png',
+    primary:'01', secondary:'Diseño',
+    tertiary:'Justo lo que tenía en mente, incluso mejor. Súper bonita, muy bien acabada, con un estilo elegante.',
+    photo:'assets/tarta1.jpg' },
+  { id:'lu3', type:'carrusel', section:'luis-c', slot:'Acto 02', layout:'L-luis-act',
+    filename:'evangelcake_luis_carrusel_03_sabor.png',
+    primary:'02', secondary:'Sabor',
+    tertiary:'No solo era estética, estaba buenísima. Nos sorprendió mucho el sabor y lo ligera que era.',
+    photo:'assets/tarta2.jpg' },
+  { id:'lu4', type:'carrusel', section:'luis-c', slot:'Acto 03', layout:'L-luis-act',
+    filename:'evangelcake_luis_carrusel_04_carino.png',
+    primary:'03', secondary:'Cariño',
+    tertiary:'Muchísimas gracias por el trabajo. Se nota el cariño y el nivel.',
+    photo:'assets/tarta4.jpg' },
+  { id:'lu5', type:'carrusel', section:'luis-c', slot:'CTA', layout:'L-luis-final',
+    filename:'evangelcake_luis_carrusel_05_repetire.png',
+    primary:'Repetiré', secondary:'seguro.',
+    tertiary:'Luis Pildain · ★★★★★ Google · Mayo 2026',
+    photo:null },
+
+  // ============================================================
+  // SECCIÓN — CARRUSEL "¿QUIERES SABER QUÉ OPINAN?" (Social proof + FOMO)
+  // ============================================================
+  { id:'op1', type:'carrusel', section:'opinan-c', slot:'Hook', layout:'L-opinan-hook',
+    filename:'evangelcake_opinan_carrusel_01_hook.png',
+    primary:'¿Quieres saber',
+    secondary:'qué opinan?',
+    tertiary:'5 clientes reales contándolo todo. Desliza →',
+    photo:null },
+  { id:'op2', type:'carrusel', section:'opinan-c', slot:'Reseña 01', layout:'L-opinan-card',
+    filename:'evangelcake_opinan_carrusel_02_luis.png',
+    primary:'Diseño que emociona',
+    secondary:'Luis Pildain · Local Guide · 26 reseñas · 44 fotos',
+    tertiary:'La tarta ha quedado espectacular, de verdad. Justo lo que tenía en mente, incluso mejor. Súper bonita, muy bien acabada y con un estilo elegante que nos encantó. Y lo mejor es que no solo era estética, estaba buenísima.',
+    photo:null },
+  { id:'op3', type:'carrusel', section:'opinan-c', slot:'Reseña 02', layout:'L-opinan-card',
+    filename:'evangelcake_opinan_carrusel_03_lola.png',
+    primary:'Tartas de cuento',
+    secondary:'Lola Khasyanova · Local Guide · 25 reseñas · 213 fotos',
+    tertiary:'Encargamos una tarta con diseño de Lilo y Stitch y quedamos muy satisfechos con el resultado. La decoración coincidía con lo que habíamos pedido, todo hecho con mucha precisión, belleza y atención al detalle. Una experiencia muy positiva. Volveremos a encargar.',
+    photo:null },
+  { id:'op4', type:'carrusel', section:'opinan-c', slot:'Reseña 03', layout:'L-opinan-card',
+    filename:'evangelcake_opinan_carrusel_04_rosa.png',
+    primary:'Trato espectacular',
+    secondary:'Rosa Senao García · Local Guide · 21 reseñas',
+    tertiary:'El mejor lugar para disfrutar de tus dulces favoritos, con una gran variedad, creados con mucho cariño y con un trato espectacular.',
+    photo:null },
+  { id:'op5', type:'carrusel', section:'opinan-c', slot:'Reseña 04', layout:'L-opinan-card',
+    filename:'evangelcake_opinan_carrusel_05_rutty.png',
+    primary:'Cariño en cada detalle',
+    secondary:'Rutty G C · Google · hace 3 días',
+    tertiary:'Hicimos un pedido ajustado de tiempo y en ningún momento se pusieron pegas. Atención maravillosa. La estética muy delicada y fina. El bizcocho buenísimo y la cobertura también. Gustó mucho a todo el mundo.',
+    photo:null },
+  { id:'op6', type:'carrusel', section:'opinan-c', slot:'CTA', layout:'L-opinan-cta',
+    filename:'evangelcake_opinan_carrusel_06_cta.png',
+    primary:'tú',
+    secondary:'¿vas a ser la única que no la pruebe?',
+    tertiary:URL_FULL,
+    photo:null }
+];
+
+// ============================================================
+// RENDERERS — one function per layout
+// ============================================================
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+const RENDERERS = {
+
+  'L-s1-hook': p => `
+    <div class="piece-canvas story L-s1-hook pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag">
+        <div class="mono">EvangelCake · Zaragoza</div>
+        <div class="badge">dulce</div>
+      </div>
+      <div class="huge-pct">5<span class="pct">%</span></div>
+      <div class="bottom-block">
+        <div class="text">${esc(p.primary)}<br><strong>${esc(p.secondary)}</strong></div>
+        <img src="assets/dulci.png" class="mascot" alt="Dulci" />
+      </div>
+      <div class="corner-handle">${IG}</div>
+    </div>
+  `,
+
+  'L-s1-ctx': p => `
+    <div class="piece-canvas story L-s1-ctx pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="ctx-header">
+        <span>paso · 02</span>
+        <span>cómo conseguirlo</span>
+      </div>
+      <div class="ctx-step">así de fácil</div>
+      <div class="ctx-title">${esc(p.primary)}<br><em>+ 5% descuento</em></div>
+      <div class="ctx-card">
+        <div class="ico">✉</div>
+        <div class="label">Tu correo, tu descuento</div>
+        <div class="body">${esc(p.secondary).replace('5%','<strong>5%</strong>')}</div>
+      </div>
+      <div class="footnote">
+        <span>${IG}</span>
+        <span>Mayo 2026</span>
+      </div>
+    </div>
+  `,
+
+  'L-s1-cta': p => `
+    <div class="piece-canvas story L-s1-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="cta-eyebrow">
+        <span>último paso</span>
+        <span>${IG}</span>
+      </div>
+      <div class="cta-action">${esc(p.primary)}<em>ahora mismo</em></div>
+      <div class="arrow">→</div>
+      <div class="url-pill">${esc(p.secondary)}</div>
+      <div class="ph">${ p.photo ? `<img src="${esc(p.photo)}" />` : '' }</div>
+    </div>
+  `,
+
+  'L-s2-hook': p => `
+    <div class="piece-canvas story L-s2-hook pc-${p.variant||'default'}">
+      ${ p.photo ? `<img class="pc-photo" src="${esc(p.photo)}" />` : '' }
+      <div class="pc-bg"></div>
+      <div class="corner-tag">Semana 2</div>
+      <div class="week-badge"><span class="sm">5%</span><span class="big">OFF</span></div>
+      <div class="headline"><em>esta</em> ${esc(p.primary).replace('Encarga tu tarta','encarga<br>tu tarta')}</div>
+      <div class="footer-line">
+        <span>${esc(p.secondary)}</span>
+        <span>${IG}</span>
+      </div>
+    </div>
+  `,
+
+  'L-s2-ctx': p => `
+    <div class="piece-canvas story L-s2-ctx pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="left-block"></div>
+      <div class="rot-tag">EvangelCake · 2026</div>
+      <div class="left-content">
+        <div class="eyebrow">Tu beneficio</div>
+        <div class="word1">5%</div>
+        <div class="word2">${esc(p.primary)}</div>
+      </div>
+      <div class="right-info">
+        <div class="label">cómo funciona</div>
+        <div class="body">${esc(p.secondary).replace(/newsletter/i,'<em>newsletter</em>')}</div>
+      </div>
+      <div class="footer-mark">${IG}</div>
+    </div>
+  `,
+
+  'L-s2-cta': p => `
+    <div class="piece-canvas story L-s2-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-row">
+        <img src="assets/logo.png" class="logo" />
+        <div class="handle">${IG}</div>
+      </div>
+      <div class="ribbon">Tu pedido <em>con 5%</em></div>
+      <div class="links">
+        <div class="link-btn featured">
+          <div>
+            <div class="lbl">${esc(p.primary)}</div>
+            <div class="sub">${URL_FULL}</div>
+          </div>
+          <div class="arr">→</div>
+        </div>
+        <div class="link-btn">
+          <div>
+            <div class="lbl">${esc(p.secondary)}</div>
+            <div class="sub">${IG}</div>
+          </div>
+          <div class="arr">↗</div>
+        </div>
+      </div>
+      <div class="bottom-tag">¡Te esperamos!</div>
+    </div>
+  `,
+
+  'L-s3-hook': p => `
+    <div class="piece-canvas story L-s3-hook pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="grid-lines"></div>
+      <div class="top-bar">
+        <div class="label">Semana 3 · Zaragoza</div>
+        <img src="assets/sticker.png" class="sticker" />
+      </div>
+      <div class="massive">
+        <div class="pre">solo en mayo</div>
+        <div class="num">5%</div>
+      </div>
+      <div class="off-tag">OFF</div>
+      <div class="descript">${esc(p.primary).replace('Tartas personalizadas','<em>tartas</em> personalizadas')}</div>
+      <div class="bottom-stamp">
+        <span>${IG}</span>
+        <span>Newsletter · Web</span>
+      </div>
+    </div>
+  `,
+
+  'L-s3-ctx': p => `
+    <div class="piece-canvas story L-s3-ctx pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-line">${esc(p.primary)} cada detalle</div>
+      <div class="headline">3 cosas que<em>tú decides</em></div>
+      <div class="cards">
+        <div class="card">
+          <div class="num">01</div>
+          <div class="info"><div class="label">forma</div><div class="word">Diseño</div></div>
+        </div>
+        <div class="card">
+          <div class="num">02</div>
+          <div class="info"><div class="label">paladar</div><div class="word">Sabor</div></div>
+        </div>
+        <div class="card">
+          <div class="num">03</div>
+          <div class="info"><div class="label">corazón</div><div class="word">Relleno</div></div>
+        </div>
+      </div>
+      <div class="you-decide">a tu manera<em>+5% descuento newsletter</em></div>
+    </div>
+  `,
+
+  'L-s3-cta': p => `
+    <div class="piece-canvas story L-s3-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="stamp-top">
+        <div class="lbl">${IG}</div>
+        <div class="now">stock limitado</div>
+      </div>
+      <div class="big-cta">
+        <div class="verb">${esc(p.primary).split(' ')[0]}<br><em>${(esc(p.primary).split(' ').slice(1).join(' ')||'')}</em></div>
+        <span class="now-script">hoy mismo</span>
+      </div>
+      <div class="mascot-arr"><img src="assets/dulci.png" /></div>
+      <div class="arrow-curve">↘</div>
+      <div class="url-block">
+        <div class="lbl">pide en la web</div>
+        <div class="url">${esc(p.secondary)}</div>
+      </div>
+    </div>
+  `,
+
+  'L-c1': p => `
+    <div class="piece-canvas carrusel L-c1 pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="label-top">EvangelCake · Tartas</div>
+      <div class="frame">${ p.photo ? `<img src="${esc(p.photo)}" />` : '' }</div>
+      <div class="frame-number">01<span class="of">de cinco</span></div>
+      <div class="caption">
+        <div class="title">${esc(p.primary)}<em>artesanal</em></div>
+        <div class="meta">${esc(p.secondary)}<br>Zaragoza</div>
+      </div>
+    </div>
+  `,
+
+  'L-c2': p => `
+    <div class="piece-canvas carrusel L-c2 pc-${p.variant||'default'}">
+      ${ p.photo ? `<img class="pc-photo" src="${esc(p.photo)}" />` : '' }
+      <div class="pc-bg"></div>
+      <div class="corner-num">02</div>
+      <div class="badge">+5% OFF</div>
+      <div class="cap">
+        <div class="eyebrow">${esc(p.secondary)}</div>
+        <div class="title">${esc(p.primary)}<em>con amor</em></div>
+      </div>
+    </div>
+  `,
+
+  'L-c3': p => `
+    <div class="piece-canvas carrusel L-c3 pc-${p.variant||'default'}">
+      <div class="left">${ p.photo ? `<img src="${esc(p.photo)}" />` : '' }</div>
+      <div class="right">
+        <div class="top">
+          <div class="num">03</div>
+          <div class="of">de cinco · slide</div>
+        </div>
+        <div class="mid">
+          <div class="eyebrow">para soñar</div>
+          <div class="title">${esc(p.primary)}<em>de cuento</em></div>
+        </div>
+        <div class="bottom">
+          <span>${esc(p.secondary)}</span>
+          <span>${IG}</span>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'L-c4': p => `
+    <div class="piece-canvas carrusel L-c4 pc-${p.variant||'default'}">
+      ${ p.photo ? `<img class="pc-photo" src="${esc(p.photo)}" />` : '' }
+      <div class="pc-bg"></div>
+      <div class="corner-pill">Clásicos</div>
+      <div class="num">04</div>
+      <div class="focus-text">
+        <div class="title">${esc(p.primary)}<em>sin fórmulas</em></div>
+        <div class="sub">${esc(p.secondary)}</div>
+      </div>
+    </div>
+  `,
+
+  'L-c5': p => `
+    <div class="piece-canvas carrusel L-c5 pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag">Última parada · Slide 05</div>
+      <div class="center">
+        <div class="script">Encárgalas con</div>
+        <div class="big"><span class="pct">5% OFF</span></div>
+      </div>
+      <div class="arrow-row">
+        <div class="arr">↓</div>
+        <div class="nws">${esc(p.secondary)}</div>
+      </div>
+      <div class="footer-url">${esc(p.tertiary)}</div>
+      <img src="assets/dulci.png" class="mascot-c5" />
+    </div>
+  `,
+
+  // ===== RESEÑAS — STORIES =====
+
+  'L-rev-hook': p => `
+    <div class="piece-canvas story L-rev-hook pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="voces-tag">
+        <span>Voces · 5★ Google</span>
+        <span>Mayo 2026</span>
+      </div>
+      <div class="stars-row">★★★★★</div>
+      <div class="star-count">cinco<em>estrellas reales</em></div>
+      <div class="quote-massive">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="badge-row"><div class="b">★</div><div class="b">★</div><div class="b">★</div><div class="b">★</div><div class="b">★</div></div>
+      <div class="footer"><span>${IG}</span><span>desliza · hay más</span></div>
+    </div>
+  `,
+
+  'L-rev-photo': p => `
+    <div class="piece-canvas story L-rev-photo pc-${p.variant||'default'}">
+      ${p.photo ? `<img class="pc-photo" src="${esc(p.photo)}" />` : ''}
+      <div class="pc-bg"></div>
+      <div class="top-stars">
+        <div class="stars">★★★★★</div>
+        <div class="badge">Google · 5★</div>
+      </div>
+      <div class="quote-marks">"</div>
+      <div class="body-quote">${esc(p.primary).replace(/incluso mejor/i,'<em>incluso mejor</em>')}</div>
+      <div class="signature">
+        <div class="name">${esc(p.secondary)}</div>
+        <div class="role">${esc(p.tertiary)}<br>reseña verificada</div>
+      </div>
+      <div class="footer-strip"><span>${IG}</span><span>cliente real · Zaragoza</span></div>
+    </div>
+  `,
+
+  'L-rev-card': p => `
+    <div class="piece-canvas story L-rev-card pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag">
+        <span>Reseña Google</span>
+        <span class="stars">★★★★★</span>
+      </div>
+      <div class="qm">"</div>
+      <div class="quote">${esc(p.primary)}<em>— lo dicen ellas</em></div>
+      <div class="subquote">${esc(p.secondary)}</div>
+      <div class="signature-block">
+        <div>
+          <div class="name">${esc(p.tertiary)}</div>
+          <div class="label">Local Guide · 21 reseñas</div>
+        </div>
+        <div class="avatar">${(p.tertiary||'').charAt(0)}</div>
+      </div>
+      <div class="footer">${IG} · reseñas reales en Google</div>
+    </div>
+  `,
+
+  'L-rev-magazine': p => `
+    <div class="piece-canvas story L-rev-magazine pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="vertical-num">03</div>
+      <div class="vertical-tag">testimonio · marlene</div>
+      <div class="header-row">
+        <span>Voces · 03 / 05</span>
+        <span class="stars">★★★★★</span>
+      </div>
+      <div class="pull-quote">${esc(p.primary)}<em>.</em></div>
+      <div class="sub">${esc(p.secondary)}</div>
+      <div class="author-block">
+        <div>
+          <div class="name">${esc(p.tertiary)}</div>
+          <div class="role">reseña verificada · Google</div>
+        </div>
+        <div class="source">— gracias</div>
+      </div>
+      <div class="footer"><span>${IG}</span><span>Mayo 2026 · Zaragoza</span></div>
+    </div>
+  `,
+
+  'L-rev-stamp': p => `
+    <div class="piece-canvas story L-rev-stamp pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="stamp-header">
+        <span>Certificado · Voces</span>
+        <span>05 / 05</span>
+      </div>
+      <div class="seal">
+        <div class="star">★★★★★</div>
+        <div class="lbl">5★<br>verificado</div>
+      </div>
+      <div class="title">Cliente del mes</div>
+      <div class="quote">${esc(p.primary)}<em>— textual</em></div>
+      <div class="sub">${esc(p.secondary)}</div>
+      <div class="author">
+        <div>
+          <div class="name">${esc(p.tertiary)}</div>
+          <div class="role">reseña Google · Mayo 2026</div>
+        </div>
+        <div class="stars">★★★★★</div>
+      </div>
+      <div class="footer">EvangelCake · ${IG} · Zaragoza</div>
+    </div>
+  `,
+
+  // ===== MARCA · PROCESO — STORIES =====
+
+  'L-brand-mascota': p => `
+    <div class="piece-canvas story L-brand-mascota pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="corner-tag"><span>EvangelCake</span><span>Zaragoza · 2026</span></div>
+      <div class="hello">hola,</div>
+      <div class="iam">${esc(p.primary)}</div>
+      <div class="role-line">${esc(p.secondary).split('·')[0]}<em>${(esc(p.secondary).split('·')[1]||'').trim()}</em></div>
+      <div class="bubble">¿Tienes una idea de tarta? <br>cuéntamela 💌</div>
+      <div class="dulci-big"><img src="assets/dulci.png" /></div>
+      <div class="footer">${IG}</div>
+    </div>
+  `,
+
+  'L-brand-proceso': p => `
+    <div class="piece-canvas story L-brand-proceso pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="header"><span>EvangelCake · cocina</span><span>cómo trabajamos</span></div>
+      <div class="title">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><div class="body"><div class="word">Tu idea</div><div class="desc">whatsapp · dm · email</div></div></div>
+        <div class="step"><div class="num">02</div><div class="body"><div class="word">Boceto</div><div class="desc">presupuesto sin compromiso</div></div></div>
+        <div class="step"><div class="num">03</div><div class="body"><div class="word">Hecho a mano</div><div class="desc">sin prisa, con cariño</div></div></div>
+        <div class="step"><div class="num">04</div><div class="body"><div class="word">Para tu día</div><div class="desc">entrega puntual · Zaragoza</div></div></div>
+      </div>
+      <div class="footer">sencillo · cercano · tuyo</div>
+    </div>
+  `,
+
+  'L-brand-detalle': p => `
+    <div class="piece-canvas story L-brand-detalle pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="label-arc"><span>Detalle · close-up</span><span>Mayo 2026</span></div>
+      <div class="photo-circle">${p.photo ? `<img src="${esc(p.photo)}" />` : ''}</div>
+      <div class="big-word">${esc(p.primary)}<em>el alma del oficio</em></div>
+      <div class="sub">${esc(p.secondary).split('en LA')[0]}<em>en LA tarta${esc(p.secondary).split('en LA')[1]||''}</em></div>
+      <div class="footer"><span>${IG}</span><span>hecho a mano</span></div>
+    </div>
+  `,
+
+  'L-brand-poll': p => `
+    <div class="piece-canvas story L-brand-poll pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="header">interacción · poll · responde abajo</div>
+      <div class="question">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="versus">
+        <div class="half choco">
+          <div class="emoji">🍫</div>
+          <div class="label">team</div>
+          <div class="name">Choco</div>
+        </div>
+        <div class="half vainilla">
+          <div class="emoji">🌼</div>
+          <div class="label">team</div>
+          <div class="name">Vainilla</div>
+        </div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="cta-bottom">${esc(p.tertiary).split('·')[0]}<em>${(esc(p.tertiary).split('·')[1]||'').trim()}</em></div>
+      <div class="footer"><span>${IG}</span><span>poll abierto · 24h</span></div>
+    </div>
+  `,
+
+  // ===== RESEÑAS — CARRUSEL =====
+
+  'L-cv-cover': p => `
+    <div class="piece-canvas carrusel L-cv-cover pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top"><span>Voces · 01 / 05</span><span>EvangelCake</span></div>
+      <div class="stars">★★★★★</div>
+      <div class="title">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="meta">${esc(p.tertiary)}</div>
+    </div>
+  `,
+
+  'L-cv-quote': p => `
+    <div class="piece-canvas carrusel L-cv-quote pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-bar"><span>Reseña Google</span><span class="stars">★★★★★</span></div>
+      <div class="qm">"</div>
+      <div class="quote">${esc(p.primary)}<em>—</em></div>
+      <div class="author">
+        <div>
+          <div class="name">${esc(p.secondary)}</div>
+          <div class="role">${esc(p.tertiary)}</div>
+        </div>
+        <div class="badge">gracias</div>
+      </div>
+    </div>
+  `,
+
+  'L-cv-photo': p => `
+    <div class="piece-canvas carrusel L-cv-photo pc-${p.variant||'default'}">
+      ${p.photo ? `<img class="pc-photo" src="${esc(p.photo)}" />` : ''}
+      <div class="pc-bg"></div>
+      <div class="top-pill">Cliente real · ${IG}</div>
+      <div class="stars-top">★★★★★</div>
+      <div class="quote">${esc(p.primary)}</div>
+      <div class="author"><span>${esc(p.secondary)}</span><span>Google · verificada</span></div>
+    </div>
+  `,
+
+  'L-cv-cta': p => `
+    <div class="piece-canvas carrusel L-cv-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="badges">Slide 05 · CTA</div>
+      <div class="stars-huge">★★★★★</div>
+      <div class="big">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="arrow">↓</div>
+      <div class="footer-url">${esc(p.tertiary)}</div>
+    </div>
+  `,
+
+  // ===== CASO PASO A PASO — CARRUSEL =====
+
+  'L-cs-cover': p => `
+    <div class="piece-canvas carrusel L-cs-cover pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top"><span>Cómo funciona · 01 / 05</span><span>EvangelCake</span></div>
+      <div class="big">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="sub">${esc(p.tertiary)}</div>
+      <div class="dulci-corner"><img src="assets/dulci.png" /></div>
+      <div class="footer">${IG} · Zaragoza</div>
+    </div>
+  `,
+
+  'L-cs-step': p => `
+    <div class="piece-canvas carrusel L-cs-step pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag">paso</div>
+      <div class="stage-num">${esc(p.slot)} / 5</div>
+      <div class="huge-num">${esc(p.primary)}</div>
+      <div class="word">${esc(p.secondary).split(' ')[0]}<em>${esc(p.secondary).split(' ').slice(1).join(' ')}</em></div>
+      <div class="desc">${esc(p.tertiary)}</div>
+      <div class="footer"><span>${IG}</span><span>continúa →</span></div>
+    </div>
+  `,
+
+  'L-cs-cta': p => `
+    <div class="piece-canvas carrusel L-cs-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top"><span>paso final · 05 / 05</span><span>pídela ya</span></div>
+      <div class="num">${esc(p.primary)}</div>
+      <div class="body">${esc(p.secondary).split(' ')[0]}<em>${esc(p.secondary).split(' ').slice(1).join(' ')||'tu día'}</em></div>
+      <div class="url-pill">→ ${esc(p.tertiary)}</div>
+    </div>
+  `,
+
+  // ===== LUIS PILDAIN · CARRUSEL DESTACADO =====
+
+  'L-luis-cover': p => `
+    <div class="piece-canvas carrusel L-luis-cover pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top"><span>Reseña destacada · Google 5★</span><span>Mayo 2026</span></div>
+      <div class="stars">★★★★★</div>
+      <div class="lede">una reseña,</div>
+      <div class="big">en <em>4 actos</em></div>
+      <div class="sig">
+        <div>
+          <div class="name">${esc(p.tertiary)}</div>
+          <div class="role">Local Guide · 26 reseñas · 44 fotos</div>
+        </div>
+        <div class="avatar">${(p.tertiary||'L').charAt(0)}</div>
+      </div>
+      <div class="swipe">desliza →  acto 1 de 4</div>
+    </div>
+  `,
+
+  'L-luis-act': p => `
+    <div class="piece-canvas carrusel L-luis-act${(p.slot||'').includes('02')?' alt':''} pc-${p.variant||'default'}">
+      <div class="left-photo">${p.photo ? `<img src="${esc(p.photo)}" />` : ''}</div>
+      <div class="act-tag">acto ${esc(p.primary)} / 04</div>
+      <div class="act-num">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="right-content">
+        <div class="top-r">
+          <span>Luis Pildain</span>
+          <span class="stars">★★★★★</span>
+        </div>
+        <div class="mid">
+          <div class="lbl">${esc(p.secondary)}</div>
+          <div class="quote">${esc(p.tertiary).split('.')[0]}.<em>${esc(p.tertiary).split('.').slice(1).join('.')}</em></div>
+        </div>
+        <div class="bottom-r"><span>Google · reseña verificada</span><span>${IG}</span></div>
+      </div>
+    </div>
+  `,
+
+  'L-luis-final': p => `
+    <div class="piece-canvas carrusel L-luis-final pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="stars-top">
+        <span>acto 04 / final</span>
+        <span class="stars">★★★★★</span>
+      </div>
+      <div class="script">${esc(p.primary)}</div>
+      <div class="verb">${esc(p.secondary)}</div>
+      <div class="quote">"Muchísimas gracias por el trabajo, se nota el cariño y el nivel."</div>
+      <div class="url">${esc(p.tertiary)}</div>
+    </div>
+  `,
+
+  // ===== ¿QUIERES SABER QUÉ OPINAN? · CARRUSEL SOCIAL PROOF =====
+
+  'L-opinan-hook': p => `
+    <div class="piece-canvas carrusel L-opinan-hook pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag">
+        <span>Voces reales · Google</span>
+        <span class="stars">★★★★★</span>
+      </div>
+      <div class="lead">psst…</div>
+      <div class="big">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="sub">${esc(p.tertiary)}</div>
+      <img class="dulci-look" src="assets/dulci.png" />
+      <div class="swipe"><span>desliza</span><span class="arr">→</span></div>
+    </div>
+  `,
+
+  'L-opinan-card': p => {
+    const parts = (p.secondary||'').split('·').map(s => s.trim());
+    const name = parts[0] || '';
+    const meta = parts.slice(1).join(' · ');
+    const initial = name.charAt(0) || '★';
+    return `
+    <div class="piece-canvas carrusel L-opinan-card pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag">
+        <span>${esc(p.slot||'Reseña')} · Google ★★★★★</span>
+        <span>opinan #${(p.id||'').slice(-1)}</span>
+      </div>
+      <div class="editorial">${esc(p.primary)}</div>
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">${esc(initial)}</div>
+          <div class="who">
+            <div class="name">${esc(name)}</div>
+            <div class="meta">${esc(meta)}</div>
+          </div>
+          <div class="more-dots">⋮</div>
+        </div>
+        <div class="stars-row">
+          <span class="stars">★★★★★</span>
+          <span class="ago">hace poco</span>
+          <span class="new-pill">NUEVA</span>
+        </div>
+        <div class="body">${esc(p.tertiary)}</div>
+        <div class="footer-icons">
+          <span class="heart">❤</span>
+          <span>1</span>
+          <span class="pill">📤 Compartir</span>
+          <span class="pill">⤴ Responder</span>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>reseña verificada · Google</span>
+        <span class="dot">${IG}</span>
+      </div>
+    </div>
+  `;},
+
+  'L-opinan-cta': p => `
+    <div class="piece-canvas carrusel L-opinan-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top">
+        <span>último slide · CTA</span>
+        <span class="stars">★★★★★</span>
+      </div>
+      <div class="script-top">y ahora…</div>
+      <div class="massive">${esc(p.secondary)}<br><em>${esc(p.primary)} sí</em></div>
+      <div class="url-pill">${esc(p.tertiary)}</div>
+      <div class="footer">encárgala · entrega Zaragoza</div>
+      <img class="dulci-corner" src="assets/dulci.png" />
+    </div>
+  `,
+
+  // =========================================================
+  // TONO CERCANO · STORIES (1080×1920)
+  // =========================================================
+
+  'L-st-secret': p => `
+    <div class="piece-canvas story L-st-secret pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>${IG}</span><span>solo por aquí</span></div>
+      <div class="psst">psst…</div>
+      <div class="big">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="sub">${esc(p.tertiary)}</div>
+      <div class="swipe-foot"><span>desliza</span><span class="arr">→</span></div>
+      <div class="handle">EvangelCake · Zaragoza</div>
+      <div class="dulci-peek"><img src="assets/dulci.png" /></div>
+    </div>
+  `,
+
+  'L-st-chat': p => `
+    <div class="piece-canvas story L-st-chat pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="status-bar"><span>11:32</span><span>●●● 100%</span></div>
+      <div class="who-bar">
+        <div class="av"><img src="assets/dulci.png" /></div>
+        <div class="info"><div class="name">Dulci · EvangelCake</div><div class="status">en línea ●</div></div>
+      </div>
+      <div class="messages">
+        <div class="msg them">${esc(p.primary)}<div class="t">11:32</div></div>
+        <div class="msg me">${esc(p.secondary)}<div class="t">11:34</div></div>
+      </div>
+      <div class="input-bar">escribe tu mensaje…</div>
+      <div class="caption-bottom">${esc(p.tertiary)}</div>
+    </div>
+  `,
+
+  'L-st-fomo': p => `
+    <div class="piece-canvas story L-st-fomo pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>${IG}</span><span class="pill">última llamada</span></div>
+      <div class="massive">${esc(p.primary)}<br><em>${esc(p.secondary)}</em></div>
+      <div class="script-line">en quedarse sin tarta</div>
+      <div class="url-pill">${esc(p.tertiary)}</div>
+      <div class="footer"><span>EvangelCake · Zaragoza</span><span>★★★★★</span></div>
+      <div class="dulci-side"><img src="assets/dulci.png" /></div>
+    </div>
+  `,
+
+  'L-st-review': p => {
+    const parts = (p.secondary||'').split('·').map(s => s.trim());
+    const name = parts[0] || '';
+    const meta = parts.slice(1).join(' · ');
+    return `
+    <div class="piece-canvas story L-st-review pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>voces · 5★ Google</span><span>${esc(p.slot||'')}</span></div>
+      <div class="editorial">${esc(p.primary)}</div>
+      <div class="review-card">
+        <div class="head">
+          <div class="av">${esc(name.charAt(0)||'★')}</div>
+          <div class="who"><div class="name">${esc(name)}</div><div class="meta">${esc(meta)}</div></div>
+          <div class="dots">⋮</div>
+        </div>
+        <div class="stars-row">
+          <span class="stars">★★★★★</span>
+          <span class="ago">hace poco</span>
+          <span class="pill">NUEVA</span>
+        </div>
+        <div class="body">${esc(p.tertiary)}</div>
+        <div class="icons">
+          <span class="heart">❤</span><span>1</span>
+          <span class="pill2">📤 Compartir</span>
+          <span class="pill2">⤴ Responder</span>
+        </div>
+      </div>
+      <div class="caption-foot">¿la siguiente eres tú?</div>
+      <div class="handle-foot"><span>${IG}</span><span>reseña verificada</span></div>
+    </div>
+  `;},
+
+  'L-st-hello': p => `
+    <div class="piece-canvas story L-st-hello pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>presentaciones</span><span>${IG}</span></div>
+      <div class="greet">${esc(p.primary)}</div>
+      <div class="name">${esc(p.secondary)}</div>
+      <div class="bubble">${esc(p.tertiary).split('✨')[0]}<em>${esc(p.tertiary).includes('✨')?' ✨':''}</em></div>
+      <div class="footer">cuéntame tu idea · DM abierto</div>
+      <div class="dulci-big"><img src="assets/dulci.png" /></div>
+    </div>
+  `,
+
+  'L-st-howto': p => `
+    <div class="piece-canvas story L-st-howto pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>cómo funciona</span><span>4 pasos</span></div>
+      <div class="title">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="chat">
+        <div class="step"><div class="num">1</div><div class="txt">me cuentas tu idea<em>whatsapp o DM</em></div></div>
+        <div class="step"><div class="num">2</div><div class="txt">hacemos boceto<em>y presupuesto</em></div></div>
+        <div class="step"><div class="num">3</div><div class="txt">cocino sin prisa<em>con cariño · de verdad</em></div></div>
+        <div class="step"><div class="num">4</div><div class="txt">para tu día<em>entrega puntual</em></div></div>
+      </div>
+      <div class="footer">así de fácil ✨</div>
+    </div>
+  `,
+
+  'L-st-zoom': p => `
+    <div class="piece-canvas story L-st-zoom pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>close-up · detalle</span><span>${IG}</span></div>
+      <div class="zoom-square">${p.photo ? `<img src="${esc(p.photo)}" />` : ''}</div>
+      <div class="caption-on-photo">¿lo ves?</div>
+      <div class="big-claim">${esc(p.primary)}<em> que nadie ve</em></div>
+      <div class="sub">${esc(p.tertiary)}</div>
+      <div class="footer"><span>hecho a mano</span><span>EvangelCake</span></div>
+    </div>
+  `,
+
+  'L-st-poll-ig': p => `
+    <div class="piece-canvas story L-st-poll-ig pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>poll abierto · 24h</span><span class="pill">vota ↓</span></div>
+      <div class="intro">dime, ¿qué prefieres?</div>
+      <div class="poll">
+        <div class="q">${esc(p.primary)} ${esc(p.secondary)}</div>
+        <div class="options">
+          <div class="opt choco"><div class="emoji">🍫</div><div class="lbl">Choco</div><div class="pct">52%</div></div>
+          <div class="opt vain"><div class="emoji">🌼</div><div class="lbl">Vainilla</div><div class="pct">48%</div></div>
+        </div>
+        <div class="vs-dot">VS</div>
+      </div>
+      <div class="caption-pad"><em>${esc(p.tertiary).split('(')[0]}</em>${esc(p.tertiary).includes('(') ? ' ('+esc(p.tertiary).split('(')[1] : ''}</div>
+      <div class="footer">${IG} · poll cerrado en 24h</div>
+    </div>
+  `,
+
+  // ===== FOMO LAYOUTS =====
+
+  'L-st-num': p => `
+    <div class="piece-canvas story L-st-num pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>stock real</span><span class="pill">limitado</span></div>
+      <div class="big-num">${esc(p.primary)}</div>
+      <div class="strike">${esc(p.secondary).split('.')[0]}.<em>${(esc(p.secondary).split('.')[1]||'').trim()}</em></div>
+      <div class="sub">${esc(p.tertiary)}</div>
+      <div class="footer"><span>${IG}</span><span>EvangelCake · Zaragoza</span></div>
+    </div>
+  `,
+
+  'L-st-calendar': p => `
+    <div class="piece-canvas story L-st-calendar pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>agenda real</span><span>${IG}</span></div>
+      <div class="title">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="agenda">
+        <div class="month"><span>Mayo 2026 · pedidos</span><span class="pill">3 huecos</span></div>
+        <div class="row taken"><div class="date">Mar 14</div><div class="who">Marta R.<small>tarta cumpleaños · 8 personas</small></div><span class="badge">RESERVADA</span></div>
+        <div class="row taken"><div class="date">Mié 15</div><div class="who">Carlos L.<small>bodas · 30 personas</small></div><span class="badge">RESERVADA</span></div>
+        <div class="row free"><div class="date">Jue 16</div><div class="who">— libre —<small>¿tú?</small></div><span class="badge">LIBRE</span></div>
+        <div class="row free"><div class="date">Vie 17</div><div class="who">— libre —<small>¿tú?</small></div><span class="badge">LIBRE</span></div>
+        <div class="row taken"><div class="date">Sáb 18</div><div class="who">Laura M.<small>baby shower · 12 personas</small></div><span class="badge">RESERVADA</span></div>
+        <div class="row free"><div class="date">Dom 19</div><div class="who">— libre —<small>¿tú?</small></div><span class="badge">LIBRE</span></div>
+      </div>
+      <div class="punch">${esc(p.tertiary).split('.')[0]}.<br><em>${(esc(p.tertiary).split('.')[1]||'').trim()}</em></div>
+      <div class="footer"><span>actualizado · hace 12 min</span><span>★★★★★ Google</span></div>
+    </div>
+  `,
+
+  'L-st-boceto': p => `
+    <div class="piece-canvas story L-st-boceto pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="stamp">borrador · Mayo</div>
+      <div class="top-handwritten">cuaderno de</div>
+      <div class="big">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="sketch-mock">
+        <div class="lbl">Briefing rápido · una clienta</div>
+        <div class="items">
+          <span class="check">✓</span> cumple de mi peque (5 años)<br>
+          <span class="check">✓</span> personaje: Bluey<br>
+          <span class="check">✓</span> 12 personas<br>
+          ✎ <strong>tú decides el sabor</strong>
+        </div>
+      </div>
+      <div class="closing">${esc(p.tertiary)}</div>
+      <div class="footer"><span>${IG}</span><span>así empieza · cada tarta</span></div>
+    </div>
+  `,
+
+  'L-st-clock': p => `
+    <div class="piece-canvas story L-st-clock pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>aviso real</span><span class="live">EN VIVO</span></div>
+      <div class="lede">esta semana cierra…</div>
+      <div class="timer">
+        <div class="seg"><div class="n">02</div><div class="l">días</div></div>
+        <div class="sep">:</div>
+        <div class="seg"><div class="n">14</div><div class="l">horas</div></div>
+        <div class="sep">:</div>
+        <div class="seg"><div class="n">37</div><div class="l">min</div></div>
+      </div>
+      <div class="massive">${esc(p.primary)}<br><em>${esc(p.secondary)}</em></div>
+      <div class="url-pill">→ ${esc(p.tertiary)}</div>
+      <div class="footer">${IG} · cierre real · agenda llena</div>
+    </div>
+  `,
+
+  'L-st-notif': p => `
+    <div class="piece-canvas story L-st-notif pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="status-bar"><span>11:47</span><span>●●● 92%</span></div>
+      <div class="lockscreen-time">11:47</div>
+      <div class="date">jueves, 14 de mayo</div>
+      <div class="notif">
+        <div class="icon">EC</div>
+        <div class="body"><div class="app"><span>EvangelCake</span><span class="t">ahora</span></div><div class="msg">Marta acaba de pedir su tarta · <em>queda 1 hueco</em></div></div>
+      </div>
+      <div class="notif second">
+        <div class="icon">EC</div>
+        <div class="body"><div class="app"><span>EvangelCake</span><span class="t">hace 2 min</span></div><div class="msg">Laura reservó para el sábado</div></div>
+      </div>
+      <div class="notif third">
+        <div class="icon">EC</div>
+        <div class="body"><div class="app"><span>EvangelCake</span><span class="t">hace 7 min</span></div><div class="msg">Nueva reseña 5★ · "espectacular"</div></div>
+      </div>
+      <div class="punch">${esc(p.primary)},<br><em>otra ${esc(p.secondary)}</em></div>
+      <div class="swipe-up"><span class="arr">↑</span>desliza · pídela tú</div>
+    </div>
+  `,
+
+  'L-st-reveal': p => `
+    <div class="piece-canvas story L-st-reveal pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>poll cerrado · resultado</span><span class="pill">REVELADO</span></div>
+      <div class="drum">y el ganador es…</div>
+      <div class="winner"><em>${esc(p.primary)}</em></div>
+      <div class="bars">
+        <div class="bar"><div class="name">🌼 ${esc(p.primary)}</div><div class="track"><div class="fill" style="width:62%">62%</div></div></div>
+        <div class="bar lose"><div class="name">🍫 Choco</div><div class="track"><div class="fill" style="width:38%">38%</div></div></div>
+      </div>
+      <div class="promise">y porque lo prometí: <em>solo 5 tartas</em><br>con ese relleno · esta semana</div>
+      <div class="fomo-pill">cuando se vayan, se van · ${URL_SHORT}</div>
+      <div class="footer"><span>${IG}</span><span>poll cerrado · gracias 💌</span></div>
+    </div>
+  `,
+
+};
+
+// ============================================================
+// SECTIONS CONFIG
+// ============================================================
+const SECTIONS = [
+  { key:'stories',  type:'story',    title:'Stories', em:'10 cadenas creativas', subtitle:'Cada cadena Hook → Contexto → CTA · 1080×1920 · mucho FOMO', subgroupByCadena:true },
+  { key:'promo-c',  type:'carrusel', title:'Carrusel', em:'Tartas personalizadas', subtitle:'5 slides · catálogo + CTA · 1080×1080' },
+  { key:'resenas-c',type:'carrusel', title:'Carrusel', em:'Voces (reseñas)', subtitle:'5 slides reseñas + CTA · 1080×1080' },
+  { key:'caso-c',   type:'carrusel', title:'Carrusel', em:'Tu tarta paso a paso', subtitle:'4 pasos + invitación · 1080×1080' },
+  { key:'luis-c',   type:'carrusel', title:'Carrusel', em:'Reseña destacada · Luis Pildain', subtitle:'Una reseña Google en 4 actos · 1080×1080' },
+  { key:'opinan-c', type:'carrusel', title:'Carrusel', em:'¿Quieres saber qué opinan?', subtitle:'Hook + 4 reseñas estilo screenshot + CTA FOMO · 1080×1080' },
+];
+
+const TAB_LABELS = {
+  'stories':'10 cadenas · Stories',
+  'promo-c':'Promo · Carrusel',
+  'resenas-c':'Voces · Carrusel',
+  'caso-c':'Paso a paso · Carrusel',
+  'luis-c':'★ Luis Pildain · Carrusel',
+  'opinan-c':'¿Qué opinan? · Carrusel',
+};
+
+const CADENA_LABELS = {
+  1:  { name:'El 5% que caduca',        sub:'Promo Newsletter · Semana 1' },
+  2:  { name:'El secreto',              sub:'WhatsApp + FOMO · Semana 2' },
+  3:  { name:'Tú decides',              sub:'Personaliza · Semana 3' },
+  4:  { name:'Voces reales',            sub:'Hook + Luis + FOMO CTA' },
+  5:  { name:'Soy Dulci',               sub:'Mascota · Proceso · Invite' },
+  6:  { name:'El detalle',              sub:'Zoom + FOMO' },
+  7:  { name:'¿Choco o vainilla?',      sub:'Poll IG + Reveal limitado' },
+  8:  { name:'Stock limitado',          sub:'Número · Agenda · FOMO puro' },
+  9:  { name:'De boceto a tarta',       sub:'Idea + Resultado' },
+  10: { name:'Mientras dudas',          sub:'Timer + Notif + FOMO mega' },
+};
+
+function defaultSection(p){
+  if(p.section) return p.section;
+  return p.type === 'story' ? 'stories' : 'promo-c';
+}
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  pieces: PIECES.map(p => ({...p, variant:'default', section: defaultSection(p)})),
+  selectedId: null,
+};
+
+// ============================================================
+// RENDERING
+// ============================================================
+
+function renderPiece(piece){
+  const fn = RENDERERS[piece.layout];
+  return fn ? fn(piece) : '<div class="piece-canvas"></div>';
+}
+
+function buildCardThumb(piece){
+  const html = renderPiece(piece);
+  return `
+    <div class="thumb-scale">${html}</div>
+  `;
+}
+
+function buildSectionTabs(){
+  const tabsEl = document.getElementById('section-tabs');
+  if(!tabsEl) return;
+  tabsEl.innerHTML = '';
+  const allBtn = document.createElement('button');
+  allBtn.className = 'active';
+  allBtn.innerHTML = `Todas <span class="count">${state.pieces.length}</span>`;
+  allBtn.dataset.target = '';
+  tabsEl.appendChild(allBtn);
+
+  for(const sec of SECTIONS){
+    const count = state.pieces.filter(p => p.section === sec.key).length;
+    if(!count) continue;
+    const b = document.createElement('button');
+    b.dataset.target = `sec-${sec.key}`;
+    b.innerHTML = `${TAB_LABELS[sec.key] || sec.key} <span class="count">${count}</span>`;
+    tabsEl.appendChild(b);
+  }
+
+  tabsEl.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    tabsEl.querySelectorAll('button').forEach(x => x.classList.toggle('active', x===btn));
+    if(btn.dataset.target){
+      const tgt = document.getElementById(btn.dataset.target);
+      if(tgt){
+        const tabsH = tabsEl.getBoundingClientRect().height;
+        const top = tgt.getBoundingClientRect().top + window.scrollY - tabsH - 12;
+        window.scrollTo({ top, behavior:'smooth' });
+      }
+    } else {
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+  });
+}
+
+function updateStats(){
+  const stories = state.pieces.filter(p => p.type==='story').length;
+  const carrusel = state.pieces.filter(p => p.type==='carrusel').length;
+  const total = state.pieces.length;
+  const sEl = document.getElementById('stat-stories');
+  const cEl = document.getElementById('stat-carrusel');
+  const tEl = document.getElementById('stat-total');
+  if(sEl) sEl.textContent = stories;
+  if(cEl) cEl.textContent = carrusel;
+  if(tEl) tEl.textContent = total;
+}
+
+function buildCards(){
+  const main = document.getElementById('dashboard-main');
+  main.innerHTML = '';
+
+  for(const sec of SECTIONS){
+    const pieces = state.pieces.filter(p => p.section === sec.key);
+    if(!pieces.length) continue;
+
+    const wrap = document.createElement('div');
+    wrap.id = `sec-${sec.key}`;
+    wrap.className = 'section-wrap';
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.innerHTML = `
+      <h2><em>${esc(sec.em)}</em> ${esc(sec.title)}</h2>
+      <div class="meta">${esc(sec.subtitle)}</div>
+    `;
+    wrap.appendChild(header);
+
+    if(sec.subgroupByCadena){
+      for(let c=1;c<=10;c++){
+        const cadPieces = pieces.filter(p => p.cadena===c);
+        if(!cadPieces.length) continue;
+        const lbl = CADENA_LABELS[c] || { name:`Cadena ${c}`, sub:'' };
+        const cadEl = document.createElement('div');
+        cadEl.className = 'cadena';
+        cadEl.id = `cadena-${c}`;
+        const cc = (c<10?'0':'')+c;
+        cadEl.innerHTML = `
+          <div class="cadena-label">
+            <div class="num">${cc}</div>
+            <div class="info">
+              <strong>${esc(lbl.name)}</strong>
+              <span>${esc(lbl.sub)}</span>
+            </div>
+          </div>
+          <div class="stories-row" data-cadena="${c}"></div>
+        `;
+        wrap.appendChild(cadEl);
+        const row = cadEl.querySelector('.stories-row');
+        // For cadenas with <3 stories, use compact grid
+        if(cadPieces.length < 3) row.classList.add('flex'+cadPieces.length);
+        cadPieces.forEach(p => row.appendChild(buildCardEl(p)));
+      }
+    } else {
+      const row = document.createElement('div');
+      if(sec.type === 'story'){
+        row.className = `stories-row ${sec.rowClass||''}`;
+      } else {
+        row.className = 'carrusel-grid';
+      }
+      pieces.forEach(p => row.appendChild(buildCardEl(p)));
+      wrap.appendChild(row);
+    }
+
+    main.appendChild(wrap);
+  }
+
+  scaleThumbs();
+}
+
+function buildCardEl(piece){
+  const el = document.createElement('div');
+  el.className = `piece-card ${piece.type}`;
+  el.dataset.id = piece.id;
+  el.innerHTML = `
+    <div class="thumb-wrap">
+      ${buildCardThumb(piece)}
+    </div>
+    <div class="meta-bar">
+      <div class="label">${piece.type==='story' ? `S${piece.cadena} · ${piece.slot.toUpperCase()}` : `SLIDE ${piece.slot}`}</div>
+      <div class="slot">${piece.type==='story'?'STORY':'CARRUSEL'}</div>
+    </div>
+  `;
+  el.addEventListener('click', () => openEditor(piece.id));
+  return el;
+}
+
+function scaleThumbs(){
+  document.querySelectorAll('.piece-card').forEach(card => {
+    const wrap = card.querySelector('.thumb-wrap');
+    const scale = card.querySelector('.thumb-scale');
+    if(!wrap || !scale) return;
+    const w = wrap.clientWidth;
+    const ratio = w / 1080;
+    scale.style.transform = `scale(${ratio})`;
+  });
+}
+
+function updateCardThumb(piece){
+  const card = document.querySelector(`.piece-card[data-id="${piece.id}"]`);
+  if(!card) return;
+  const wrap = card.querySelector('.thumb-wrap');
+  wrap.innerHTML = buildCardThumb(piece);
+  scaleThumbs();
+}
+
+function updateEditorStage(piece){
+  const stage = document.getElementById('editor-stage');
+  stage.innerHTML = renderPiece(piece);
+  const preview = document.getElementById('editor-preview');
+  preview.classList.toggle('story', piece.type==='story');
+  preview.classList.toggle('carrusel', piece.type==='carrusel');
+}
+
+// ============================================================
+// EDITOR
+// ============================================================
+
+function openEditor(id){
+  const piece = state.pieces.find(p => p.id===id);
+  if(!piece) return;
+  state.selectedId = id;
+
+  document.querySelectorAll('.piece-card').forEach(c => c.classList.toggle('active', c.dataset.id===id));
+  document.body.classList.add('editor-open');
+  document.getElementById('editor-panel').classList.add('open');
+
+  const sec = SECTIONS.find(s => s.key === piece.section) || {};
+  const sectionLabel = sec.em || '';
+  document.getElementById('editor-title').firstChild.nodeValue =
+    piece.type==='story'
+      ? (piece.cadena ? `Story · cadena ${piece.cadena}` : `Story · ${sectionLabel}`)
+      : `Carrusel · ${sectionLabel || ('slide ' + piece.slot)}`;
+  document.getElementById('editor-subtitle').textContent = (piece.slot||'').toString().toUpperCase();
+  document.getElementById('filename-pill').textContent = piece.filename;
+
+  document.getElementById('field-primary').value = piece.primary || '';
+  document.getElementById('field-secondary').value = piece.secondary || '';
+  document.getElementById('field-tertiary').value = piece.tertiary || '';
+
+  const showTertiary = piece.type==='carrusel' || piece.layout==='L-c5';
+  document.getElementById('tertiary-group').style.display = showTertiary ? 'block' : 'none';
+
+  document.querySelectorAll('.variant-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.variant === (piece.variant||'default'));
+  });
+
+  document.getElementById('field-photo').value = '';
+
+  updateEditorStage(piece);
+}
+
+function closeEditor(){
+  state.selectedId = null;
+  document.querySelectorAll('.piece-card').forEach(c => c.classList.remove('active'));
+  document.body.classList.remove('editor-open');
+  document.getElementById('editor-panel').classList.remove('open');
+}
+
+function applyEdits(){
+  const id = state.selectedId;
+  if(!id) return;
+  const piece = state.pieces.find(p => p.id===id);
+  piece.primary   = document.getElementById('field-primary').value;
+  piece.secondary = document.getElementById('field-secondary').value;
+  piece.tertiary  = document.getElementById('field-tertiary').value;
+  updateEditorStage(piece);
+  updateCardThumb(piece);
+}
+
+document.getElementById('field-primary').addEventListener('input', applyEdits);
+document.getElementById('field-secondary').addEventListener('input', applyEdits);
+document.getElementById('field-tertiary').addEventListener('input', applyEdits);
+
+document.getElementById('field-photo').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const piece = state.pieces.find(p => p.id===state.selectedId);
+    piece.photo = ev.target.result;
+    updateEditorStage(piece);
+    updateCardThumb(piece);
+  };
+  reader.readAsDataURL(f);
+});
+
+document.querySelectorAll('.variant-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    const v = b.dataset.variant;
+    document.querySelectorAll('.variant-btn').forEach(x => x.classList.toggle('active', x===b));
+    const piece = state.pieces.find(p => p.id===state.selectedId);
+    if(!piece) return;
+    piece.variant = v;
+    updateEditorStage(piece);
+    updateCardThumb(piece);
+  });
+});
+
+document.getElementById('editor-close').addEventListener('click', closeEditor);
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  const id = state.selectedId; if(!id) return;
+  const original = PIECES.find(p => p.id===id);
+  const piece = state.pieces.find(p => p.id===id);
+  Object.assign(piece, {...original, variant:'default'});
+  openEditor(id);
+  updateCardThumb(piece);
+  toast('Pieza reseteada');
+});
+
+// ============================================================
+// PNG EXPORT
+// ============================================================
+async function downloadPNG(){
+  const id = state.selectedId; if(!id) return;
+  const piece = state.pieces.find(p => p.id===id);
+  const w = 1080;
+  const h = piece.type==='story' ? 1920 : 1080;
+
+  toast('Generando PNG…');
+
+  // Render the piece inside an isolated iframe so html2canvas doesn't clone
+  // the heavy dashboard tree (33 cards × 1080×1920 each kills performance).
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = `position:fixed;top:0;left:0;width:${w}px;height:${h}px;opacity:0;z-index:-1;border:0;pointer-events:none`;
+  document.body.appendChild(iframe);
+
+  try{
+    const doc = iframe.contentDocument;
+    const stylesHTML = [...document.querySelectorAll('style,link[rel="stylesheet"]')].map(s => s.outerHTML).join('\n');
+    doc.open();
+    doc.write(`<!DOCTYPE html><html><head>${stylesHTML}<style>html,body{margin:0;padding:0;background:transparent}</style></head><body>${renderPiece(piece)}</body></html>`);
+    doc.close();
+
+    // Wait for iframe load + fonts/images
+    if(doc.readyState !== 'complete'){
+      await new Promise(res => { iframe.onload = res; });
+    }
+    await Promise.all([...doc.querySelectorAll('img')].map(img =>
+      img.complete ? Promise.resolve() : new Promise(res => { img.onload = res; img.onerror = res; })
+    ));
+    if(doc.fonts && doc.fonts.ready) await doc.fonts.ready;
+    await new Promise(r => setTimeout(r, 400));
+
+    const target = doc.body.firstElementChild;
+    const canvas = await html2canvas(target, {
+      width:w, height:h, scale:1,
+      backgroundColor:null,
+      useCORS:true, allowTaint:true, logging:false,
+    });
+
+    const link = document.createElement('a');
+    link.download = piece.filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    toast('PNG descargado ✓');
+  } catch(err){
+    console.error(err);
+    toast('Error al exportar');
+  } finally {
+    iframe.remove();
+  }
+}
+
+document.getElementById('btn-download').addEventListener('click', downloadPNG);
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('resize', scaleThumbs);
+window.addEventListener('load', () => {
+  updateStats();
+  buildSectionTabs();
+  buildCards();
+  // initial scale (twice — once for layout, once after fonts settle)
+  setTimeout(scaleThumbs, 100);
+  setTimeout(scaleThumbs, 600);
+});
+
+</script>
+</body>
+</html>
