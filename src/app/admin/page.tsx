@@ -166,6 +166,12 @@ export default async function AdminPage() {
             >
               Gestionar Instagram →
             </a>
+            <a
+              href="/admin/campana"
+              style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
+            >
+              Campaña Mayo 2026 →
+            </a>
           </p>
         </div>
         <LogoutButton />

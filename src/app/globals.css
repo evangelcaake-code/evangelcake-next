@@ -584,6 +584,24 @@ p{margin:0 0 12px}
   transform:translateY(0);
 }
 /* ==========================================================================
+   Admin shortcuts (cards de navegación dentro del admin)
+   ========================================================================== */
+.admin-shortcut{
+  display:flex;flex-direction:column;gap:6px;
+  padding:18px 16px;
+  background:#fff;border:1px solid rgba(0,0,0,.06);
+  border-radius:14px;text-decoration:none;color:var(--ink);
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.admin-shortcut:hover{
+  transform:translateY(-3px);
+  border-color:var(--pink-deep);
+  box-shadow:0 10px 24px rgba(0,0,0,.10);
+}
+.admin-shortcut strong{font-family:var(--serif);font-size:18px;font-weight:500}
+.admin-shortcut span:last-child{font-size:13px;color:var(--ink-2)}
+
+/* ==========================================================================
    Instagram Feed (home) — sustituye la antigua "gallery-home"
    ========================================================================== */
 .ig-section{padding:48px 48px}
