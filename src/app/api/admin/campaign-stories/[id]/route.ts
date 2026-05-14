@@ -13,7 +13,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const body = await req.json();
 
   const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
-  for (const key of ["title", "subtitle", "cta", "bg", "image", "accent_color", "scheduled_date"]) {
+  for (const key of [
+    "title", "subtitle", "cta", "bg", "image", "accent_color",
+    "scheduled_date", "layout", "background_image",
+  ]) {
     if (key in body) patch[key] = body[key];
   }
 

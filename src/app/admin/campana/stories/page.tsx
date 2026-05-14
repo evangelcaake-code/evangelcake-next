@@ -22,6 +22,8 @@ export interface CampaignStory {
   bg: string;
   image: string | null;
   accent_color: string;
+  layout: string;
+  background_image: string | null;
 }
 
 export default async function StoriesPage() {
@@ -30,7 +32,9 @@ export default async function StoriesPage() {
   const sb = getSupabaseAdmin();
   const { data, error } = await sb
     .from("campaign_stories")
-    .select("id, cadena, story_num, scheduled_date, title, subtitle, cta, bg, image, accent_color")
+    .select(
+      "id, cadena, story_num, scheduled_date, title, subtitle, cta, bg, image, accent_color, layout, background_image",
+    )
     .order("cadena")
     .order("story_num");
 
