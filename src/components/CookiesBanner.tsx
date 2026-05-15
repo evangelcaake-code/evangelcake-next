@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const STORAGE_KEY = "evangelcake_cookies";
 const VERSION = 1;
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+const GA_MEASUREMENT_ID = "G-2ZDY4LKCBX";
 
 type Consent = {
   v: number;
@@ -30,7 +30,6 @@ function readConsent(): Consent | null {
 let gaLoaded = false;
 function loadGA() {
   if (gaLoaded) return;
-  if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === "G-XXXXXXXXXX") return;
   gaLoaded = true;
   const s = document.createElement("script");
   s.async = true;
