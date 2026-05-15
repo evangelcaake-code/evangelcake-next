@@ -532,6 +532,147 @@
     z-index:-1;
   }
 
+  /* ---------- EDIT MODE OVERLAY (mover elementos) ---------- */
+  .edit-mode-overlay{
+    position:fixed;inset:0;
+    background:rgba(26,22,20,.88);
+    backdrop-filter:blur(6px);
+    z-index:300;
+    display:flex;align-items:center;justify-content:center;
+    padding:120px 40px 40px;
+  }
+  .edit-mode-toolbar{
+    position:absolute;top:20px;left:50%;
+    transform:translateX(-50%);
+    background:#fff;
+    border-radius:16px;
+    padding:14px 18px;
+    display:flex;align-items:center;gap:14px;
+    box-shadow:0 14px 40px rgba(0,0,0,.4);
+    z-index:2;
+    max-width:90vw;
+  }
+  .edit-mode-toolbar .em-title{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-2);
+    border-right:1px solid rgba(26,22,20,.12);
+    padding-right:14px;
+    max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .edit-mode-toolbar .em-hint{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+  .edit-mode-toolbar button{
+    background:#fff;border:1px solid rgba(26,22,20,.18);
+    padding:8px 16px;border-radius:99px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--ink);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .edit-mode-toolbar button:hover{border-color:var(--pink-deep);color:var(--pink-deep)}
+  .edit-mode-toolbar button.primary{
+    background:var(--ink);color:var(--cream);border-color:var(--ink);
+  }
+  .edit-mode-toolbar button.primary:hover{ background:var(--pink-deep);border-color:var(--pink-deep);color:#fff }
+  .edit-mode-stage-wrap{
+    position:relative;
+    background:transparent;
+    overflow:visible;
+  }
+  .edit-mode-stage{
+    position:relative;
+    transform-origin:top left;
+    background:#000;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .edit-mode-stage [data-el]{
+    cursor:pointer;
+    transition:outline .12s ease, box-shadow .12s ease;
+  }
+  .edit-mode-stage [data-el]:hover:not(.selected){
+    outline:2px dashed rgba(232,90,154,.55);
+    outline-offset:0;
+  }
+  .edit-mode-stage [data-el].selected{
+    outline:3px solid var(--pink-deep);
+    outline-offset:2px;
+    cursor:grab;
+  }
+  .edit-mode-stage [data-el].selected.dragging{
+    cursor:grabbing;
+    box-shadow:0 12px 40px rgba(232,90,154,.45);
+    z-index:99;
+  }
+  .edit-mode-stage [data-el][contenteditable="true"]{
+    outline:3px solid var(--gold);
+    background:rgba(255,255,255,.6);
+    cursor:text !important;
+    box-shadow:0 0 0 6px rgba(199,154,74,.18);
+  }
+  .edit-mode-stage img{
+    pointer-events:none;
+  }
+  .edit-mode-stage [data-el="dulci-big"] img,
+  .edit-mode-stage [data-el="dulci-peek"] img,
+  .edit-mode-stage [data-el="dulci-corner"] img,
+  .edit-mode-stage [data-el="dulci-side"] img,
+  .edit-mode-stage [data-el="dulci-look"] img,
+  .edit-mode-stage [data-el="dulci-top"] img,
+  .edit-mode-stage [data-el="mascot-c5"] img,
+  .edit-mode-stage [data-el="mascot-arr"] img{
+    pointer-events:none;
+  }
+  /* Floating element toolbar */
+  .em-floating-tools{
+    position:fixed;
+    background:#fff;
+    border-radius:14px;
+    padding:8px;
+    display:flex;gap:4px;align-items:center;
+    box-shadow:0 14px 38px rgba(0,0,0,.35);
+    z-index:301;
+    pointer-events:auto;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .em-floating-tools button{
+    background:#fff;
+    border:1px solid rgba(26,22,20,.08);
+    width:36px;height:36px;
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;cursor:pointer;
+    transition:all .12s ease;
+    padding:0;
+  }
+  .em-floating-tools button:hover{
+    background:var(--pink-deep);color:#fff;border-color:var(--pink-deep);
+  }
+  .em-floating-tools .sep{
+    width:1px;height:24px;background:rgba(26,22,20,.1);
+    margin:0 4px;
+  }
+  .em-floating-tools .el-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--ink-2);
+    padding:0 8px;
+    max-width:160px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .em-floating-tools button.danger:hover{background:#c0392b;border-color:#c0392b}
+  .edit-mode-overlay .em-counter{
+    position:absolute;
+    top:84px;left:50%;
+    transform:translateX(-50%);
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(6px);
+    color:#fff;
+    padding:6px 16px;border-radius:99px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    z-index:2;
+  }
+
   /* ---------- TOAST ---------- */
   .toast{
     position:fixed;
@@ -4084,7 +4225,8 @@
     </div>
   </div>
 
-  <div class="editor-footer">
+  <div class="editor-footer" style="flex-wrap:wrap;gap:8px">
+    <button class="btn btn-secondary" id="btn-position" style="flex:0 0 100%">✋ Mover elementos</button>
     <button class="btn btn-secondary" id="btn-reset">Reset</button>
     <button class="btn btn-primary" id="btn-download">⬇ Descargar PNG</button>
   </div>
@@ -5541,6 +5683,431 @@ const state = {
   selectedId: null,
 };
 
+// Restore stored overrides + variants from localStorage (per-piece position edits)
+(function loadStoredState(){
+  try{
+    const raw = localStorage.getItem('evangelcake-dashboard-state');
+    if(!raw) return;
+    const stored = JSON.parse(raw);
+    state.pieces.forEach(p => {
+      const s = stored[p.id];
+      if(!s) return;
+      if(s.overrides) p.overrides = s.overrides;
+      if(s.variant) p.variant = s.variant;
+      if(s.primary != null) p.primary = s.primary;
+      if(s.secondary != null) p.secondary = s.secondary;
+      if(s.tertiary != null) p.tertiary = s.tertiary;
+    });
+  } catch(e){ console.warn('[state] load failed', e); }
+})();
+
+function persistState(){
+  try{
+    const o = {};
+    state.pieces.forEach(p => {
+      const orig = PIECES.find(x => x.id===p.id) || {};
+      const diff = {};
+      if(p.overrides && Object.keys(p.overrides).length) diff.overrides = p.overrides;
+      if(p.variant && p.variant !== 'default') diff.variant = p.variant;
+      if(p.primary !== orig.primary) diff.primary = p.primary;
+      if(p.secondary !== orig.secondary) diff.secondary = p.secondary;
+      if(p.tertiary !== orig.tertiary) diff.tertiary = p.tertiary;
+      if(Object.keys(diff).length) o[p.id] = diff;
+    });
+    localStorage.setItem('evangelcake-dashboard-state', JSON.stringify(o));
+  } catch(e){}
+}
+
+// ============================================================
+// ELEMENT OVERRIDES — drag + edit + swap + size + hide
+// ============================================================
+const NON_INTERACTIVE = new Set(['pc-bg']);
+
+function autoTagElements(canvas){
+  const seen = {};
+  const walk = (el, parentKey) => {
+    const tag = el.tagName ? el.tagName.toLowerCase() : '';
+    let cls = (el.className || '').toString().split(' ')[0];
+    if(NON_INTERACTIVE.has(cls)) return;
+    if(!el.dataset.el){
+      let key = cls || tag;
+      if(!key) key = 'el';
+      // disambiguate against siblings + previously seen keys
+      if(seen[key]){ seen[key]++; key = `${key}-${seen[key]}`; }
+      else { seen[key] = 1; }
+      el.dataset.el = key;
+    }
+    // Recurse into children (skip IMG content)
+    if(tag === 'img') return;
+    for(const child of el.children){
+      walk(child, el.dataset.el);
+    }
+  };
+  for(const child of canvas.children){
+    walk(child, null);
+  }
+}
+
+function applyOverrides(canvas, piece){
+  if(!piece || !piece.overrides) return;
+  autoTagElements(canvas);
+  Object.entries(piece.overrides).forEach(([key, o]) => {
+    const target = canvas.querySelector(`[data-el="${key}"]`);
+    if(!target) return;
+    if(o.left != null || o.top != null){
+      target.style.right = 'auto';
+      target.style.bottom = 'auto';
+    }
+    if(o.left != null) target.style.left = o.left + 'px';
+    if(o.top  != null) target.style.top  = o.top  + 'px';
+    if(o.width != null) target.style.width = o.width + 'px';
+    if(o.fontSize != null) target.style.fontSize = o.fontSize + 'px';
+    if(o.hidden === true) target.style.display = 'none';
+    if(o.text != null){
+      // Replace innerHTML to preserve em/strong inline tags
+      target.innerHTML = o.text;
+    }
+    if(o.src != null && target.tagName === 'IMG'){
+      target.src = o.src;
+    }
+  });
+}
+
+function saveOverride(piece, key, patch){
+  piece.overrides = piece.overrides || {};
+  piece.overrides[key] = Object.assign({}, piece.overrides[key] || {}, patch);
+  persistState();
+}
+
+function openPositionEditor(){
+  const piece = state.pieces.find(p => p.id === state.selectedId);
+  if(!piece) return;
+
+  const isStory = piece.type === 'story';
+  const W = 1080, H = isStory ? 1920 : 1080;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'edit-mode-overlay';
+  overlay.innerHTML = `
+    <div class="edit-mode-toolbar">
+      <span class="em-title">Editor visual · ${esc(piece.filename || piece.id)}</span>
+      <span class="em-hint">click selecciona · arrastra mueve · doble-click edita texto · esc salir</span>
+      <button class="em-reset">Resetear pieza</button>
+      <button class="em-close primary">Hecho ✓</button>
+    </div>
+    <div class="em-counter">Selecciona cualquier elemento para editarlo</div>
+    <div class="edit-mode-stage-wrap">
+      <div class="edit-mode-stage" style="width:${W}px;height:${H}px"></div>
+    </div>
+    <input type="file" id="em-image-input" accept="image/*" style="display:none">
+  `;
+  document.body.appendChild(overlay);
+
+  const wrap = overlay.querySelector('.edit-mode-stage-wrap');
+  const stage = overlay.querySelector('.edit-mode-stage');
+  const counter = overlay.querySelector('.em-counter');
+  const imageInput = overlay.querySelector('#em-image-input');
+  stage.innerHTML = renderPiece(piece);
+  let canvas = stage.firstElementChild;
+  let selected = null;
+  let toolbar = null;
+
+  const remount = () => {
+    stage.innerHTML = renderPiece(piece);
+    canvas = stage.firstElementChild;
+    autoTagElements(canvas);
+    applyOverrides(canvas, piece);
+    attachInteractions(canvas, piece, overlay, {
+      onSelect: setSelected,
+    });
+  };
+
+  const setSelected = (el) => {
+    if(selected) selected.classList.remove('selected');
+    selected = el;
+    if(toolbar) { toolbar.remove(); toolbar = null; }
+    if(!el) { counter.textContent = 'Selecciona cualquier elemento para editarlo'; return; }
+    el.classList.add('selected');
+    counter.textContent = `Seleccionado: ${el.dataset.el}`;
+    toolbar = buildToolbar(el, piece, overlay, imageInput, remount, setSelected);
+    positionToolbar(toolbar, el);
+  };
+
+  requestAnimationFrame(() => {
+    autoTagElements(canvas);
+    applyOverrides(canvas, piece);
+    attachInteractions(canvas, piece, overlay, {
+      onSelect: setSelected,
+    });
+
+    const availH = window.innerHeight - 180;
+    const availW = window.innerWidth  - 100;
+    const scale = Math.min(availW / W, availH / H, 0.9);
+    stage.style.transform = `scale(${scale})`;
+    wrap.style.width = (W * scale) + 'px';
+    wrap.style.height = (H * scale) + 'px';
+    overlay.dataset.scale = scale;
+  });
+
+  const teardown = () => {
+    document.removeEventListener('keydown', onKey);
+    if(toolbar) toolbar.remove();
+    overlay.remove();
+    updateEditorStage(piece);
+    updateCardThumb(piece);
+    persistState();
+    toast('Cambios guardados ✓');
+  };
+
+  overlay.querySelector('.em-close').onclick = teardown;
+  overlay.addEventListener('click', e => {
+    if(e.target === overlay || e.target === wrap) {
+      setSelected(null);
+      if(e.target === overlay) teardown();
+    }
+  });
+  stage.addEventListener('click', e => {
+    if(e.target === stage) setSelected(null);
+  });
+
+  overlay.querySelector('.em-reset').onclick = () => {
+    if(!confirm('¿Resetear todos los cambios de esta pieza?')) return;
+    delete piece.overrides;
+    setSelected(null);
+    remount();
+    persistState();
+    toast('Pieza reseteada');
+  };
+
+  const onKey = (e) => {
+    if(e.key === 'Escape'){
+      if(selected && selected.contentEditable === 'true'){
+        selected.contentEditable = 'false';
+        return;
+      }
+      if(selected){ setSelected(null); return; }
+      teardown();
+    }
+  };
+  document.addEventListener('keydown', onKey);
+}
+
+function buildToolbar(el, piece, overlay, imageInput, remount, setSelected){
+  const tb = document.createElement('div');
+  tb.className = 'em-floating-tools';
+  const isImg = el.tagName === 'IMG';
+  const hasText = !isImg && el.textContent.trim().length > 0;
+
+  const btn = (icon, title, action) => {
+    const b = document.createElement('button');
+    b.innerHTML = icon;
+    b.title = title;
+    b.onclick = e => { e.stopPropagation(); action(); };
+    return b;
+  };
+
+  const label = document.createElement('span');
+  label.className = 'el-label';
+  label.textContent = el.dataset.el;
+  tb.appendChild(label);
+  tb.appendChild(Object.assign(document.createElement('span'),{className:'sep'}));
+
+  if(hasText){
+    tb.appendChild(btn('✏️','Editar texto (doble-click)', () => {
+      enterTextEdit(el, piece);
+    }));
+    tb.appendChild(btn('A−','Texto más pequeño', () => {
+      const cs = getComputedStyle(el);
+      const cur = parseFloat(cs.fontSize) || 16;
+      const next = Math.max(8, Math.round(cur * 0.92));
+      el.style.fontSize = next + 'px';
+      saveOverride(piece, el.dataset.el, { fontSize: next });
+    }));
+    tb.appendChild(btn('A+','Texto más grande', () => {
+      const cs = getComputedStyle(el);
+      const cur = parseFloat(cs.fontSize) || 16;
+      const next = Math.round(cur * 1.08);
+      el.style.fontSize = next + 'px';
+      saveOverride(piece, el.dataset.el, { fontSize: next });
+    }));
+  }
+
+  if(isImg){
+    tb.appendChild(btn('🖼','Cambiar imagen', () => {
+      imageInput.onchange = (ev) => {
+        const f = ev.target.files[0]; if(!f) return;
+        const reader = new FileReader();
+        reader.onload = e2 => {
+          el.src = e2.target.result;
+          saveOverride(piece, el.dataset.el, { src: e2.target.result });
+        };
+        reader.readAsDataURL(f);
+        imageInput.value = '';
+      };
+      imageInput.click();
+    }));
+    tb.appendChild(btn('⤧−','Reducir', () => {
+      const r = el.getBoundingClientRect();
+      const scale = parseFloat(overlay.dataset.scale) || 1;
+      const wpx = Math.max(40, Math.round(r.width / scale * 0.9));
+      el.style.width = wpx + 'px';
+      saveOverride(piece, el.dataset.el, { width: wpx });
+    }));
+    tb.appendChild(btn('⤧+','Agrandar', () => {
+      const r = el.getBoundingClientRect();
+      const scale = parseFloat(overlay.dataset.scale) || 1;
+      const wpx = Math.round(r.width / scale * 1.1);
+      el.style.width = wpx + 'px';
+      saveOverride(piece, el.dataset.el, { width: wpx });
+    }));
+  }
+
+  tb.appendChild(Object.assign(document.createElement('span'),{className:'sep'}));
+  tb.appendChild(btn('👁','Ocultar elemento', () => {
+    el.style.display = 'none';
+    saveOverride(piece, el.dataset.el, { hidden: true });
+    setSelected(null);
+    setTimeout(() => toast('Elemento oculto · Reset pieza para recuperar'), 50);
+  }));
+  tb.appendChild(btn('↺','Resetear este elemento', () => {
+    if(piece.overrides && piece.overrides[el.dataset.el]){
+      delete piece.overrides[el.dataset.el];
+      persistState();
+    }
+    remount();
+    setSelected(null);
+  }));
+
+  document.body.appendChild(tb);
+  return tb;
+}
+
+function positionToolbar(tb, el){
+  const r = el.getBoundingClientRect();
+  const tbW = tb.offsetWidth || 320;
+  const tbH = tb.offsetHeight || 50;
+  let x = r.left + r.width/2 - tbW/2;
+  let y = r.top - tbH - 12;
+  // clamp to viewport
+  const pad = 10;
+  if(x < pad) x = pad;
+  if(x + tbW > innerWidth - pad) x = innerWidth - pad - tbW;
+  if(y < 80) y = r.bottom + 12;
+  tb.style.left = x + 'px';
+  tb.style.top  = y + 'px';
+}
+
+function enterTextEdit(el, piece){
+  el.contentEditable = 'true';
+  el.focus();
+  // place cursor at end
+  const sel = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  const finish = () => {
+    el.contentEditable = 'false';
+    saveOverride(piece, el.dataset.el, { text: el.innerHTML });
+  };
+  el.addEventListener('blur', finish, { once: true });
+  el.addEventListener('keydown', e => {
+    if(e.key === 'Escape'){ e.preventDefault(); el.blur(); }
+  });
+}
+
+function attachInteractions(canvas, piece, overlay, opts){
+  const onSelect = opts.onSelect || (()=>{});
+
+  canvas.querySelectorAll('[data-el]').forEach(el => {
+    if(NON_INTERACTIVE.has(el.dataset.el)) return;
+
+    let dragging = false, hasMoved = false;
+    let startX, startY, startTop, startLeft, hasPositioning;
+    let downTime = 0;
+
+    const isImg = el.tagName === 'IMG';
+    const tag = el.tagName.toLowerCase();
+
+    // pointerdown — decide selection vs drag
+    el.addEventListener('pointerdown', e => {
+      // ignore if currently text-editing
+      if(el.contentEditable === 'true') return;
+      e.stopPropagation();
+      e.preventDefault();
+      downTime = Date.now();
+      hasMoved = false;
+      try { el.setPointerCapture(e.pointerId); } catch(_){}
+      startX = e.clientX; startY = e.clientY;
+      const cs = getComputedStyle(el);
+      hasPositioning = (cs.position === 'absolute' || cs.position === 'fixed');
+      startLeft = parseFloat(cs.left);
+      startTop  = parseFloat(cs.top);
+      const rect = el.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      const scale = parseFloat(overlay.dataset.scale) || 1;
+      if(isNaN(startLeft)) startLeft = (rect.left - canvasRect.left) / scale;
+      if(isNaN(startTop))  startTop  = (rect.top  - canvasRect.top)  / scale;
+      dragging = true;
+    });
+
+    el.addEventListener('pointermove', e => {
+      if(!dragging) return;
+      if(el.contentEditable === 'true') return;
+      const scale = parseFloat(overlay.dataset.scale) || 1;
+      const dx = (e.clientX - startX) / scale;
+      const dy = (e.clientY - startY) / scale;
+      // ignore tiny jitter (just a click)
+      if(!hasMoved && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
+      hasMoved = true;
+      onSelect(el);
+      el.classList.add('dragging');
+      // For positioned: move via top/left. For non-positioned: convert to absolute.
+      if(!hasPositioning){
+        // Compute current position relative to canvas and switch to absolute
+        const rect = el.getBoundingClientRect();
+        const canvasRect = canvas.getBoundingClientRect();
+        startLeft = (rect.left - canvasRect.left) / scale - dx;
+        startTop  = (rect.top  - canvasRect.top)  / scale - dy;
+        el.style.position = 'absolute';
+        hasPositioning = true;
+      }
+      el.style.right  = 'auto';
+      el.style.bottom = 'auto';
+      el.style.top  = (startTop  + dy) + 'px';
+      el.style.left = (startLeft + dx) + 'px';
+    });
+
+    const finish = () => {
+      if(!dragging) return;
+      dragging = false;
+      el.classList.remove('dragging');
+      if(hasMoved){
+        saveOverride(piece, el.dataset.el, {
+          top:  parseFloat(el.style.top),
+          left: parseFloat(el.style.left),
+        });
+      } else {
+        // simple click → select
+        onSelect(el);
+      }
+    };
+    el.addEventListener('pointerup', finish);
+    el.addEventListener('pointercancel', finish);
+
+    // double-click to edit text
+    el.addEventListener('dblclick', e => {
+      if(isImg) return;
+      if(el.textContent.trim().length === 0) return;
+      e.stopPropagation();
+      e.preventDefault();
+      onSelect(el);
+      enterTextEdit(el, piece);
+    });
+  });
+}
+
 // ============================================================
 // RENDERING
 // ============================================================
@@ -5664,6 +6231,14 @@ function buildCards(){
     main.appendChild(wrap);
   }
 
+  // Apply stored position overrides to all card thumbnails (DOM now ready)
+  state.pieces.forEach(p => {
+    if(!p.overrides) return;
+    const card = document.querySelector(`.piece-card[data-id="${p.id}"]`);
+    const canvas = card && card.querySelector('.piece-canvas');
+    if(canvas) applyOverrides(canvas, p);
+  });
+
   scaleThumbs();
 }
 
@@ -5700,12 +6275,17 @@ function updateCardThumb(piece){
   if(!card) return;
   const wrap = card.querySelector('.thumb-wrap');
   wrap.innerHTML = buildCardThumb(piece);
+  // Apply position overrides to the freshly rendered canvas inside the thumb
+  const canvas = wrap.querySelector('.piece-canvas');
+  if(canvas) applyOverrides(canvas, piece);
   scaleThumbs();
 }
 
 function updateEditorStage(piece){
   const stage = document.getElementById('editor-stage');
   stage.innerHTML = renderPiece(piece);
+  const canvas = stage.querySelector('.piece-canvas');
+  if(canvas) applyOverrides(canvas, piece);
   const preview = document.getElementById('editor-preview');
   preview.classList.toggle('story', piece.type==='story');
   preview.classList.toggle('carrusel', piece.type==='carrusel');
@@ -5767,9 +6347,11 @@ function applyEdits(){
   updateCardThumb(piece);
 }
 
-document.getElementById('field-primary').addEventListener('input', applyEdits);
-document.getElementById('field-secondary').addEventListener('input', applyEdits);
-document.getElementById('field-tertiary').addEventListener('input', applyEdits);
+function applyEditsPersist(){ applyEdits(); persistState(); }
+document.getElementById('field-primary').addEventListener('input', applyEditsPersist);
+document.getElementById('field-secondary').addEventListener('input', applyEditsPersist);
+document.getElementById('field-tertiary').addEventListener('input', applyEditsPersist);
+document.getElementById('btn-position').addEventListener('click', openPositionEditor);
 
 document.getElementById('field-photo').addEventListener('change', e => {
   const f = e.target.files[0];
@@ -5793,6 +6375,7 @@ document.querySelectorAll('.variant-btn').forEach(b => {
     piece.variant = v;
     updateEditorStage(piece);
     updateCardThumb(piece);
+    persistState();
   });
 });
 
@@ -5803,8 +6386,10 @@ document.getElementById('btn-reset').addEventListener('click', () => {
   const original = PIECES.find(p => p.id===id);
   const piece = state.pieces.find(p => p.id===id);
   Object.assign(piece, {...original, variant:'default'});
+  delete piece.overrides;
   openEditor(id);
   updateCardThumb(piece);
+  persistState();
   toast('Pieza reseteada');
 });
 
@@ -5843,6 +6428,8 @@ async function downloadPNG(){
     await new Promise(r => setTimeout(r, 400));
 
     const target = doc.body.firstElementChild;
+    // Apply position overrides (drag-moved elements) before snapshotting
+    if(target && piece.overrides) applyOverrides(target, piece);
     const canvas = await html2canvas(target, {
       width:w, height:h, scale:1,
       backgroundColor:null,
