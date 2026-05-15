@@ -3616,6 +3616,373 @@
     color:var(--ink-2);
   }
 
+  /* =====================================================
+     CAMPAÑA 15-17 MAYO · TEASER + JUEGO + 5% (5 LAYOUTS)
+     ===================================================== */
+
+  /* ===== L-st-teaser : minimalist 19:00 teaser ===== */
+  .L-st-teaser .pc-bg{
+    background:linear-gradient(180deg, #f4b8d0 0%, #fbf3df 100%);
+  }
+  .L-st-teaser .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.25), transparent 60%);
+  }
+  .L-st-teaser .stamp{
+    position:absolute;top:160px;left:0;right:0;
+    text-align:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.35em;text-transform:uppercase;
+    color:var(--c-ink);
+  }
+  .L-st-teaser .stamp::before, .L-st-teaser .stamp::after{
+    content:"——";margin:0 18px;color:rgba(26,22,20,.4);
+  }
+  .L-st-teaser .lede{
+    position:absolute;top:560px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:90px;line-height:1.05;letter-spacing:-.02em;
+    color:var(--c-ink);
+  }
+  .L-st-teaser .massive{
+    position:absolute;top:780px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:700;
+    font-size:160px;line-height:.96;letter-spacing:-.035em;
+    color:var(--c-ink);
+  }
+  .L-st-teaser .massive em{
+    font-style:normal;
+    background:var(--c-ink);color:var(--cream);
+    padding:0 14px;
+    display:inline-block;
+    transform:rotate(-1.5deg);
+  }
+  .L-st-teaser .clock-pill{
+    position:absolute;bottom:280px;left:0;right:0;
+    text-align:center;
+  }
+  .L-st-teaser .clock-pill .label{
+    font-family:var(--mono);font-size:18px;letter-spacing:.32em;text-transform:uppercase;
+    color:rgba(26,22,20,.6);
+    margin-bottom:10px;
+  }
+  .L-st-teaser .clock-pill .time{
+    display:inline-block;
+    background:var(--c-ink);color:var(--cream);
+    padding:18px 38px;border-radius:99px;
+    font-family:var(--mono);font-weight:600;font-size:42px;letter-spacing:.08em;
+    box-shadow:0 12px 30px rgba(0,0,0,.18);
+  }
+  .L-st-teaser .footer{
+    position:absolute;bottom:140px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:1;
+  }
+
+  /* ===== L-st-launch : game launch announcement ===== */
+  .L-st-launch .pc-bg{ background:var(--c-bg); }
+  .L-st-launch .pc-bg::before{
+    content:"";position:absolute;
+    bottom:0;left:0;right:0;height:60%;
+    background:radial-gradient(ellipse at bottom, var(--c-soft) 0%, transparent 60%);
+  }
+  .L-st-launch .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-launch .top-tag .new-pill{
+    background:var(--c-accent);color:#fff;
+    padding:8px 22px;border-radius:99px;
+    font-size:16px;letter-spacing:.2em;
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.65} }
+  .L-st-launch .dulci-top{
+    position:absolute;top:240px;left:50%;
+    transform:translateX(-50%);
+    width:340px;
+    z-index:2;
+  }
+  .L-st-launch .dulci-top img{ width:100%;height:auto; }
+  .L-st-launch .controller{
+    position:absolute;top:280px;right:60px;
+    font-size:120px;line-height:1;
+    transform:rotate(15deg);
+    z-index:3;
+  }
+  .L-st-launch .lede{
+    position:absolute;top:700px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:110px;color:var(--c-accent);line-height:.9;
+  }
+  .L-st-launch .massive{
+    position:absolute;top:840px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:700;font-size:130px;line-height:.94;letter-spacing:-.035em;
+  }
+  .L-st-launch .massive em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:1.05em;line-height:.95;
+  }
+  .L-st-launch .prize-row{
+    position:absolute;top:1280px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:600;font-size:90px;line-height:1;letter-spacing:-.02em;
+    color:var(--c-ink);
+  }
+  .L-st-launch .prize-row .num{
+    background:var(--c-gold);color:#fff;
+    padding:0 18px;
+    display:inline-block;
+    transform:rotate(-1.5deg);
+  }
+  .L-st-launch .sub{
+    position:absolute;top:1430px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:46px;line-height:1.1;
+  }
+  .L-st-launch .url-pill{
+    position:absolute;bottom:200px;left:80px;right:80px;
+    background:var(--c-accent);color:#fff;
+    padding:26px 32px;border-radius:99px;
+    text-align:center;
+    font-family:var(--mono);font-weight:600;font-size:30px;letter-spacing:.04em;
+  }
+  .L-st-launch .url-pill::before{ content:"🎮  "; }
+  .L-st-launch .footer{
+    position:absolute;bottom:130px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ===== L-st-podium : prizes 🥇🥈🥉 ===== */
+  .L-st-podium .pc-bg{ background:var(--c-bg); }
+  .L-st-podium .pc-bg::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(45deg, rgba(199,154,74,.06) 0, rgba(199,154,74,.06) 2px, transparent 2px, transparent 14px);
+  }
+  .L-st-podium .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-st-podium .top-tag .pill{
+    background:var(--c-gold);color:#fff;
+    padding:8px 22px;border-radius:99px;
+    font-size:16px;letter-spacing:.2em;
+  }
+  .L-st-podium .title{
+    position:absolute;top:300px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:120px;line-height:.94;letter-spacing:-.03em;
+  }
+  .L-st-podium .title em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:.9em;
+  }
+  .L-st-podium .podium{
+    position:absolute;top:760px;left:80px;right:80px;
+    display:flex;flex-direction:column;gap:24px;
+  }
+  .L-st-podium .prize{
+    background:#fff;
+    border-radius:28px;
+    padding:36px 44px;
+    box-shadow:0 18px 40px rgba(26,22,20,.12);
+    display:flex;align-items:center;gap:28px;
+    border:2px solid var(--c-ink);
+  }
+  .L-st-podium .prize.first{
+    background:linear-gradient(135deg, #c79a4a 0%, #e0b87a 100%);
+    color:#fff;border-color:#c79a4a;
+    transform:scale(1.04);
+    box-shadow:0 24px 50px rgba(199,154,74,.4);
+  }
+  .L-st-podium .prize.second{
+    background:#e8e0d4;
+    transform:translateX(20px);
+  }
+  .L-st-podium .prize.third{
+    background:#d6b896;
+    transform:translateX(-15px);
+  }
+  .L-st-podium .prize .medal{
+    font-size:90px;line-height:1;flex-shrink:0;
+  }
+  .L-st-podium .prize .info{ flex:1; line-height:1; }
+  .L-st-podium .prize .info .lbl{
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    opacity:.75;
+    margin-bottom:6px;
+  }
+  .L-st-podium .prize .info .pos{
+    font-family:var(--serif);font-weight:600;font-size:54px;line-height:1;letter-spacing:-.015em;
+  }
+  .L-st-podium .prize .amount{
+    font-family:var(--serif);font-weight:800;font-size:110px;line-height:.85;letter-spacing:-.035em;
+    color:#fff;
+    background:rgba(0,0,0,.18);
+    padding:6px 18px;border-radius:14px;
+  }
+  .L-st-podium .prize.second .amount,
+  .L-st-podium .prize.third .amount{ color:var(--c-ink);background:rgba(255,255,255,.5); }
+  .L-st-podium .sub{
+    position:absolute;bottom:200px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:50px;line-height:1.1;
+  }
+  .L-st-podium .sub em{
+    font-style:normal;font-weight:700;color:var(--c-accent);
+  }
+  .L-st-podium .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ===== L-st-photo-steps : photo BG + 4 steps overlay ===== */
+  .L-st-photo-steps .pc-photo{ filter:brightness(.78) saturate(1.05); }
+  .L-st-photo-steps .pc-bg{
+    background:linear-gradient(180deg, rgba(26,22,20,.35) 0%, rgba(26,22,20,.85) 70%);
+    z-index:1;
+  }
+  .L-st-photo-steps .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-st-photo-steps .equation{
+    position:absolute;top:380px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--serif);font-weight:700;font-size:130px;line-height:.95;letter-spacing:-.03em;
+    z-index:2;
+  }
+  .L-st-photo-steps .equation em{
+    font-style:normal;color:var(--c-accent);
+    background:var(--c-bg);
+    padding:0 12px;display:inline-block;
+    transform:rotate(-2deg);
+  }
+  .L-st-photo-steps .auto{
+    position:absolute;top:660px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:160px;color:var(--c-accent);line-height:.9;
+    z-index:2;
+  }
+  .L-st-photo-steps .steps{
+    position:absolute;top:920px;left:80px;right:80px;
+    display:flex;flex-direction:column;gap:18px;
+    z-index:2;
+  }
+  .L-st-photo-steps .step{
+    background:rgba(255,255,255,.93);
+    backdrop-filter:blur(8px);
+    border-radius:20px;
+    padding:22px 30px;
+    display:flex;align-items:center;gap:20px;
+    color:var(--c-ink);
+  }
+  .L-st-photo-steps .step .num{
+    width:60px;height:60px;border-radius:50%;
+    background:var(--c-accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:32px;
+    flex-shrink:0;
+  }
+  .L-st-photo-steps .step .txt{
+    font-family:var(--sans);font-weight:500;font-size:38px;line-height:1;letter-spacing:-.005em;
+  }
+  .L-st-photo-steps .easy{
+    position:absolute;bottom:200px;left:80px;right:80px;
+    text-align:center;
+    color:#fff;
+    font-family:var(--serif);font-weight:600;font-size:80px;line-height:1;letter-spacing:-.02em;
+    z-index:2;
+  }
+  .L-st-photo-steps .easy em{ font-style:normal;color:var(--c-accent); }
+  .L-st-photo-steps .footer{
+    position:absolute;bottom:130px;left:80px;right:80px;
+    color:rgba(255,255,255,.7);
+    text-align:center;
+    font-family:var(--mono);font-size:16px;letter-spacing:.25em;text-transform:uppercase;
+    z-index:2;
+  }
+
+  /* ===== L-st-cta-gold : gold gradient final CTA ===== */
+  .L-st-cta-gold .pc-bg{
+    background:linear-gradient(180deg, #c79a4a 0%, #e8c690 50%, #fbf3df 100%);
+  }
+  .L-st-cta-gold .pc-bg::before{
+    content:"";position:absolute;inset:50px;
+    border:2px solid rgba(255,255,255,.6);
+    border-radius:22px;
+  }
+  .L-st-cta-gold .top-tag{
+    position:absolute;top:140px;left:100px;right:100px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-st-cta-gold .top-tag .pill{
+    background:rgba(255,255,255,.25);
+    padding:8px 22px;border-radius:99px;
+    backdrop-filter:blur(8px);
+    font-size:16px;
+  }
+  .L-st-cta-gold .massive{
+    position:absolute;top:340px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:800;font-size:240px;line-height:.88;letter-spacing:-.045em;
+    color:#fff;
+  }
+  .L-st-cta-gold .massive em{
+    font-family:var(--script);font-style:normal;font-weight:400;
+    color:#fff;display:block;font-size:.85em;
+  }
+  .L-st-cta-gold .sub-block{
+    position:absolute;top:920px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-weight:500;font-size:64px;line-height:1.05;
+    color:var(--c-ink);
+  }
+  .L-st-cta-gold .sub-block strong{
+    color:var(--c-accent);font-weight:700;
+  }
+  .L-st-cta-gold .url-pill{
+    position:absolute;top:1180px;left:80px;right:80px;
+    background:var(--c-ink);color:#fff;
+    padding:32px 36px;border-radius:99px;
+    text-align:center;
+    font-family:var(--mono);font-weight:600;font-size:30px;letter-spacing:.04em;
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
+  }
+  .L-st-cta-gold .url-pill::before{
+    content:"→ ";color:#c79a4a;
+  }
+  .L-st-cta-gold .choice-row{
+    position:absolute;bottom:240px;left:80px;right:80px;
+    display:flex;justify-content:center;gap:30px;
+    font-family:var(--mono);font-size:24px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--c-ink);
+  }
+  .L-st-cta-gold .choice-row span{
+    background:#fff;padding:10px 22px;border-radius:99px;
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+  }
+  .L-st-cta-gold .footer{
+    position:absolute;bottom:140px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--script);font-size:80px;color:var(--c-accent);line-height:1;
+  }
+
   /* ---------- RESPONSIVE TWEAKS ---------- */
   @media (max-width:1100px){
     .stories-row{ grid-template-columns:repeat(3,1fr); }
@@ -3734,6 +4101,7 @@
 // ============================================================
 const URL_FULL = "evangelcake.com/tartas-personalizadas";
 const URL_SHORT = "evangelcake.com";
+const URL_GAME = "evangelcake.com/juego";
 const IG = "@evangelcake";
 
 const PIECES = [
@@ -3962,6 +4330,60 @@ const PIECES = [
     filename:'evangelcake_c10_dudas_03_cta.png',
     primary:'no seas',
     secondary:'la que se queda viendo',
+    tertiary:URL_FULL,
+    photo:null },
+
+  // ============================================================
+  // CADENA 11 · TEASER 15 MAYO (1) — antes del lanzamiento
+  // ============================================================
+  { id:'c11-teaser', type:'story', cadena:11, slot:'teaser', layout:'L-st-teaser',
+    filename:'evangelcake_15mayo_teaser.png',
+    primary:'Hoy a las 19:00…',
+    secondary:'algo que ninguna pastelería ha hecho jamás',
+    tertiary:'15 mayo · 19:00h',
+    photo:null },
+
+  // ============================================================
+  // CADENA 12 · LANZAMIENTO JUEGO 15 MAYO (3)
+  // ============================================================
+  { id:'c12-launch', type:'story', cadena:12, slot:'lanzamiento', layout:'L-st-launch',
+    filename:'evangelcake_15mayo_lanzamiento.png',
+    primary:'Acabamos de lanzar',
+    secondary:'nuestro juego',
+    tertiary:URL_GAME,
+    photo:null },
+  { id:'c12-prizes', type:'story', cadena:12, slot:'premios', layout:'L-st-podium',
+    filename:'evangelcake_15mayo_premios.png',
+    primary:'3 personas',
+    secondary:'en Zaragoza se llevarán tartas GRATIS',
+    tertiary:'Diseño · Sabor · Relleno · tú decides',
+    photo:null },
+  { id:'c12-cta', type:'story', cadena:12, slot:'cta-juego', layout:'L-st-fomo',
+    filename:'evangelcake_15mayo_cta_juego.png',
+    primary:'Link en',
+    secondary:'bio · juega ya',
+    tertiary:URL_GAME,
+    photo:null },
+
+  // ============================================================
+  // CADENA 13 · 5% DESCUENTO POST-JUEGO 16-17 MAYO (3) — FOMO
+  // ============================================================
+  { id:'c13-hook', type:'story', cadena:13, slot:'hook', layout:'L-st-secret',
+    filename:'evangelcake_16mayo_hook_5.png',
+    primary:'mientras juegas…',
+    secondary:'otros ya están encargando con 5%',
+    tertiary:'¿tú no? · solo desde la web',
+    photo:null },
+  { id:'c13-ctx', type:'story', cadena:13, slot:'contexto', layout:'L-st-photo-steps',
+    filename:'evangelcake_16mayo_contexto_5.png',
+    primary:'Newsletter',
+    secondary:'= 5% OFF',
+    tertiary:'Entras a la web · te suscribes · haces tu pedido · descuento aplicado',
+    photo:'assets/tarta1.jpg' },
+  { id:'c13-cta', type:'story', cadena:13, slot:'cta-5', layout:'L-st-cta-gold',
+    filename:'evangelcake_16mayo_cta_5.png',
+    primary:'Encárgala',
+    secondary:'ya con 5%',
     tertiary:URL_FULL,
     photo:null },
 
@@ -4979,6 +5401,94 @@ const RENDERERS = {
     </div>
   `,
 
+  // ===== CAMPAÑA 15-17 MAYO · TEASER + JUEGO + 5% =====
+
+  'L-st-teaser': p => `
+    <div class="piece-canvas story L-st-teaser pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="stamp">EvangelCake · Zaragoza</div>
+      <div class="lede">${esc(p.primary)}</div>
+      <div class="massive">algo que <em>ninguna pastelería</em><br>ha hecho jamás</div>
+      <div class="clock-pill">
+        <div class="label">marca este momento</div>
+        <div class="time">${esc(p.tertiary)}</div>
+      </div>
+      <div class="footer">esto va a doler bonito</div>
+    </div>
+  `,
+
+  'L-st-launch': p => `
+    <div class="piece-canvas story L-st-launch pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>NOW LIVE</span><span class="new-pill">● en directo</span></div>
+      <div class="controller">🎮</div>
+      <div class="dulci-top"><img src="assets/dulci.png" /></div>
+      <div class="lede">acabamos de lanzar</div>
+      <div class="massive">nuestro juego<em>y hay tartas</em></div>
+      <div class="prize-row">gana hasta <span class="num">90€</span> en tarta</div>
+      <div class="sub">totalmente personalizada · diseño, sabor, relleno · tú eliges todo</div>
+      <div class="url-pill">${esc(p.tertiary)}</div>
+      <div class="footer"><span>${IG}</span><span>juego abierto · 31 mayo</span></div>
+    </div>
+  `,
+
+  'L-st-podium': p => `
+    <div class="piece-canvas story L-st-podium pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>premios reales · Mayo 2026</span><span class="pill">3 ganadores</span></div>
+      <div class="title">${esc(p.primary)} en Zaragoza<em>se llevarán tarta GRATIS</em></div>
+      <div class="podium">
+        <div class="prize first">
+          <div class="medal">🥇</div>
+          <div class="info"><div class="lbl">primer puesto</div><div class="pos">Top 1</div></div>
+          <div class="amount">90€</div>
+        </div>
+        <div class="prize second">
+          <div class="medal">🥈</div>
+          <div class="info"><div class="lbl">segundo puesto</div><div class="pos">Top 2</div></div>
+          <div class="amount">60€</div>
+        </div>
+        <div class="prize third">
+          <div class="medal">🥉</div>
+          <div class="info"><div class="lbl">tercer puesto</div><div class="pos">Top 3</div></div>
+          <div class="amount">40€</div>
+        </div>
+      </div>
+      <div class="sub">totalmente personalizadas · <em>tú decides</em> diseño, sabor y relleno</div>
+      <div class="footer">${IG} · juego cierra 31 mayo · 23:59h</div>
+    </div>
+  `,
+
+  'L-st-photo-steps': p => `
+    <div class="piece-canvas story L-st-photo-steps pc-${p.variant||'default'}">
+      ${p.photo ? `<img class="pc-photo" src="${esc(p.photo)}" />` : ''}
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>cómo funciona</span><span>${IG}</span></div>
+      <div class="equation">${esc(p.primary)} <em>${esc(p.secondary)}</em></div>
+      <div class="auto">automático</div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div class="txt">entras a la web</div></div>
+        <div class="step"><div class="num">2</div><div class="txt">te suscribes al newsletter</div></div>
+        <div class="step"><div class="num">3</div><div class="txt">haces tu pedido</div></div>
+        <div class="step"><div class="num">4</div><div class="txt">descuento aplicado</div></div>
+      </div>
+      <div class="easy">así de <em>fácil</em></div>
+      <div class="footer">EvangelCake · ${URL_SHORT}</div>
+    </div>
+  `,
+
+  'L-st-cta-gold': p => `
+    <div class="piece-canvas story L-st-cta-gold pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>último paso</span><span class="pill">tú decides</span></div>
+      <div class="massive">${esc(p.primary)}<em>${esc(p.secondary)}</em></div>
+      <div class="sub-block">5% de descuento <strong>automático</strong><br>Newsletter en la web</div>
+      <div class="url-pill">${esc(p.tertiary)}</div>
+      <div class="choice-row"><span>Diseño</span><span>Sabor</span><span>Relleno</span></div>
+      <div class="footer">tú decides todo</div>
+    </div>
+  `,
+
 };
 
 // ============================================================
@@ -5013,6 +5523,9 @@ const CADENA_LABELS = {
   8:  { name:'Stock limitado',          sub:'Número · Agenda · FOMO puro' },
   9:  { name:'De boceto a tarta',       sub:'Idea + Resultado' },
   10: { name:'Mientras dudas',          sub:'Timer + Notif + FOMO mega' },
+  11: { name:'★ Teaser 15 Mayo',        sub:'Hoy a las 19:00… · pre-lanzamiento' },
+  12: { name:'★ Lanzamiento del juego', sub:'15 mayo · Anuncio + Premios + CTA' },
+  13: { name:'★ 5% post-juego',         sub:'16-17 mayo · Hook FOMO + Contexto + CTA' },
 };
 
 function defaultSection(p){
@@ -5113,7 +5626,7 @@ function buildCards(){
     wrap.appendChild(header);
 
     if(sec.subgroupByCadena){
-      for(let c=1;c<=10;c++){
+      for(let c=1;c<=13;c++){
         const cadPieces = pieces.filter(p => p.cadena===c);
         if(!cadPieces.length) continue;
         const lbl = CADENA_LABELS[c] || { name:`Cadena ${c}`, sub:'' };
