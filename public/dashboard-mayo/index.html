@@ -540,11 +540,11 @@
   .L-uauq-hero .pc-bg{ background:var(--c-bg); }
   .L-uauq-hero .hero-photo{
     position:absolute;top:0;left:0;right:0;height:1100px;
-    overflow:hidden;
-  }
-  .L-uauq-hero .hero-photo img{
-    width:100%;height:100%;object-fit:cover;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
     filter:saturate(1.06) contrast(1.02);
+    overflow:hidden;
   }
   .L-uauq-hero .hero-photo::after{
     content:"";position:absolute;inset:0;
@@ -5858,7 +5858,7 @@ const RENDERERS = {
   'L-uauq-hero': p => `
     <div class="piece-canvas story L-uauq-hero pc-${p.variant||'default'}">
       <div class="pc-bg"></div>
-      <div class="hero-photo">${p.photo ? `<img src="${esc(p.photo)}" />` : ''}</div>
+      <div class="hero-photo"${p.photo ? ` style="background-image:url('${esc(p.photo)}')"` : ''}></div>
       <div class="top-tag">
         <span>uauqsabor · finde</span>
         <span class="pill">solo V·S·D</span>
