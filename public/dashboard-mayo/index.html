@@ -532,6 +532,206 @@
     z-index:-1;
   }
 
+  /* =====================================================
+     CADENA 14 · UAUQSABOR FINDE (3 stories)
+     ===================================================== */
+
+  /* ===== L-uauq-hero : Foto hero + claim ===== */
+  .L-uauq-hero .pc-bg{ background:var(--c-bg); }
+  .L-uauq-hero .hero-photo{
+    position:absolute;top:0;left:0;right:0;height:1100px;
+    overflow:hidden;
+  }
+  .L-uauq-hero .hero-photo img{
+    width:100%;height:100%;object-fit:cover;
+    filter:saturate(1.06) contrast(1.02);
+  }
+  .L-uauq-hero .hero-photo::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(232,90,154,.18) 0%, transparent 30%, rgba(245,240,232,.92) 100%);
+  }
+  .L-uauq-hero .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    z-index:2;
+  }
+  .L-uauq-hero .top-tag .pill{
+    background:rgba(255,255,255,.95);color:var(--c-ink);
+    padding:8px 22px;border-radius:99px;letter-spacing:.22em;
+  }
+  .L-uauq-hero .arrow-down{
+    position:absolute;top:920px;left:50%;transform:translateX(-50%);
+    color:#fff;font-family:var(--serif);font-size:160px;line-height:.6;font-weight:300;
+    z-index:2;
+  }
+  .L-uauq-hero .lede{
+    position:absolute;top:1080px;left:80px;
+    font-family:var(--script);font-size:130px;color:var(--c-accent);line-height:.9;
+    transform:rotate(-3deg);
+    z-index:2;
+  }
+  .L-uauq-hero .massive{
+    position:absolute;top:1240px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:800;font-size:200px;line-height:.88;letter-spacing:-.045em;
+    z-index:2;
+  }
+  .L-uauq-hero .massive em{
+    font-style:normal;color:var(--c-accent);
+  }
+  .L-uauq-hero .sub{
+    position:absolute;top:1530px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:54px;line-height:1.1;
+    max-width:780px;
+  }
+  .L-uauq-hero .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:20px;letter-spacing:.25em;text-transform:uppercase;
+    padding-top:20px;border-top:2px solid var(--c-ink);
+  }
+  .L-uauq-hero .footer .swipe{ color:var(--c-accent); }
+
+  /* ===== L-uauq-grid : Grid 2×2 sabores ===== */
+  .L-uauq-grid .pc-bg{ background:var(--c-bg); }
+  .L-uauq-grid .pc-bg::before{
+    content:"";position:absolute;
+    top:-200px;right:-200px;width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle, var(--c-soft) 0%, transparent 65%);
+    opacity:.5;
+  }
+  .L-uauq-grid .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+    padding-bottom:18px;border-bottom:2px solid var(--c-ink);
+  }
+  .L-uauq-grid .eyebrow{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:120px;line-height:.92;letter-spacing:-.035em;
+    text-align:center;
+  }
+  .L-uauq-grid .eyebrow em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    display:block;font-size:.95em;
+  }
+  .L-uauq-grid .grid{
+    position:absolute;top:540px;left:80px;right:80px;
+    display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  }
+  .L-uauq-grid .grid .sab{
+    background:#fff;border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 18px 40px rgba(26,22,20,.14);
+  }
+  .L-uauq-grid .grid .sab .ph{
+    aspect-ratio:1/1;background:linear-gradient(135deg, var(--c-soft), var(--cream));
+    overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .L-uauq-grid .grid .sab .ph img{ width:100%;height:100%;object-fit:cover; }
+  .L-uauq-grid .grid .sab .ph .empty{
+    font-family:var(--script);font-size:80px;color:rgba(26,22,20,.25);
+  }
+  .L-uauq-grid .grid .sab .lbl{
+    padding:20px 24px;
+    font-family:var(--serif);font-weight:600;font-size:48px;line-height:1;letter-spacing:-.01em;
+    text-align:center;
+  }
+  .L-uauq-grid .grid .sab .lbl em{
+    display:block;
+    font-family:var(--mono);font-style:normal;font-size:16px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-2);font-weight:400;margin-top:4px;
+  }
+  .L-uauq-grid .claim{
+    position:absolute;top:1380px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:500;font-size:90px;line-height:.95;letter-spacing:-.02em;
+    text-align:center;
+  }
+  .L-uauq-grid .claim em{
+    font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+  }
+  .L-uauq-grid .more{
+    position:absolute;top:1580px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:42px;line-height:1.15;
+    text-align:center;color:var(--c-ink);
+  }
+  .L-uauq-grid .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ===== L-uauq-cta : Encarga ya ===== */
+  .L-uauq-cta .pc-bg{
+    background:linear-gradient(180deg, var(--c-bg) 0%, var(--c-soft) 100%);
+  }
+  .L-uauq-cta .top-tag{
+    position:absolute;top:140px;left:80px;right:80px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:22px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  .L-uauq-cta .top-tag .pill{
+    background:var(--c-accent);color:#fff;
+    padding:8px 22px;border-radius:99px;
+  }
+  .L-uauq-cta .lede{
+    position:absolute;top:280px;left:80px;right:80px;
+    font-family:var(--script);font-size:130px;color:var(--c-accent);line-height:.9;
+    transform:rotate(-3deg);
+  }
+  .L-uauq-cta .massive{
+    position:absolute;top:460px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:800;font-size:220px;line-height:.88;letter-spacing:-.045em;
+  }
+  .L-uauq-cta .massive em{
+    font-style:normal;color:var(--c-accent);
+  }
+  .L-uauq-cta .sub{
+    position:absolute;top:880px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:56px;line-height:1.1;
+  }
+  .L-uauq-cta .contact{
+    position:absolute;top:1080px;left:80px;right:80px;
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .L-uauq-cta .contact .pill{
+    background:#fff;border:3px solid var(--c-ink);border-radius:24px;
+    padding:30px 36px;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:8px 8px 0 var(--c-ink);
+  }
+  .L-uauq-cta .contact .pill.alt{
+    background:var(--c-ink);color:var(--c-bg);
+    box-shadow:8px 8px 0 var(--c-accent);
+  }
+  .L-uauq-cta .contact .pill .lbl{
+    font-family:var(--serif);font-weight:600;font-size:52px;line-height:1;
+  }
+  .L-uauq-cta .contact .pill .ic{
+    font-size:60px;line-height:1;
+  }
+  .L-uauq-cta .fomo{
+    position:absolute;top:1620px;left:80px;right:80px;
+    text-align:center;
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:40px;line-height:1.15;
+    color:var(--c-ink);
+  }
+  .L-uauq-cta .fomo em{
+    font-style:normal;font-weight:600;
+    background:var(--c-ink);color:var(--c-bg);
+    padding:0 8px;
+  }
+  .L-uauq-cta .footer{
+    position:absolute;bottom:120px;left:80px;right:80px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-2);
+    padding-top:18px;border-top:1px solid rgba(26,22,20,.2);
+  }
+
   /* ---------- EDIT MODE OVERLAY (mover elementos) ---------- */
   .edit-mode-overlay{
     position:fixed;inset:0;
@@ -4530,6 +4730,28 @@ const PIECES = [
     photo:null },
 
   // ============================================================
+  // CADENA 14 · UAUQSABOR FINDE (3 stories)
+  // ============================================================
+  { id:'c14-hero', type:'story', cadena:14, slot:'hook', layout:'L-uauq-hero',
+    filename:'evangelcake_c14_uauq_01_hero.png',
+    primary:'no es una tarta',
+    secondary:'es tu uauqsabor',
+    tertiary:'el sabor lo eliges tú · sólo viernes a domingo',
+    photo:'assets/uauq-cocina.jpg' },
+  { id:'c14-grid', type:'story', cadena:14, slot:'sabores', layout:'L-uauq-grid',
+    filename:'evangelcake_c14_uauq_02_grid.png',
+    primary:'elige tu sabor',
+    secondary:'y los que tú me digas',
+    tertiary:'vainilla, fresa, dulce de leche, biscoff, lotus, kinder, red velvet… si se te ocurre, te lo hago',
+    photo:null },
+  { id:'c14-cta', type:'story', cadena:14, slot:'cta', layout:'L-uauq-cta',
+    filename:'evangelcake_c14_uauq_03_cta.png',
+    primary:'tu uauqsabor',
+    secondary:'esperándote con tu nombre',
+    tertiary:'los huecos del viernes vuelan',
+    photo:null },
+
+  // ============================================================
   // SECCIÓN — CARRUSEL · VOCES (RESEÑAS GOOGLE)
   // ============================================================
   { id:'cv1', type:'carrusel', section:'resenas-c', slot:'1', layout:'L-cv-cover',
@@ -5631,13 +5853,76 @@ const RENDERERS = {
     </div>
   `,
 
+  // ===== CADENA 14 · UAUQSABOR FINDE =====
+
+  'L-uauq-hero': p => `
+    <div class="piece-canvas story L-uauq-hero pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="hero-photo">${p.photo ? `<img src="${esc(p.photo)}" />` : ''}</div>
+      <div class="top-tag">
+        <span>uauqsabor · finde</span>
+        <span class="pill">solo V·S·D</span>
+      </div>
+      <div class="arrow-down">↓</div>
+      <div class="lede">este finde pasa esto</div>
+      <div class="massive">${esc(p.primary)}<br><em>${esc(p.secondary)}</em></div>
+      <div class="sub">${esc(p.tertiary)}</div>
+      <div class="footer"><span>EvangelCake · Zaragoza</span><span class="swipe">desliza →</span></div>
+    </div>
+  `,
+
+  'L-uauq-grid': p => `
+    <div class="piece-canvas story L-uauq-grid pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>uauqsabor · sabores</span><span>02 / 03</span></div>
+      <div class="eyebrow">${esc(p.primary)}<em>esta semana</em></div>
+      <div class="grid">
+        <div class="sab" data-uauq="1">
+          <div class="ph"><span class="empty">pistacho</span></div>
+          <div class="lbl">Pistacho<em>suave + crunch</em></div>
+        </div>
+        <div class="sab" data-uauq="2">
+          <div class="ph"><span class="empty">maracuyá</span></div>
+          <div class="lbl">Maracuyá<em>ácido + dulce</em></div>
+        </div>
+        <div class="sab" data-uauq="3">
+          <div class="ph"><span class="empty">cereza</span></div>
+          <div class="lbl">Choco-cereza<em>clásico que enamora</em></div>
+        </div>
+        <div class="sab" data-uauq="4">
+          <div class="ph"><span class="empty">oreo</span></div>
+          <div class="lbl">Choco-Oreo<em>para los traviesos</em></div>
+        </div>
+      </div>
+      <div class="claim">y los <em>que tú me digas</em></div>
+      <div class="more">${esc(p.tertiary)}</div>
+      <div class="footer"><span>${IG}</span><span>swipe → encarga</span></div>
+    </div>
+  `,
+
+  'L-uauq-cta': p => `
+    <div class="piece-canvas story L-uauq-cta pc-${p.variant||'default'}">
+      <div class="pc-bg"></div>
+      <div class="top-tag"><span>uauqsabor · cta</span><span class="pill">encarga ya</span></div>
+      <div class="lede">finde · listo para ti</div>
+      <div class="massive">${esc(p.primary)}<br><em>${esc(p.secondary)}</em></div>
+      <div class="sub">elige sabor, te aviso cuando esté listo.</div>
+      <div class="contact">
+        <div class="pill"><span class="lbl">DM aquí</span><span class="ic">💬</span></div>
+        <div class="pill alt"><span class="lbl">WhatsApp 624 131 348</span><span class="ic">📱</span></div>
+      </div>
+      <div class="fomo"><em>${esc(p.tertiary)}</em> · no me preguntes el domingo</div>
+      <div class="footer"><span>EvangelCake · Zaragoza</span><span>★★★★★ Google</span></div>
+    </div>
+  `,
+
 };
 
 // ============================================================
 // SECTIONS CONFIG
 // ============================================================
 const SECTIONS = [
-  { key:'stories',  type:'story',    title:'Stories', em:'10 cadenas creativas', subtitle:'Cada cadena Hook → Contexto → CTA · 1080×1920 · mucho FOMO', subgroupByCadena:true },
+  { key:'stories',  type:'story',    title:'Stories', em:'14 cadenas creativas', subtitle:'Cada cadena Hook → Contexto → CTA · 1080×1920 · mucho FOMO', subgroupByCadena:true },
   { key:'promo-c',  type:'carrusel', title:'Carrusel', em:'Tartas personalizadas', subtitle:'5 slides · catálogo + CTA · 1080×1080' },
   { key:'resenas-c',type:'carrusel', title:'Carrusel', em:'Voces (reseñas)', subtitle:'5 slides reseñas + CTA · 1080×1080' },
   { key:'caso-c',   type:'carrusel', title:'Carrusel', em:'Tu tarta paso a paso', subtitle:'4 pasos + invitación · 1080×1080' },
@@ -5646,7 +5931,7 @@ const SECTIONS = [
 ];
 
 const TAB_LABELS = {
-  'stories':'10 cadenas · Stories',
+  'stories':'14 cadenas · Stories',
   'promo-c':'Promo · Carrusel',
   'resenas-c':'Voces · Carrusel',
   'caso-c':'Paso a paso · Carrusel',
@@ -5668,6 +5953,7 @@ const CADENA_LABELS = {
   11: { name:'★ Teaser 15 Mayo',        sub:'Hoy a las 19:00… · pre-lanzamiento' },
   12: { name:'★ Lanzamiento del juego', sub:'15 mayo · Anuncio + Premios + CTA' },
   13: { name:'★ 5% post-juego',         sub:'16-17 mayo · Hook FOMO + Contexto + CTA' },
+  14: { name:'★ uauqsabor finde',       sub:'Hero cocina + Grid sabores + CTA encarga · V·S·D' },
 };
 
 function defaultSection(p){
@@ -6193,7 +6479,7 @@ function buildCards(){
     wrap.appendChild(header);
 
     if(sec.subgroupByCadena){
-      for(let c=1;c<=13;c++){
+      for(let c=1;c<=14;c++){
         const cadPieces = pieces.filter(p => p.cadena===c);
         if(!cadPieces.length) continue;
         const lbl = CADENA_LABELS[c] || { name:`Cadena ${c}`, sub:'' };
