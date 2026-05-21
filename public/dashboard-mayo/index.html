@@ -6056,6 +6056,12 @@ function applyOverrides(canvas, piece){
     if(o.src != null && target.tagName === 'IMG'){
       target.src = o.src;
     }
+    if(o.bg != null && target.tagName !== 'IMG'){
+      target.style.backgroundImage = `url("${o.bg}")`;
+      target.style.backgroundSize = 'cover';
+      target.style.backgroundPosition = 'center';
+      target.querySelectorAll('.empty').forEach(em => em.style.display = 'none');
+    }
   });
 }
 
@@ -6218,35 +6224,46 @@ function buildToolbar(el, piece, overlay, imageInput, remount, setSelected){
     }));
   }
 
-  if(isImg){
-    tb.appendChild(btn('🖼','Cambiar imagen', () => {
-      imageInput.onchange = (ev) => {
-        const f = ev.target.files[0]; if(!f) return;
-        const reader = new FileReader();
-        reader.onload = e2 => {
-          el.src = e2.target.result;
-          saveOverride(piece, el.dataset.el, { src: e2.target.result });
-        };
-        reader.readAsDataURL(f);
-        imageInput.value = '';
+  // Image action — always available; works on <img> via src, on any other
+  // element via CSS background-image (perfect for slots/placeholders).
+  tb.appendChild(btn('🖼','Subir / cambiar imagen', () => {
+    imageInput.onchange = (ev) => {
+      const f = ev.target.files[0]; if(!f) return;
+      const reader = new FileReader();
+      reader.onload = e2 => {
+        const url = e2.target.result;
+        if(el.tagName === 'IMG'){
+          el.src = url;
+          saveOverride(piece, el.dataset.el, { src: url });
+        } else {
+          el.style.backgroundImage = `url("${url}")`;
+          el.style.backgroundSize = 'cover';
+          el.style.backgroundPosition = 'center';
+          // Hide empty-state placeholder labels if any
+          el.querySelectorAll('.empty').forEach(em => em.style.display = 'none');
+          saveOverride(piece, el.dataset.el, { bg: url });
+        }
       };
-      imageInput.click();
-    }));
-    tb.appendChild(btn('⤧−','Reducir', () => {
-      const r = el.getBoundingClientRect();
-      const scale = parseFloat(overlay.dataset.scale) || 1;
-      const wpx = Math.max(40, Math.round(r.width / scale * 0.9));
-      el.style.width = wpx + 'px';
-      saveOverride(piece, el.dataset.el, { width: wpx });
-    }));
-    tb.appendChild(btn('⤧+','Agrandar', () => {
-      const r = el.getBoundingClientRect();
-      const scale = parseFloat(overlay.dataset.scale) || 1;
-      const wpx = Math.round(r.width / scale * 1.1);
-      el.style.width = wpx + 'px';
-      saveOverride(piece, el.dataset.el, { width: wpx });
-    }));
-  }
+      reader.readAsDataURL(f);
+      imageInput.value = '';
+    };
+    imageInput.click();
+  }));
+  // Width step — works for img + any block
+  tb.appendChild(btn('⤧−','Reducir tamaño', () => {
+    const r = el.getBoundingClientRect();
+    const scale = parseFloat(overlay.dataset.scale) || 1;
+    const wpx = Math.max(40, Math.round(r.width / scale * 0.9));
+    el.style.width = wpx + 'px';
+    saveOverride(piece, el.dataset.el, { width: wpx });
+  }));
+  tb.appendChild(btn('⤧+','Agrandar tamaño', () => {
+    const r = el.getBoundingClientRect();
+    const scale = parseFloat(overlay.dataset.scale) || 1;
+    const wpx = Math.round(r.width / scale * 1.1);
+    el.style.width = wpx + 'px';
+    saveOverride(piece, el.dataset.el, { width: wpx });
+  }));
 
   tb.appendChild(Object.assign(document.createElement('span'),{className:'sep'}));
   tb.appendChild(btn('👁','Ocultar elemento', () => {
