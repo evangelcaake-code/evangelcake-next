@@ -608,16 +608,19 @@
     padding-bottom:18px;border-bottom:2px solid var(--c-ink);
   }
   .L-uauq-grid .eyebrow{
-    position:absolute;top:280px;left:80px;right:80px;
-    font-family:var(--serif);font-weight:700;font-size:120px;line-height:.92;letter-spacing:-.035em;
+    position:absolute;top:260px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:700;font-size:110px;line-height:.92;letter-spacing:-.035em;
     text-align:center;
   }
   .L-uauq-grid .eyebrow em{
     font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
     display:block;font-size:.95em;
+    letter-spacing:0;            /* reset — script font no soporta tracking negativo */
+    line-height:1;
+    margin-top:8px;
   }
   .L-uauq-grid .grid{
-    position:absolute;top:540px;left:80px;right:80px;
+    position:absolute;top:550px;left:80px;right:80px;
     display:grid;grid-template-columns:1fr 1fr;gap:24px;
   }
   .L-uauq-grid .grid .sab{
@@ -626,39 +629,41 @@
     box-shadow:0 18px 40px rgba(26,22,20,.14);
   }
   .L-uauq-grid .grid .sab .ph{
-    aspect-ratio:1/1;background:linear-gradient(135deg, var(--c-soft), var(--cream));
+    aspect-ratio:4/3;
+    background:linear-gradient(135deg, var(--c-soft), var(--cream));
+    background-size:cover;background-position:center;
     overflow:hidden;
     display:flex;align-items:center;justify-content:center;
   }
-  .L-uauq-grid .grid .sab .ph img{ width:100%;height:100%;object-fit:cover; }
   .L-uauq-grid .grid .sab .ph .empty{
-    font-family:var(--script);font-size:80px;color:rgba(26,22,20,.25);
+    font-family:var(--script);font-size:60px;color:rgba(26,22,20,.25);
   }
   .L-uauq-grid .grid .sab .lbl{
-    padding:20px 24px;
-    font-family:var(--serif);font-weight:600;font-size:48px;line-height:1;letter-spacing:-.01em;
+    padding:18px 20px 20px;
+    font-family:var(--serif);font-weight:600;font-size:46px;line-height:1;letter-spacing:-.01em;
     text-align:center;
   }
   .L-uauq-grid .grid .sab .lbl em{
     display:block;
-    font-family:var(--mono);font-style:normal;font-size:16px;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--ink-2);font-weight:400;margin-top:4px;
+    font-family:var(--mono);font-style:normal;font-size:15px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-2);font-weight:400;margin-top:8px;
   }
   .L-uauq-grid .claim{
-    position:absolute;top:1380px;left:80px;right:80px;
-    font-family:var(--serif);font-weight:500;font-size:90px;line-height:.95;letter-spacing:-.02em;
+    position:absolute;top:1490px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:500;font-size:78px;line-height:.95;letter-spacing:-.02em;
     text-align:center;
   }
   .L-uauq-grid .claim em{
     font-family:var(--script);font-style:normal;color:var(--c-accent);font-weight:400;
+    letter-spacing:0;
   }
   .L-uauq-grid .more{
-    position:absolute;top:1580px;left:80px;right:80px;
-    font-family:var(--serif);font-weight:300;font-style:italic;font-size:42px;line-height:1.15;
+    position:absolute;top:1640px;left:80px;right:80px;
+    font-family:var(--serif);font-weight:300;font-style:italic;font-size:34px;line-height:1.18;
     text-align:center;color:var(--c-ink);
   }
   .L-uauq-grid .footer{
-    position:absolute;bottom:120px;left:80px;right:80px;
+    position:absolute;bottom:80px;left:80px;right:80px;
     display:flex;justify-content:space-between;
     font-family:var(--mono);font-size:18px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--ink-2);
