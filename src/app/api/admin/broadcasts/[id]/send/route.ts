@@ -23,6 +23,24 @@ async function sleep(ms: number) {
 async function resolveAudience(audience: string) {
   const sb = getSupabaseAdmin();
 
+  // Top 3 del último mes con scores — transaccional (premio), no requiere consent.
+  if (audience === "winners") {
+    const { data: latest } = await sb
+      .from("scores")
+      .select("month")
+      .order("month", { ascending: false })
+      .limit(1);
+    const month = latest?.[0]?.month;
+    if (!month) return [];
+    const { data: top } = await sb
+      .from("scores")
+      .select("email, name")
+      .eq("month", month)
+      .order("score", { ascending: false })
+      .limit(3);
+    return (top || []).map((t) => ({ email: t.email, name: t.name }));
+  }
+
   // Base: todos los subscribers con consent (RGPD); 'all' incluye sin consent.
   let q = sb.from("subscribers").select("email, name, birthday, discount_code, discount_used");
   if (audience !== "all") {
