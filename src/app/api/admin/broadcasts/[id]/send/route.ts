@@ -23,19 +23,18 @@ async function sleep(ms: number) {
 async function resolveAudience(audience: string) {
   const sb = getSupabaseAdmin();
 
-  // Top 3 del último mes con scores — transaccional (premio), no requiere consent.
-  if (audience === "winners") {
-    const { data: latest } = await sb
-      .from("scores")
-      .select("month")
-      .order("month", { ascending: false })
-      .limit(1);
-    const month = latest?.[0]?.month;
-    if (!month) return [];
+  // Ganadores: top 3 del MES ANTERIOR (mes ya cerrado). Transaccional, sin consent.
+  // current_month_top_3: top 3 del mes en curso (ranking abierto), para notificaciones tipo "vas líder".
+  if (audience === "winners" || audience === "current_month_top_3") {
+    const now = new Date();
+    const ymCurrent = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
+    const prev = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+    const ymPrev = `${prev.getUTCFullYear()}-${String(prev.getUTCMonth() + 1).padStart(2, "0")}`;
+    const targetMonth = audience === "winners" ? ymPrev : ymCurrent;
     const { data: top } = await sb
       .from("scores")
       .select("email, name")
-      .eq("month", month)
+      .eq("month", targetMonth)
       .order("score", { ascending: false })
       .limit(3);
     return (top || []).map((t) => ({ email: t.email, name: t.name }));

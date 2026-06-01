@@ -7,7 +7,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 
-const VALID_AUDIENCES = ["all", "subscribed", "with_birthday_this_month", "with_unused_code", "winners"] as const;
+const VALID_AUDIENCES = [
+  "all",
+  "subscribed",
+  "with_birthday_this_month",
+  "with_unused_code",
+  "winners",
+  "current_month_top_3",
+] as const;
 type Audience = (typeof VALID_AUDIENCES)[number];
 
 export async function GET() {
