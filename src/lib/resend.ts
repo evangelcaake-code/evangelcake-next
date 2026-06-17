@@ -223,6 +223,107 @@ export async function sendLeadNotification(lead: {
 }
 
 /**
+ * Lead magnet del post del bolo de cenoura: manda la receta de tía Railda
+ * con un email cálido en primera persona de Andreia. Un único botón grande
+ * lleva al PDF servido en /recetas/. Sin adjunto — el visitante hace click
+ * y accede online (mejor deliverability, permite tracking, siempre versión
+ * actualizada).
+ *
+ * NO usa el sistema de plantillas de DB a propósito: la copy del lead magnet
+ * es load-bearing para conversión y no debe poder romperse desde /admin.
+ * Tampoco lleva código de descuento — la oferta ES la receta.
+ */
+export async function sendRecipePDF({ to, name }: { to: string; name: string }) {
+  const site = (process.env.NEXT_PUBLIC_SITE_URL || "https://evangelcake.com").replace(/\/$/, "");
+  const pdfUrl = `${site}/recetas/bolo-cenoura-evangelcake.pdf`;
+  const igUrl = "https://instagram.com/evangelcake";
+  const displayName = name?.trim() || "amig@";
+
+  const subject = "Aquí tienes la receta de mi tía Railda 🥕";
+  const preview = "La receta entera, los trucos y el truco del palillo. Como en casa.";
+
+  const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fbf3df;padding:24px">
+  <span style="display:none!important;visibility:hidden;opacity:0;color:transparent;height:0;width:0;overflow:hidden;mso-hide:all">${preview}</span>
+  <table role="presentation" width="100%" style="max-width:560px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden">
+    <tr><td style="padding:32px 32px 0">
+      <h1 style="font-family:Georgia,serif;font-size:28px;color:#1a1614;margin:0 0 8px">Hola ${nl2brSafe(displayName)},</h1>
+      <p style="color:#3a322c;line-height:1.6;margin:16px 0">
+        Aquí va, como te prometí: la receta del <strong>bolo de cenoura</strong> de mi tía Railda, tal y como se hace en casa en Brasil.
+      </p>
+      <p style="color:#3a322c;line-height:1.6;margin:16px 0">
+        Es la que olía los domingos por la mañana. Cantidades exactas, los trucos de mi tía y la cobertura de chocolate brigadeiro de mi abuela. Todo dentro.
+      </p>
+    </td></tr>
+    <tr><td style="padding:24px 32px 8px">
+      <p style="text-align:center;margin:0">
+        <a href="${pdfUrl}" style="display:inline-block;background:#e85a9a;color:#fff;padding:18px 40px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px;box-shadow:0 8px 24px rgba(232,90,154,.35)">Abrir la receta →</a>
+      </p>
+    </td></tr>
+    <tr><td style="padding:16px 32px 8px">
+      <p style="color:#3a322c;line-height:1.6;margin:16px 0">
+        Si la haces, compártela en Instagram y etiquétanos <a href="${igUrl}" style="color:#e85a9a;text-decoration:none"><strong>@evangelcake</strong></a> — te mandamos otra receta sorpresa.
+      </p>
+    </td></tr>
+    <tr><td style="padding:24px 32px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:#3a322c;font-size:13px">
+      <p style="margin:0">Un abrazo,<br><strong>Andreia &amp; Tiago</strong> · EvangelCake<br>Pº María Agustín 13 · Zaragoza</p>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  const text = [
+    `Hola ${displayName},`,
+    "",
+    "Aquí va, como te prometí: la receta del bolo de cenoura de mi tía Railda, tal y como se hace en casa en Brasil.",
+    "",
+    "Es la que olía los domingos por la mañana. Cantidades exactas, los trucos de mi tía y la cobertura de chocolate brigadeiro de mi abuela. Todo dentro.",
+    "",
+    `Ábrela aquí: ${pdfUrl}`,
+    "",
+    "Si la haces, compártela en Instagram y etiquétanos @evangelcake — te mandamos otra receta sorpresa.",
+    "",
+    "Un abrazo,",
+    "Andreia & Tiago · EvangelCake",
+    "Pº María Agustín 13 · Zaragoza",
+  ].join("\n");
+
+  // From cálido: ponemos "Andreia de EvangelCake" como display name para que
+  // parezca un email personal, pero seguimos usando el mismo address verificado
+  // del resto de envíos (no romper SPF/DKIM ni cambiar el dominio FROM).
+  const addressMatch = FROM.match(/<([^>]+)>/);
+  const fromAddress = addressMatch ? addressMatch[1] : FROM;
+  const recipeFrom = `Andreia de EvangelCake <${fromAddress}>`;
+
+  const res = await getResend().emails.send({
+    from: recipeFrom,
+    to,
+    replyTo: REPLY_TO,
+    headers: deliverabilityHeaders(to),
+    subject,
+    html: html + unsubFooterHtml(to),
+    text: text + unsubFooterText(to),
+  });
+  if (res.error) {
+    console.error("[resend recipe_pdf]", res.error);
+    throw new Error(
+      `Resend rechazó el envío: ${res.error.message || res.error.name || "desconocido"}`,
+    );
+  }
+  return res;
+}
+
+// Local mini helper para escapar HTML en el nombre del destinatario (evita
+// XSS si alguien se suscribe con "<script>" como nombre). Duplicado liviano
+// del escapeHtml de emailTemplates.ts para no acoplar este envío al sistema
+// de plantillas de DB.
+function nl2brSafe(s: string) {
+  return String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!,
+  );
+}
+
+/**
  * Envío directo de un email arbitrario (subject + HTML) a UN destinatario.
  * Usado por el sistema de broadcasts en /admin/emails/broadcasts.
  */

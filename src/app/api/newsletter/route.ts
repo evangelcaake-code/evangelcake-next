@@ -10,6 +10,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/server";
 import {
   sendWelcomeDiscount,
   sendAlreadySubscribed,
+  sendRecipePDF,
   generateDiscountCode,
 } from "@/lib/resend";
 import {
@@ -128,30 +129,39 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Enviar email: si es nuevo → bienvenida con código. Si ya estaba →
-    // email distinto, divertido, recordándole que ya está suscrito.
-    if (code) {
-      try {
+    // Lead magnets por source: cuando el form viene del post del bolo de
+    // cenoura, el regalo es la receta en PDF (no el código del 5%). Aplica
+    // tanto si el subscriber es nuevo como si ya estaba — no asumimos que
+    // ya la recibió en una suscripción anterior.
+    const isRecipeLead = source === "blog-zanahoria-brasil"
+      || source === "blog-zanahoria"
+      || source.startsWith("blog-zanahoria");
+
+    // Enviar email: receta del post de zanahoria, o bienvenida con código,
+    // o recordatorio para suscriptores existentes.
+    try {
+      const displayName = name || existing?.name || "amig@";
+      if (isRecipeLead) {
+        await sendRecipePDF({ to: email, name: displayName });
+      } else if (code) {
         if (isNew) {
           await sendWelcomeDiscount({ to: email, name, code });
         } else {
-          await sendAlreadySubscribed({
-            to: email,
-            name: name || existing?.name || "amig@",
-            code,
-          });
+          await sendAlreadySubscribed({ to: email, name: displayName, code });
         }
-      } catch (err) {
-        console.error("[newsletter] resend send:", err);
-        // No fallar la petición por esto — el subscriber ya está guardado.
       }
+    } catch (err) {
+      console.error("[newsletter] resend send:", err);
+      // No fallar la petición por esto — el subscriber ya está guardado.
     }
 
     const res = NextResponse.json({
       ok: true,
       isNew,
       code,
-      message: isNew
+      message: isRecipeLead
+        ? "¡Hecho! Te hemos mandado la receta de mi tía Railda al email."
+        : isNew
         ? "¡Bienvenida! Te hemos enviado tu código de descuento."
         : "Ya estabas suscrita. Te hemos mandado un email recordatorio.",
     });
