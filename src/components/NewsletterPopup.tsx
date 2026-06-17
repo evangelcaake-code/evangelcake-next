@@ -192,7 +192,7 @@ export default function NewsletterPopup() {
 
   return (
     <div
-      className={`newsletter-popup${closing ? " is-closing" : ""}`}
+      className={`nf-overlay${closing ? " is-closing" : ""}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="popup-title"
@@ -200,96 +200,106 @@ export default function NewsletterPopup() {
         if (e.target === e.currentTarget) close();
       }}
     >
-      <div className="newsletter-popup-card">
+      <div className="nf-card nf-popup">
         <button
           type="button"
-          className="newsletter-popup-close"
+          className="nf-popup-close"
           onClick={close}
           aria-label="Cerrar"
         >
           ×
         </button>
 
-        <span className="newsletter-popup-badge">−5%</span>
-
         {done ? (
-          <>
-            <h3 id="popup-title">¡Hecho! 🎂</h3>
-            <p>
-              Mira tu correo en unos minutos. Te hemos mandado el código del 5%
-              para tu primera tarta personalizada.
+          <div className="nf-card-success">
+            <div className="nf-eyebrow">¡Hecho!</div>
+            <h3 id="popup-title" className="nf-title">
+              Mira tu email <span aria-hidden="true">📩</span>
+            </h3>
+            <p className="nf-desc">
+              Te hemos mandado el código del 5% para tu primera tarta personalizada.
+              Si no lo ves, revisa la carpeta de spam.
             </p>
             <button
               type="button"
-              className="btn btn-pink"
+              className="nf-submit"
               onClick={close}
-              style={{ marginTop: 10 }}
+              style={{ marginTop: 18, width: "100%" }}
             >
               Seguir explorando →
             </button>
-          </>
+          </div>
         ) : (
           <>
-            <h3 id="popup-title">{VARIANTS[variant].title}</h3>
-            <p>{VARIANTS[variant].description}</p>
+            <div className="nf-head">
+              <span className="nf-eyebrow">solo para ti</span>
+              <h3 id="popup-title" className="nf-title">
+                {VARIANTS[variant].title}
+              </h3>
+              <p className="nf-desc">{VARIANTS[variant].description}</p>
+            </div>
 
-            <form
-              className="newsletter-popup-form newsletter-popup-form-stacked"
-              onSubmit={onSubmit}
-              noValidate
-            >
-              <input
-                type="text"
-                placeholder="Tu nombre"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                maxLength={40}
-                autoFocus
-                autoComplete="given-name"
-                aria-label="Tu nombre"
-              />
-              <input
-                type="email"
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-                aria-label="Tu correo electrónico"
-              />
-              <label className="newsletter-popup-birthday">
-                <span>Tu cumpleaños (opcional)</span>
+            <form className="nf-form" onSubmit={onSubmit} noValidate>
+              <div className="nf-field">
+                <label htmlFor="nf-pop-name" className="nf-label">Tu nombre</label>
                 <input
+                  id="nf-pop-name"
+                  className="nf-input"
+                  type="text"
+                  placeholder="María, Carlos, Andreia…"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  maxLength={40}
+                  autoFocus
+                  autoComplete="given-name"
+                />
+              </div>
+
+              <div className="nf-field">
+                <label htmlFor="nf-pop-email" className="nf-label">Tu email</label>
+                <input
+                  id="nf-pop-email"
+                  className="nf-input"
+                  type="email"
+                  placeholder="tu@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                />
+              </div>
+
+              <div className="nf-field nf-field-birthday">
+                <label htmlFor="nf-pop-bday" className="nf-label">
+                  Tu cumpleaños <span className="nf-optional">(opcional)</span>
+                </label>
+                <input
+                  id="nf-pop-bday"
+                  className="nf-input"
                   type="date"
                   value={birthday}
                   onChange={(e) => setBirthday(e.target.value)}
                   max={new Date().toISOString().slice(0, 10)}
                   min="1900-01-01"
                 />
-                <small>
+                <small className="nf-hint">
                   Si lo dejas, ese día te llega algo especial 🎂
                 </small>
-              </label>
-              <button type="submit" disabled={loading}>
+              </div>
+
+              <button type="submit" className="nf-submit" disabled={loading}>
                 {loading ? "Enviando…" : VARIANTS[variant].cta}
               </button>
+
+              {error && (
+                <p className="nf-error" role="alert">
+                  {error}
+                </p>
+              )}
             </form>
 
-            {error && (
-              <p
-                role="alert"
-                style={{
-                  color: "var(--pink-deep)",
-                  fontSize: 13,
-                  margin: "8px 0 0",
-                }}
-              >
-                {error}
-              </p>
-            )}
-
-            <p className="newsletter-popup-tiny">
+            <p className="nf-popup-tiny">
               Sin spam. Puedes darte de baja cuando quieras.{" "}
               <Link href="/privacidad" onClick={close}>
                 Privacidad
@@ -299,7 +309,7 @@ export default function NewsletterPopup() {
 
             <button
               type="button"
-              className="newsletter-popup-skip"
+              className="nf-popup-skip"
               onClick={close}
             >
               No, gracias

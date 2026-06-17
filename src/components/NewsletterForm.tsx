@@ -71,75 +71,92 @@ export default function NewsletterForm({
 
   if (success) {
     return (
-      <aside className="newsletter-inline">
-        <span className="newsletter-badge" aria-hidden="true">−5%</span>
-        <span className="newsletter-inline-tag">¡Hecho!</span>
-        <h3>Mira tu email 📩</h3>
-        <p>Te hemos enviado tu código del 5%. Si no lo ves, revisa el spam.</p>
+      <aside className="nf-card nf-card-success" role="status">
+        <div className="nf-eyebrow">¡Hecho!</div>
+        <h3 className="nf-title">Mira tu email <span aria-hidden="true">📩</span></h3>
+        <p className="nf-desc">
+          La receta te llega en menos de un minuto. Si no la ves, revisa la carpeta de spam.
+        </p>
       </aside>
     );
   }
 
   return (
-    <aside className="newsletter-inline">
-      <span className="newsletter-badge" aria-hidden="true">−5%</span>
-      <span className="newsletter-inline-tag">{eyebrow}</span>
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <form
-        className="newsletter-form newsletter-form-stacked"
-        onSubmit={onSubmit}
-        noValidate
-      >
-        <input
-          type="text"
-          placeholder="Tu nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          maxLength={40}
-          autoComplete="given-name"
-          aria-label="Tu nombre"
-        />
-        <input
-          type="email"
-          placeholder="tu@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-          aria-label="Tu email"
-        />
-        <label className="newsletter-birthday">
-          <span>Tu cumpleaños (opcional)</span>
+    <aside className="nf-card" aria-labelledby="nf-title">
+      <div className="nf-head">
+        <span className="nf-eyebrow">{eyebrow}</span>
+        <h3 id="nf-title" className="nf-title">{title}</h3>
+        <p className="nf-desc">{description}</p>
+      </div>
+
+      <form className="nf-form" onSubmit={onSubmit} noValidate>
+        <div className="nf-field">
+          <label htmlFor="nf-name" className="nf-label">Tu nombre</label>
           <input
+            id="nf-name"
+            type="text"
+            placeholder="María, Carlos, Andreia…"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={40}
+            autoComplete="given-name"
+            className="nf-input"
+          />
+        </div>
+
+        <div className="nf-field">
+          <label htmlFor="nf-email" className="nf-label">Tu email</label>
+          <input
+            id="nf-email"
+            type="email"
+            placeholder="tu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+            className="nf-input"
+          />
+        </div>
+
+        <div className="nf-field nf-field-birthday">
+          <label htmlFor="nf-bday" className="nf-label">
+            Tu cumpleaños <span className="nf-optional">(opcional)</span>
+          </label>
+          <input
+            id="nf-bday"
             type="date"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
             max={new Date().toISOString().slice(0, 10)}
             min="1900-01-01"
+            className="nf-input"
           />
-          <small>Si lo dejas, ese día te llega algo especial 🎂</small>
+          <small className="nf-hint">
+            Si lo dejas, ese día te llega algo especial 🎂
+          </small>
+        </div>
+
+        <label className="nf-consent">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+          />
+          <span>
+            Acepto recibir el newsletter de EvangelCake. Sin spam, baja de la
+            lista cuando quieras. <a href="/privacidad" target="_blank" rel="noopener">Privacidad</a>.
+          </span>
         </label>
-        <button type="submit" className="btn btn-pink" disabled={loading}>
+
+        <button type="submit" className="nf-submit" disabled={loading}>
           {loading ? "Enviando…" : buttonLabel}
         </button>
+
+        {error && (
+          <p className="nf-error" role="alert">{error}</p>
+        )}
       </form>
-      <label className="newsletter-consent">
-        <input
-          type="checkbox"
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-        />
-        <span>
-          Acepto el newsletter · <a href="/privacidad">Privacidad</a>
-        </span>
-      </label>
-      {error && (
-        <p className="game-error" role="alert" style={{ marginTop: 10 }}>
-          {error}
-        </p>
-      )}
     </aside>
   );
 }
