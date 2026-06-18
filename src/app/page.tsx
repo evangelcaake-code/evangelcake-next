@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import Game from "@/components/Game";
-import GameTeaserRank from "@/components/GameTeaserRank";
 import HomeNewsletter from "@/components/HomeNewsletter";
 import ReviewsCarousel, { ReviewsRating } from "@/components/ReviewsCarousel";
 import BeholdInstagramFeed from "@/components/BeholdInstagramFeed";
@@ -517,29 +515,6 @@ export default function Home() {
       </section>
 
       <BeholdInstagramFeed />
-
-      <section
-        id="juego"
-        className="section"
-        aria-labelledby="game-teaser-title"
-        style={{ padding: "40px 24px" }}
-      >
-        <div className="game-teaser">
-          <div className="game-teaser-text">
-            <span className="tag">Juego del mes</span>
-            <h2 id="game-teaser-title">
-              Atrapa, esquiva… <em>y gana una tarta.</em>
-            </h2>
-            <p>
-              Juega a <strong>Dulci&apos;s Sweet Challenge</strong>, atrapa
-              tartas, esquiva bombas. Los <strong>3 mejores del mes</strong> se
-              llevan una tarta personalizada gratis.
-            </p>
-          </div>
-          <Game embed />
-          <GameTeaserRank />
-        </div>
-      </section>
 
       <section
         id="blog"

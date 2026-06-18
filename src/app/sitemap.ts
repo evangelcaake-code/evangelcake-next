@@ -9,7 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/tartas-personalizadas", priority: 0.95, changeFrequency: "weekly" },
     { path: "/galeria", priority: 0.9, changeFrequency: "weekly" },
     // TEMP: /encargos quitado del sitemap mientras está desactivado
-    { path: "/game", priority: 0.85, changeFrequency: "weekly" },
+    // TEMP: campaña juego cerrada — /game ahora muestra "Esta campaña ha terminado"
+    // y no queremos indexarla. Reactivar si vuelve la campaña del juego.
     { path: "/sobre-nosotros", priority: 0.8, changeFrequency: "monthly" },
     { path: "/contacto", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.75, changeFrequency: "weekly" },

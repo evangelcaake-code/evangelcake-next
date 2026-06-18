@@ -16,6 +16,11 @@ const links = [
   { href: "/contacto", label: "Contacto" },
 ];
 
+// CTA del nav: WhatsApp para pedir presupuesto. Antes de esto fue el botón
+// del juego "Gana tu tarta gratis" — retirado al cerrarse la campaña.
+const NAV_CTA_HREF =
+  "https://wa.me/34624131348?text=Hola!%20Quiero%20pedir%20presupuesto%20para%20una%20tarta%20personalizada";
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -23,9 +28,6 @@ export default function Header() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
-
-  // En home enlazamos al juego incrustado; fuera de home redirigimos a la home + ancla
-  const ctaHref = pathname === "/" ? "#juego" : "/#juego";
 
   return (
     <header className="site-header" role="banner">
@@ -64,10 +66,14 @@ export default function Header() {
           })}
         </ul>
         <div className="nav-cta">
-          <Link className="btn nav-cta-game" href={ctaHref}>
-            <span className="nav-cta-icon" aria-hidden="true">🎂</span>
-            Gana tu tarta gratis
-          </Link>
+          <a
+            className="btn"
+            href={NAV_CTA_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Encarga ahora →
+          </a>
         </div>
         <button
           className="hamburger"
@@ -81,16 +87,6 @@ export default function Header() {
           <span></span>
         </button>
       </nav>
-      {/* Banner permanente debajo del nav — visible siempre, en todas las
-          páginas, en todos los tamaños. Está dentro del <header> sticky
-          para que viaje con él al hacer scroll. */}
-      <a className="home-promo-banner" href={ctaHref} aria-label="Juega y gana una tarta gratis">
-        <span className="home-promo-banner-icon" aria-hidden="true">🎂</span>
-        <span className="home-promo-banner-text">
-          Juega y <strong>gana una tarta personalizada gratis</strong>
-        </span>
-        <span className="home-promo-banner-arrow" aria-hidden="true">→</span>
-      </a>
     </header>
   );
 }
