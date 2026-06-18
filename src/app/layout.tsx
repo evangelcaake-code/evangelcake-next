@@ -22,7 +22,10 @@ export const metadata: Metadata = {
     "andreia evangelista",
   ],
   authors: [{ name: "EvangelCake — Andreia & Tiago Evangelista" }],
-  icons: { icon: "/images/logo.png", apple: "/images/logo.png" },
+  // icons: gestionados por file convention en src/app/
+  //   - favicon.ico (legacy compat)
+  //   - icon.png (browser tabs)
+  //   - apple-icon.png (iOS home screen)
   openGraph: {
     type: "website",
     siteName: "EvangelCake",
