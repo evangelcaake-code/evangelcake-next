@@ -6425,7 +6425,7 @@ input[type="date"].nf-input {
   max-width: 1080px;
   margin: 0 auto;
 }
-@media (max-width: 780px) { .pc-howto-grid { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .pc-howto-grid { grid-template-columns: 1fr; } }
 .pc-howto-card {
   background: var(--paper-2);
   border-radius: var(--r-card);
@@ -7079,7 +7079,7 @@ input[type="date"].nf-input {
   max-width: 1000px;
   margin: 0 auto;
 }
-@media (max-width: 780px) { .pc-fallback-grid { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .pc-fallback-grid { grid-template-columns: 1fr; } }
 .pc-fallback-card {
   background: white;
   border: 1px solid rgba(26,22,20,.08);
@@ -7160,6 +7160,60 @@ input[type="date"].nf-input {
   min-height: 280px;
   border: 0;
   display: block;
+}
+
+/* ── Responsive · tablet (≤900) ──────────────────────────────── */
+@media (max-width: 900px) {
+  .pc-hero { padding: 48px 28px 24px; }
+  .pc-howto { padding: 24px 28px 30px; }
+  .pc-wizard-section { padding: 16px 20px 34px; }
+  .pc-fallback { padding: 28px 28px 64px; }
+}
+
+/* ── Responsive · móvil (≤560) — todo más ancho, tocable y claro ── */
+@media (max-width: 560px) {
+  .pc-hero { padding: 34px 18px 16px; }
+  .pc-hero .tag { margin-bottom: 16px; }
+  .pc-hero-title { font-size: clamp(28px, 8.4vw, 40px); margin: 6px 0 14px; }
+  .pc-hero-lede { font-size: 16px; line-height: 1.45; }
+
+  .pc-howto { padding: 18px 16px 22px; }
+  .pc-howto-grid { gap: 12px; }
+  .pc-howto-card { padding: 18px 20px 20px; }
+  .pc-howto-n { font-size: 30px; margin-bottom: 8px; }
+  .pc-howto-card h3 { font-size: 18px; }
+
+  .pc-wizard-section { padding: 10px 12px 26px; }
+  .pc-title { font-size: 22px; }
+  .pc-sub { font-size: 13.5px; margin-bottom: 18px; }
+  .pc-label { margin: 20px 0 9px; }
+
+  /* Botones a lo ancho, el "Siguiente" siempre grande y arriba */
+  .pc-nav { flex-direction: column-reverse; align-items: stretch; gap: 10px; margin-top: 24px; }
+  .pc-nav .btn { width: 100%; justify-content: center; padding: 15px 20px; }
+  .pc-nav > span { display: none; }
+
+  /* Tipos y cata: toque cómodo */
+  .pc-type { padding: 13px; gap: 11px; }
+  .pc-type.on { padding: 12px; }
+  .pc-pill { padding: 10px 16px; }
+
+  /* Calendario y horas más grandes con el dedo */
+  .pc-calendar { padding: 16px; }
+  .pc-cal-nav button { width: 38px; height: 38px; }
+  .pc-cal-day { font-size: 14px; border-radius: 9px; }
+  .pc-slot { padding: 13px 0; font-size: 15px; }
+
+  .pc-fallback { padding: 20px 16px 52px; }
+  .pc-fallback-grid { gap: 12px; }
+  .pc-fallback-card { padding: 20px 20px 22px; }
+
+  .pc-store { padding: 18px 16px; margin-top: 14px; }
+  .pc-store-hours th { width: 88px; }
+
+  .pc-success { padding: 30px 20px 26px; }
+  .pc-success-actions { flex-direction: column; }
+  .pc-success-actions .btn { width: 100%; justify-content: center; }
 }
 
 /* ==========================================================================
@@ -7331,5 +7385,18 @@ input[type="date"].nf-input {
   .ccal{padding:14px}
   .ccal-day{font-size:12.5px;border-radius:8px}
   .ccal-day .c{min-width:15px;height:15px;font-size:9px}
+}
+
+/* ── Panel de citas · móvil (tarjeta apilada, botones a lo ancho) ── */
+@media (max-width:560px){
+  .cita-card{padding:16px;gap:12px}
+  /* Hora y duración en fila, no en columna, para ganar altura */
+  .cita-time{flex-direction:row;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .cita-dur{margin-top:0}
+  .cita-actions{gap:8px;margin-top:2px}
+  .cita-btn{padding:11px 16px;font-size:13px;flex:1;justify-content:center;min-width:calc(50% - 4px)}
+  .cita-move{width:100%}
+  .cita-move-input{flex:1;min-width:44%}
+  .cita-section-h{font-size:20px}
 }
 
