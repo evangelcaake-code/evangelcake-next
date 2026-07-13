@@ -6384,3 +6384,952 @@ input[type="date"].nf-input {
     margin: 0;
   }
 }
+
+/* ==========================================================================
+   PEDIR CITA · wizard de reserva de cita en el obrador
+   Prefix .pc-* . Reutiliza tokens de :root (--pink-deep, --paper, etc.).
+   ========================================================================== */
+
+/* ── Hero + sub-secciones ────────────────────────────────────── */
+.pc-hero {
+  padding: 60px 48px 30px;
+  text-align: center;
+}
+.pc-hero-inner { max-width: 720px; margin: 0 auto; }
+.pc-hero .tag { margin-bottom: 22px; }
+.pc-hero-title {
+  font-family: var(--serif-2);
+  font-weight: 400;
+  font-size: clamp(38px, 5.5vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 8px 0 20px;
+  text-wrap: balance;
+}
+.pc-hero-title em { font-style: italic; color: var(--pink-deep); }
+.pc-hero-lede {
+  font-family: var(--serif-2);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ink-2);
+  max-width: 60ch;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.pc-howto { padding: 30px 48px 40px; }
+.pc-howto-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media (max-width: 780px) { .pc-howto-grid { grid-template-columns: 1fr; } }
+.pc-howto-card {
+  background: var(--paper-2);
+  border-radius: var(--r-card);
+  padding: 26px 28px 28px;
+  border: 1px solid rgba(26,22,20,.06);
+}
+.pc-howto-n {
+  font-family: var(--serif-2);
+  font-style: italic;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--pink-deep);
+  display: block;
+  margin-bottom: 14px;
+}
+.pc-howto-card h3 {
+  font-family: var(--serif-2);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.pc-howto-card p {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.pc-wizard-section { padding: 20px 24px 40px; }
+.pc-wizard-shell {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ── Rail de pasos ───────────────────────────────────────────── */
+.pc-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+.pc-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(26,22,20,.5);
+  position: relative;
+}
+.pc-step-num {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(26,22,20,.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: white;
+  font-size: 12.5px;
+  color: rgba(26,22,20,.5);
+}
+.pc-step-label { font-weight: 500; }
+.pc-step.done .pc-step-num,
+.pc-step.active .pc-step-num { color: white; background: var(--pink-deep); border-color: var(--pink-deep); }
+.pc-step.active .pc-step-num { background: white; color: var(--pink-deep); border-width: 2px; }
+.pc-step.done, .pc-step.active { color: var(--ink); }
+.pc-step-line {
+  display: inline-block;
+  width: 44px; height: 1px;
+  background: rgba(26,22,20,.15);
+  margin: 0 14px;
+}
+@media (max-width: 640px) {
+  .pc-step-line { width: 22px; margin: 0 6px; }
+  .pc-step-label { display: none; }
+}
+
+/* ── Card del wizard ─────────────────────────────────────────── */
+.pc-card {
+  background: white;
+  border: 1px solid rgba(26,22,20,.08);
+  border-radius: var(--r-card);
+  padding: 36px 40px 32px;
+  box-shadow: var(--shadow-card);
+}
+@media (max-width: 640px) { .pc-card { padding: 26px 22px 24px; border-radius: 20px; } }
+
+.pc-title {
+  font-family: var(--serif-2);
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 34px);
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+.pc-sub {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  margin: 0 0 24px;
+}
+
+.pc-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-2);
+  font-weight: 600;
+  margin: 22px 0 10px;
+}
+
+/* ── Row de 2 columnas ───────────────────────────────────────── */
+.pc-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 2px;
+}
+@media (max-width: 640px) { .pc-row-2 { grid-template-columns: 1fr; } }
+
+/* ── Inputs ──────────────────────────────────────────────────── */
+.pc-field { display: flex; flex-direction: column; }
+.pc-input {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  border-radius: var(--r-input);
+  padding: 12px 14px;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  color: var(--ink);
+  width: 100%;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.pc-input:focus {
+  outline: none;
+  border-color: var(--pink-deep);
+  box-shadow: 0 0 0 3px rgba(232,90,154,.18);
+}
+.pc-textarea { min-height: 92px; resize: vertical; font-family: var(--sans); }
+.pc-input.error {
+  border-color: #a34b4b;
+  box-shadow: 0 0 0 3px rgba(163,75,75,.14);
+}
+.pc-date-note {
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-2);
+  opacity: .8;
+  margin: 10px 0 0;
+}
+.pc-date-note.error {
+  color: #a34b4b;
+  opacity: 1;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ── Grid de tipos ───────────────────────────────────────────── */
+.pc-type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+@media (max-width: 900px) { .pc-type-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .pc-type-grid { grid-template-columns: repeat(2, 1fr); } }
+.pc-type {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  border-radius: 12px;
+  padding: 14px 14px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  transition: all .12s ease;
+  font-family: var(--sans);
+}
+.pc-type:hover { border-color: var(--pink-deep); }
+.pc-type.on {
+  border: 2px solid var(--pink-deep);
+  padding: 13px 13px;
+  box-shadow: 0 4px 16px -8px rgba(232,90,154,.35);
+}
+.pc-type.premium { background: linear-gradient(180deg, #fef8ea, white 70%); border-color: var(--gold); }
+.pc-type.premium.on { border: 2px solid var(--gold); box-shadow: 0 4px 16px -8px rgba(199,154,74,.4); padding: 13px 13px; }
+.pc-type-glyph {
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  background: var(--pink-soft);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--pink-deep);
+  flex-shrink: 0;
+  font-family: var(--serif-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+.pc-type.premium .pc-type-glyph { background: rgba(199,154,74,.15); color: var(--gold-deep); }
+.pc-type-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pc-type-name {
+  font-family: var(--serif-2);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.pc-type-meta {
+  font-size: 11px;
+  color: var(--ink-2);
+  opacity: .7;
+}
+.pc-type.premium .pc-type-meta { color: var(--gold-deep); opacity: .9; font-weight: 600; }
+
+/* ── Cata bizcochos ──────────────────────────────────────────── */
+.pc-taste-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 640px) { .pc-taste-grid { grid-template-columns: 1fr; } }
+.pc-taste {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+  transition: all .12s ease;
+  font-family: var(--sans);
+}
+.pc-taste:hover { border-color: var(--pink-deep); }
+.pc-taste.on {
+  background: var(--pink-soft);
+  border: 2px solid var(--pink-deep);
+  padding: 13px 13px 11px;
+}
+.pc-taste-check {
+  position: absolute;
+  top: 10px; right: 12px;
+  width: 20px; height: 20px;
+  border-radius: 999px;
+  background: white;
+  border: 1px solid rgba(26,22,20,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: rgba(26,22,20,.5);
+  font-weight: 700;
+}
+.pc-taste.on .pc-taste-check {
+  background: var(--pink-deep);
+  border-color: var(--pink-deep);
+  color: white;
+}
+.pc-taste-name {
+  font-family: var(--serif-2);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 500;
+  padding-right: 26px;
+}
+.pc-taste-note {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  opacity: .7;
+  font-style: italic;
+}
+.pc-hint {
+  font-size: 12px;
+  color: var(--ink-2);
+  opacity: .7;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Pills de sabores ────────────────────────────────────────── */
+.pc-pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pc-pill {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.pc-pill:hover { border-color: var(--pink-deep); color: var(--pink-deep); }
+.pc-pill.on {
+  background: var(--pink-deep);
+  color: white;
+  border-color: var(--pink-deep);
+  font-weight: 600;
+}
+.pc-pill.off {
+  opacity: .35;
+  cursor: not-allowed;
+}
+.pc-pill.off:hover { border-color: rgba(26,22,20,.15); color: var(--ink-2); }
+
+/* ── Cards idea clara / asesoría ─────────────────────────────── */
+.pc-motive-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 640px) { .pc-motive-two { grid-template-columns: 1fr; } }
+.pc-motive {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: all .12s ease;
+  font-family: var(--sans);
+}
+.pc-motive:hover { border-color: var(--pink-deep); }
+.pc-motive.on {
+  background: var(--pink-soft);
+  border: 2px solid var(--pink-deep);
+  padding: 17px 19px;
+}
+.pc-motive-ic {
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--pink-deep);
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.pc-motive.on .pc-motive-ic { background: var(--pink-deep); color: white; }
+.pc-motive-h {
+  display: block;
+  font-family: var(--serif-2);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.pc-motive-p {
+  display: block;
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── Botones inferiores ──────────────────────────────────────── */
+.pc-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(26,22,20,.08);
+}
+.pc-next[disabled] { opacity: .45; cursor: not-allowed; }
+
+/* ── Paso 2 · calendario + slots ─────────────────────────────── */
+.pc-picker {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 26px;
+}
+@media (max-width: 820px) { .pc-picker { grid-template-columns: 1fr; } }
+
+.pc-calendar {
+  background: var(--paper-2);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid rgba(26,22,20,.06);
+}
+.pc-cal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px;
+}
+.pc-cal-month {
+  font-family: var(--serif-2);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.pc-cal-nav { display: flex; gap: 6px; }
+.pc-cal-nav button {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  width: 30px; height: 30px;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+}
+.pc-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.pc-cal-dow {
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--ink-2);
+  opacity: .6;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 6px 0;
+  font-weight: 700;
+}
+.pc-cal-day {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13.5px;
+  border-radius: 8px;
+  color: var(--ink);
+  position: relative;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  border: 0;
+  background: transparent;
+  font-family: var(--sans);
+}
+.pc-cal-day.mute { color: rgba(26,22,20,.25); cursor: default; }
+.pc-cal-day.closed { color: rgba(26,22,20,.25); text-decoration: line-through; cursor: not-allowed; }
+.pc-cal-day.full { color: rgba(26,22,20,.3); background: rgba(26,22,20,.05); cursor: not-allowed; }
+.pc-cal-day.available:hover { background: var(--pink-soft); }
+.pc-cal-day.selected {
+  background: var(--pink-deep);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 14px -4px rgba(232,90,154,.5);
+}
+.pc-cal-pip {
+  position: absolute;
+  bottom: 5px;
+  width: 4px; height: 4px;
+  border-radius: 999px;
+  background: var(--pink-deep);
+}
+.pc-cal-day.selected .pc-cal-pip { background: white; }
+
+.pc-legend {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 11.5px;
+  color: var(--ink-2);
+}
+.pc-legend-item::before {
+  content: "";
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+.pc-legend-item.avail::before { background: var(--pink-deep); }
+.pc-legend-item.full::before { background: rgba(26,22,20,.3); }
+.pc-legend-item.closed::before { background: rgba(26,22,20,.15); }
+
+.pc-slots-empty {
+  background: var(--paper-2);
+  border-radius: 14px;
+  padding: 26px;
+  text-align: center;
+  color: var(--ink-2);
+  border: 1px dashed rgba(26,22,20,.15);
+}
+.pc-slots-empty-h {
+  font-family: var(--serif-2);
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.pc-slots-empty p { font-size: 13.5px; margin: 0; }
+.pc-slots-loading { color: var(--ink-2); font-size: 13.5px; text-align: center; padding: 20px 0; }
+
+.pc-slots-date {
+  color: var(--pink-deep);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.pc-slots-h {
+  font-family: var(--serif-2);
+  font-weight: 500;
+  font-size: 17px;
+  margin: 0 0 12px;
+  letter-spacing: -0.005em;
+}
+.pc-slot-group { margin-bottom: 16px; }
+.pc-slot-group-l {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-2);
+  opacity: .7;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.pc-slot-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media (max-width: 480px) { .pc-slot-row { grid-template-columns: repeat(2, 1fr); } }
+.pc-slot {
+  background: white;
+  border: 1px solid rgba(26,22,20,.15);
+  border-radius: 10px;
+  padding: 11px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .12s ease;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--sans);
+}
+.pc-slot:hover { border-color: var(--pink-deep); color: var(--pink-deep); }
+.pc-slot.taken {
+  background: rgba(26,22,20,.05);
+  color: rgba(26,22,20,.3);
+  cursor: not-allowed;
+  border-color: transparent;
+}
+.pc-slot.on {
+  background: var(--pink-deep);
+  color: white;
+  border-color: var(--pink-deep);
+  font-weight: 600;
+  box-shadow: 0 4px 14px -4px rgba(232,90,154,.5);
+}
+
+/* ── Paso 4 · confirmación ───────────────────────────────────── */
+.pc-confirm {
+  background: var(--pink-soft);
+  border: 1px solid rgba(232,90,154,.2);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+.pc-confirm-h {
+  font-family: var(--serif-2);
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 16px;
+  letter-spacing: -0.005em;
+}
+.pc-confirm-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed rgba(26,22,20,.14);
+  font-size: 14px;
+}
+.pc-confirm-row:last-child { border: 0; }
+.pc-confirm-k {
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 700;
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+.pc-confirm-v {
+  color: var(--ink);
+  text-align: right;
+  font-weight: 500;
+  max-width: 65%;
+}
+
+.pc-what-next {
+  margin-top: 20px;
+  padding: 16px 18px;
+  background: white;
+  border: 1px solid rgba(26,22,20,.08);
+  border-radius: 12px;
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.pc-error {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: rgba(163,75,75,.08);
+  border: 1px solid rgba(163,75,75,.25);
+  color: #a34b4b;
+  border-radius: 10px;
+  font-size: 13.5px;
+}
+
+/* ── Paso 5 · éxito ──────────────────────────────────────────── */
+.pc-success { text-align: center; padding: 44px 40px 40px; }
+.pc-success-mark {
+  width: 68px; height: 68px;
+  border-radius: 999px;
+  background: var(--pink-deep);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  margin: 0 auto 22px;
+  box-shadow: 0 12px 28px -8px rgba(232,90,154,.5);
+}
+.pc-success-lead {
+  font-family: var(--serif-2);
+  font-size: 18px;
+  color: var(--ink);
+  margin: 16px 0 6px;
+}
+.pc-success-body {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  max-width: 44ch;
+  margin: 0 auto 24px;
+}
+.pc-success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Fallback (WhatsApp + sin cita) ──────────────────────────── */
+.pc-fallback { padding: 30px 48px 80px; }
+.pc-fallback-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media (max-width: 780px) { .pc-fallback-grid { grid-template-columns: 1fr; } }
+.pc-fallback-card {
+  background: white;
+  border: 1px solid rgba(26,22,20,.08);
+  border-radius: var(--r-card);
+  padding: 26px 28px 28px;
+}
+.pc-fallback-card h3 {
+  font-family: var(--serif-2);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+.pc-fallback-card p {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+/* ── Tienda: horario + mapa (ficha Google Business) ──────────── */
+.pc-store {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 22px;
+  max-width: 1000px;
+  margin: 22px auto 0;
+  background: white;
+  border: 1px solid rgba(26,22,20,.08);
+  border-radius: var(--r-card);
+  padding: 26px 28px;
+}
+@media (max-width: 780px) { .pc-store { grid-template-columns: 1fr; } }
+.pc-store-info h3 {
+  font-family: var(--serif-2);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  letter-spacing: -0.005em;
+}
+.pc-store-address {
+  color: var(--ink-2);
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+.pc-store-hours {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-bottom: 18px;
+}
+.pc-store-hours th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 6px 12px 6px 0;
+  width: 110px;
+}
+.pc-store-hours td {
+  color: var(--ink-2);
+  padding: 6px 0;
+  font-variant-numeric: tabular-nums;
+}
+.pc-store-hours tr { border-bottom: 1px dashed rgba(26,22,20,.1); }
+.pc-store-hours tr:last-child { border-bottom: 0; }
+.pc-store-hours tr.closed th,
+.pc-store-hours tr.closed td { color: rgba(26,22,20,.4); }
+.pc-store-directions { font-size: 13px; }
+.pc-store-map {
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 280px;
+  border: 1px solid rgba(26,22,20,.08);
+}
+.pc-store-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  border: 0;
+  display: block;
+}
+
+/* ==========================================================================
+   ADMIN · CITAS — panel de Betaña (prefix .cita-*)
+   ========================================================================== */
+.cita-section-h{
+  font-family:var(--serif-2);font-size:22px;font-weight:500;
+  letter-spacing:-0.01em;margin:0 0 4px;display:flex;align-items:center;gap:10px;
+}
+.cita-count{
+  background:var(--pink-soft);color:var(--pink-deep);
+  font-family:var(--sans);font-size:12px;font-weight:700;
+  padding:2px 10px;border-radius:999px;
+}
+.cita-section-sub{color:var(--ink-2);font-size:13px;margin:0 0 16px}
+.cita-list{display:grid;gap:10px}
+.cita-daygroup{margin-bottom:26px}
+.cita-day-h{
+  font-family:var(--serif-2);font-size:17px;font-weight:500;
+  margin:0 0 10px;text-transform:capitalize;
+  display:flex;align-items:center;gap:10px;
+}
+.cita-today-badge{
+  background:var(--pink-deep);color:#fff;
+  font-family:var(--sans);font-size:10px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;
+}
+.cita-card{
+  background:#fff;border:1px solid rgba(26,22,20,.08);border-radius:14px;
+  padding:16px 18px;display:grid;grid-template-columns:110px 1fr auto;
+  gap:18px;align-items:start;
+}
+@media (max-width:760px){
+  .cita-card{grid-template-columns:1fr}
+}
+.cita-card.premium{
+  border-left:3px solid var(--gold);
+  background:linear-gradient(90deg,#fef8ea 0%,#fff 30%);
+}
+.cita-card.off{opacity:.55}
+.cita-time{display:flex;flex-direction:column;gap:1px}
+.cita-hour{
+  font-family:var(--serif-2);font-size:20px;
+  font-variant-numeric:tabular-nums;letter-spacing:-0.005em;
+}
+.cita-dur{font-size:11px;color:var(--ink-2);opacity:.75}
+.cita-day-inline{
+  font-size:11.5px;color:var(--pink-deep);font-weight:600;
+  text-transform:capitalize;margin-top:3px;
+}
+.cita-name{
+  font-family:var(--serif-2);font-size:16px;font-weight:500;
+  letter-spacing:-0.005em;margin-bottom:4px;
+}
+.cita-meta{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  font-size:12.5px;color:var(--ink-2);
+}
+.cita-tag{
+  background:var(--pink-soft);color:var(--pink-deep);
+  font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;
+}
+.cita-tag.premium{background:rgba(199,154,74,.15);color:var(--gold-deep)}
+.cita-detail{
+  display:flex;flex-wrap:wrap;gap:12px;
+  font-size:12px;color:var(--ink-2);opacity:.85;margin-top:6px;
+}
+.cita-notes{
+  font-size:12.5px;font-style:italic;color:var(--ink-2);
+  margin-top:6px;padding:8px 12px;
+  background:var(--paper-2);border-radius:8px;
+}
+.cita-contact{font-size:11.5px;color:var(--ink-2);opacity:.65;margin-top:6px}
+.cita-pill{
+  font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;
+}
+.cita-pill.pending{background:#fbf1d8;color:#8B6628}
+.cita-pill.confirmed{background:var(--pink-soft);color:var(--pink-deep)}
+.cita-pill.vino{background:#e2f0e6;color:#4b7f57}
+.cita-pill.no_vino{background:#fbe6e6;color:#a34b4b}
+.cita-pill.cancelada{background:rgba(26,22,20,.07);color:var(--ink-2)}
+.cita-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+.cita-btn{
+  font-family:var(--sans);font-size:12px;font-weight:600;
+  padding:8px 14px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(26,22,20,.15);background:#fff;color:var(--ink);
+  text-decoration:none;display:inline-flex;align-items:center;
+  transition:all .12s ease;
+}
+.cita-btn:hover{border-color:var(--pink-deep);color:var(--pink-deep)}
+.cita-btn.wa{background:#25d366;border-color:#25d366;color:#fff}
+.cita-btn.wa:hover{background:#1fbb58;color:#fff}
+.cita-btn.ok{background:var(--pink-deep);border-color:var(--pink-deep);color:#fff}
+.cita-btn.ok:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.cita-btn.bad:hover{border-color:#a34b4b;color:#a34b4b}
+.cita-btn.ghost{border-style:dashed;color:var(--ink-2)}
+.cita-btn[disabled]{opacity:.5;cursor:not-allowed}
+.cita-actions-error{
+  flex-basis:100%;color:#a34b4b;font-size:12px;font-weight:600;
+  background:rgba(163,75,75,.08);border-radius:8px;padding:6px 10px;
+}
+.cita-move{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cita-move-input{
+  font-family:var(--sans);font-size:12.5px;
+  border:1px solid rgba(26,22,20,.2);border-radius:8px;
+  padding:7px 8px;background:#fff;color:var(--ink);
+}
+.cita-move-input:focus{outline:2px solid rgba(232,90,154,.3);border-color:var(--pink-deep)}
+.cita-warning{
+  background:#fbf1d8;border:1px solid var(--gold);border-radius:12px;
+  padding:16px 20px;font-size:13.5px;color:var(--ink-2);
+}
+.cita-warning p{margin:6px 0 0}
+.cita-warning code{
+  background:#fff;padding:1px 6px;border-radius:6px;font-size:12px;
+}
+
+/* ── Tareas de citas ── */
+.cita-taskgroup{margin-bottom:22px}
+.cita-task-h{
+  font-family:var(--serif-2);font-size:17px;font-weight:500;
+  margin:0 0 10px;display:flex;align-items:center;gap:10px;
+}
+
+/* ── Calendario mensual del panel de citas (.ccal-*) ── */
+.ccal{
+  background:#fff;border:1px solid rgba(26,22,20,.08);border-radius:16px;
+  padding:20px 22px;
+}
+.ccal-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;flex-wrap:wrap;gap:10px;
+}
+.ccal-nav{display:flex;gap:6px}
+.ccal-nav a{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:34px;height:34px;padding:0 12px;
+  border:1px solid rgba(26,22,20,.15);border-radius:999px;
+  color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:600;
+  transition:all .12s ease;
+}
+.ccal-nav a:hover{border-color:var(--pink-deep);color:var(--pink-deep)}
+.ccal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.ccal-dow{
+  text-align:center;font-size:10.5px;color:var(--ink-2);opacity:.6;
+  text-transform:uppercase;letter-spacing:.14em;font-weight:700;padding:6px 0;
+}
+.ccal-day{
+  aspect-ratio:1;border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  color:var(--ink);text-decoration:none;font-size:14px;
+  font-variant-numeric:tabular-nums;position:relative;
+  transition:background .12s ease;
+}
+.ccal-day.blank{pointer-events:none}
+.ccal-day:hover{background:var(--pink-soft)}
+.ccal-day.has .n{font-weight:700}
+.ccal-day .c{
+  background:var(--pink-deep);color:#fff;
+  font-size:10px;font-weight:700;
+  min-width:17px;height:17px;padding:0 4px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.ccal-day.today{box-shadow:inset 0 0 0 2px var(--pink-deep)}
+.ccal-day.selected{background:var(--pink-deep);color:#fff}
+.ccal-day.selected .c{background:#fff;color:var(--pink-deep)}
+@media (max-width:640px){
+  .ccal{padding:14px}
+  .ccal-day{font-size:12.5px;border-radius:8px}
+  .ccal-day .c{min-width:15px;height:15px;font-size:9px}
+}
+

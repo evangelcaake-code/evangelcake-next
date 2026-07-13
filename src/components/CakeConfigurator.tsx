@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { markCodeUsed } from "@/lib/markCodeUsed";
 import DesignPicker, { type DesignSelection } from "@/components/DesignPicker";
 import DiscountCodeBox from "@/components/DiscountCodeBox";
+import { BIZCOCHOS, RELLENOS, COBERTURAS } from "@/data/cakeOptions";
 
 type Size = {
   value: string;
@@ -25,18 +26,6 @@ const SIZES: Size[] = [
   { value: "30–35 personas", display: "30–35", px: "personas", price: "desde 140€", rellenos: 2 },
   { value: "40–45 personas", display: "40–45", px: "personas", price: "a consultar", rellenos: 2, consult: true },
   { value: "50–55 personas", display: "50–55", px: "personas", price: "a consultar", rellenos: 2, consult: true },
-];
-
-const BIZCOCHOS = ["Vainilla", "Red Velvet", "Chocolate"];
-
-const RELLENOS = [
-  "Chocolate", "Vainilla", "Nutella", "Pistacho", "Fresa", "Lotus",
-  "Tres Leches", "Kinder", "Oreo", "Piña", "Dulce de Leche", "Trufa",
-  "Maracuyá", "Nata", "Queso crema", "Coco", "Frutos Rojos", "Chocolate blanco",
-];
-
-const COBERTURAS = [
-  "Chantilly (nata)", "Trufa", "Merengue", "Buttercream",
 ];
 
 type Selection = {

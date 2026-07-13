@@ -149,6 +149,12 @@ export default async function AdminPage() {
           <h1>Admin</h1>
           <p style={{ margin: "4px 0 0", fontSize: 13, display: "flex", gap: 14, flexWrap: "wrap" }}>
             <a
+              href="/admin/citas"
+              style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
+            >
+              Gestionar citas →
+            </a>
+            <a
               href="/admin/analytics"
               style={{ color: "var(--pink-deep)", textDecoration: "underline" }}
             >

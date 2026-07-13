@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
     { path: "", priority: 1.0, changeFrequency: "weekly" },
     { path: "/tartas-personalizadas", priority: 0.95, changeFrequency: "weekly" },
+    { path: "/pedir-cita", priority: 0.9, changeFrequency: "weekly" },
     { path: "/galeria", priority: 0.9, changeFrequency: "weekly" },
     // TEMP: /encargos quitado del sitemap mientras está desactivado
     // TEMP: campaña juego cerrada — /game ahora muestra "Esta campaña ha terminado"

@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 const links = [
   { href: "/", label: "Inicio" },
   { href: "/tartas-personalizadas", label: "Tartas personalizadas" },
+  { href: "/pedir-cita", label: "Pedir cita" },
   { href: "/galeria", label: "Galería" },
   // TEMP: link a /encargos desactivado — reactivar cuando vuelva la página
   // { href: "/encargos", label: "Encargos" },
