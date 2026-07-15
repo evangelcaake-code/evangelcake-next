@@ -47,7 +47,7 @@ export const PRODUCTS: Product[] = [
     shortDescription: "Diseñamos contigo cada tarta a tu medida.",
     longDescription:
       "Bodas, cumpleaños, bautizos, comuniones, baby showers, despedidas… Cada tarta se diseña 1:1 contigo: bizcocho, relleno, cobertura, color y decoración. Solo chantilly fresco, nunca fondant. Sabor brasileño con técnicas europeas.",
-    price: "desde 42€",
+    price: "desde 44€",
     availability: "Bajo pedido · mínimo 5 días de antelación",
     badge: "Bajo pedido",
     image: "/images/gallery/cumple-brochazos.jpg",

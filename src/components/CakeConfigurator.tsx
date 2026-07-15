@@ -4,29 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { markCodeUsed } from "@/lib/markCodeUsed";
 import DesignPicker, { type DesignSelection } from "@/components/DesignPicker";
 import DiscountCodeBox from "@/components/DiscountCodeBox";
-import { BIZCOCHOS, RELLENOS, COBERTURAS } from "@/data/cakeOptions";
-
-type Size = {
-  value: string;
-  display: string;
-  px: string;
-  price: string;
-  rellenos: 1 | 2;
-  consult?: boolean;
-};
-
-const SIZES: Size[] = [
-  { value: "4–6 personas", display: "4–6", px: "personas", price: "desde 42€", rellenos: 1 },
-  { value: "6–8 personas", display: "6–8", px: "personas", price: "desde 48€", rellenos: 1 },
-  { value: "8–10 personas", display: "8–10", px: "personas", price: "desde 52€", rellenos: 2 },
-  { value: "10–12 personas", display: "10–12", px: "personas", price: "desde 58€", rellenos: 2 },
-  { value: "15–18 personas", display: "15–18", px: "personas", price: "desde 75€", rellenos: 2 },
-  { value: "20 personas", display: "20", px: "personas", price: "desde 85€", rellenos: 2 },
-  { value: "22–25 personas", display: "22–25", px: "personas", price: "desde 100€", rellenos: 2 },
-  { value: "30–35 personas", display: "30–35", px: "personas", price: "desde 140€", rellenos: 2 },
-  { value: "40–45 personas", display: "40–45", px: "personas", price: "a consultar", rellenos: 2, consult: true },
-  { value: "50–55 personas", display: "50–55", px: "personas", price: "a consultar", rellenos: 2, consult: true },
-];
+import { BIZCOCHOS, RELLENOS, COBERTURAS, SIZES } from "@/data/cakeOptions";
 
 type Selection = {
   raciones: string;
@@ -265,7 +243,7 @@ export default function CakeConfigurator() {
               <button
                 key={s.value}
                 type="button"
-                className={`cfg-size${s.consult ? " cfg-size-consult" : ""}${sel.raciones === s.value ? " selected" : ""}`}
+                className={`cfg-size${sel.raciones === s.value ? " selected" : ""}`}
                 onClick={(e) => pickRaciones(s.value, e)}
               >
                 <span className="cfg-size-num">{s.display}</span>
